@@ -15,5 +15,19 @@ class User
 	vector<Message> sent;
 	vector<Message> recieved;
 
+	//void singup();
+	//void login();
+	//void addcontact(); //return boolean?
+	//void removecontact();
+	//void sendmessage();
+	//void unsend();
+	//void searchcontact(); //boolean?
+	//void viewcontacts();
+	//void viewsent();
+	//void viewreceived();
+	//void favourite();
+	//void popfavorite();
+	//void viewfavorite();
+
 };
 
