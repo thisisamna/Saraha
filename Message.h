@@ -4,8 +4,8 @@ using namespace std;
 
 class Message
 {
-	User sender;
-	User receiver;
+	int sender; //id
+	string receiver; //username
 	string content;
 };
 
