@@ -8,7 +8,7 @@ using namespace std;
 
 class User
 {
-private:
+public:
 	int id;
 	string username;
 	string password;
@@ -18,12 +18,12 @@ private:
 public:
 	//void singup();
 	//void login();
-	//void addContact(); //return boolean?
-	//void removeContact();
-	//void sendMessage();
-	//void unsendLastMessage();
-	//void searchForContact(); //boolean?
-	//void viewContacts();
+	void addcontact(User u); //return boolean?
+	void removecontact(User u);
+	//void sendmessage();
+	//void unsend();
+	//void searchcontact(); //boolean?
+	//void viewcontacts();
 	void viewSent();
 	void viewReceived();
 	//void favourite();
