@@ -8,7 +8,7 @@ using namespace std;
 
 class User
 {
-private:
+public:
 	int id;
 	string username;
 	string password;
@@ -24,8 +24,8 @@ public:
 	//void unsend();
 	//void searchcontact(); //boolean?
 	//void viewcontacts();
-	//void viewsent();
-	//void viewreceived();
+	void viewSent();
+	void viewReceived();
 	//void favourite();
 	//void RemoveOldestavorite();
 	//void viewFavorites();
