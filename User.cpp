@@ -8,7 +8,7 @@ void User::addcontact(User u)
 
 	for (User it : contacts) 
 	{
-		if (it.ID == u.ID)
+		if (it.id == u.id)
 		{
 			cout << "\nUser already exists\n";
 			userExists = true;
@@ -25,15 +25,16 @@ void User::addcontact(User u)
 void User::removecontact(User u)
 {
 	int i = -1;
+
 	for (User it : contacts)
 	{
 		i++;
-		if (it.ID == u.ID)
+		if (it.id == u.id)
 			break;
 	}
 	contacts.erase(contacts.begin() + i);
 }
-#include <iostream>
+
 
 void User::viewSent()
 {
