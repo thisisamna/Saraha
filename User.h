@@ -8,6 +8,7 @@ using namespace std;
 
 class User
 {
+
 	int ID;
 	string username;
 	string password;
@@ -15,10 +16,11 @@ class User
 	vector<Message> sent;
 	vector<Message> recieved;
 
+public:
 	//void singup();
 	//void login();
-	//void addcontact(); //return boolean?
-	//void removecontact();
+	void addcontact(User u); //return boolean?
+	void removecontact(User u);
 	//void sendmessage();
 	//void unsend();
 	//void searchcontact(); //boolean?
@@ -28,6 +30,7 @@ class User
 	//void favourite();
 	//void popfavorite();
 	//void viewfavorite();
+
 
 };
 
