@@ -18,17 +18,17 @@ private:
 public:
 	//void singup();
 	//void login();
-	//void addcontact(); //return boolean?
-	//void removecontact();
-	//void sendmessage();
-	//void unsend();
-	//void searchcontact(); //boolean?
-	//void viewcontacts();
-	void viewsent();
-	void viewreceived();
+	//void addContact(); //return boolean?
+	//void removeContact();
+	//void sendMessage();
+	//void unsendLastMessage();
+	//void searchForContact(); //boolean?
+	//void viewContacts();
+	void viewSent();
+	void viewReceived();
 	//void favourite();
-	//void popfavorite();
-	//void viewfavorite();
+	//void RemoveOldestavorite();
+	//void viewFavorites();
 	
 	//helper functions
 };

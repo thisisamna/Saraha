@@ -1,7 +1,7 @@
 #include "User.h"
 #include <iostream>
 
-void User::viewsent()
+void User::viewSent()
 {
 	if (sent.empty())
 	{
@@ -16,7 +16,7 @@ void User::viewsent()
 	}
 }
 
-void User::viewreceived()
+void User::viewReceived()
 {
 	if (inbox.empty())
 	{
