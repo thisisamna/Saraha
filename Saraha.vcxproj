@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{e5b14b93-1fec-49df-bcb0-599dd2ca873b}</ProjectGuid>
+    <ProjectGuid>{9adfc20b-dfe3-4595-8af1-043adcbafef2}</ProjectGuid>
     <RootNamespace>Saraha</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -139,15 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Message.h" />
-    <ClInclude Include="Program.h" />
-    <ClInclude Include="User.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Message.cpp" />
-    <ClCompile Include="Program.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="User.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
