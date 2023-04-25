@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include "Program.h"
 using namespace std;
 class Message
 {
@@ -11,6 +12,7 @@ private:
 public:
 	void viewAsSent();
 	void viewAsReceived();
+	int getSender();
 };
 
 

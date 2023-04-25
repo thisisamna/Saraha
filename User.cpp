@@ -19,6 +19,7 @@ void User::addcontact(User u)
 
 
 	if(!userExists) // لو اليوزر مش عندي ضيفه
+
 		contacts.push_back(u);
 
 }

@@ -9,3 +9,9 @@ void Message::viewAsReceived()
 	cout << "From: " << sender << "\n";
 	cout << content << "\n\n";
 }
+
+int Message::getSender()
+{
+	return sender;
+}
+

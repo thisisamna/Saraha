@@ -82,6 +82,12 @@ User Program::getUser(string username)
 	return user;
 }
 
+void Program::addSender(Message msg)
+{
+	User sender = getUser(msg.getSender());
+	liveUser.addcontact(sender);
+}
+
 void Program::printCentered(string str)
 {
 	int maxwidth = 70;
