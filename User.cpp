@@ -3,6 +3,7 @@
 using namespace std;
 //This is an example
 //This is example 2
+//tihs is example 3
 void User::addcontact(User u)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
