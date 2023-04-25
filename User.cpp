@@ -1,5 +1,6 @@
 ﻿#include "User.h"
 #include <iostream>
+#include "Message.h"
 using namespace std;
 
 void User::addcontact(User u)
@@ -35,7 +36,6 @@ void User::removecontact(User u)
 	contacts.erase(contacts.begin() + i);
 }
 
-
 void User::viewSent()
 {
 	if (sent.empty())
@@ -44,9 +44,10 @@ void User::viewSent()
 	}
 	else
 	{
-		for(auto msg:sent)
+		while (!sent.empty())
 		{
-			msg.viewAsSent();
+			sent.top().viewAsSent();
+			sent.pop();
 		}
 	}
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Message.h"
-
+#include <stack>
 #include <string>
 #include <vector>
 using namespace std;
@@ -12,8 +12,8 @@ public:
 	int id;
 	string username;
 	string password;
-	vector<User> contacts; //vector until we choose the right data structure
-	vector<Message> sent;
+	vector<User> contacts; 
+	stack<Message> sent;
 	vector<Message> inbox;
 public:
 	void addcontact(User u); //return boolean?
