@@ -1,7 +1,7 @@
 ﻿#include "User.h"
 #include <iostream>
 using namespace std;
-
+//This is an example
 void User::addcontact(User u)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
