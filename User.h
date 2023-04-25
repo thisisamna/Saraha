@@ -16,8 +16,6 @@ public:
 	vector<Message> sent;
 	vector<Message> inbox;
 public:
-	//void singup();
-	//void login();
 	void addcontact(User u); //return boolean?
 	void removecontact(User u);
 	//void sendmessage();

@@ -14,6 +14,8 @@ class Program
 public:
 	//menu functions
 	void loginMenu();
+	//void singup();
+    //void login();
 	//helper functions
 	User getUser(int id);
 	void printCentered(string str);
