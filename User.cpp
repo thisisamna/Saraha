@@ -61,7 +61,7 @@ void User::viewReceived()
 	}
 	else
 	{
-		for (auto msg : sent)
+		for (auto msg : inbox)
 		{
 			msg.viewAsReceived();
 		}

@@ -18,10 +18,10 @@ public:
 	void loginMenu();
 	void userMenu();
 	void singup();
-    User* login();
+    User login();
 	//helper functions
-	User getUser(int id);
-	User getUser(string username);
+	User idToUser(int id);
+	User usernameToUser(string username);
 	void addSender(Message msg);
 	void printCentered(string str);
 

@@ -62,11 +62,11 @@ void Program::userMenu()
 void Program::singup()
 {
 }
-User* Program::login()
+User Program::login()
 {
-	return nullptr;
+	return User();
 }
-User Program::getUser(int id)
+User Program::idToUser(int id)
 {
 	User user;
 	auto it = usersToID.find(id);
@@ -74,7 +74,7 @@ User Program::getUser(int id)
 	return user;
 }
 
-User Program::getUser(string username)
+User Program::usernameToUser(string username)
 {
 	User user;
 	auto it = usersToUsername.find(username);
@@ -84,7 +84,7 @@ User Program::getUser(string username)
 
 void Program::addSender(Message msg)
 {
-	User sender = getUser(msg.getSender());
+	User sender = idToUser(msg.getSender());
 	liveUser.addcontact(sender);
 }
 
