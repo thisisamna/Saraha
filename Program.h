@@ -9,11 +9,12 @@ using namespace std;
 
 class Program
 {
-	char choice;
+	int choice;
 	unordered_map<int, User> users;
 public:
 	//menu functions
 	void loginMenu();
+	void userMenu();
 	//void singup();
     //void login();
 	//helper functions

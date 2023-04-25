@@ -7,18 +7,17 @@ void Program::loginMenu()
 	printCentered("S a r a h a");
 	printCentered("Annonymously send and receive messages.");
 	cout << "Welcome!" << endl;
-	cout << "Do you have an account? (y/N)\n\n" << endl; //bug here, two newlines fix it but why?
-
+	cout << "Do you have an account?\n\n" << endl; //bug here, two newlines fix it but why?
+	cout << "1. Yes\n"
+		<< "2. No\n";
 	cin >>choice;
 
 	switch (choice) {
-	case 'y':
-	case 'Y':
+	case 1:
 		printCentered("L o g   i n");
 		//login
 		break;
-	case 'n':;
-	case 'N':
+	case 2:
 		printCentered("S i g n   u p");
 		//signup
 		break;
@@ -27,6 +26,39 @@ void Program::loginMenu()
 	}
 }
 
+void Program::userMenu()
+{
+	cout << "1. Send a message\n"
+		<< "2. Inbox\n"
+		<< "3. Favorites\n"
+		<< "4. Sent messages\n"
+		<< "5. My contacts\n"
+		<< "6. Logout\n";
+	cin >> choice;
+	switch (choice)
+	{
+	case 1:
+		//send a message
+		break;
+	case 2:
+		//inbox
+		break;
+	case 3:
+		//favorites
+		break;
+	case 4:
+		//sent messages
+		break;
+	case 5:
+		//contacts
+		break;
+	case 6:
+		//logout
+		break;
+	default:
+		cout << "Invalid entry, try again!";
+	}
+}
 User Program::getUser(int id)
 {
 	User user;
