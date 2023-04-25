@@ -59,11 +59,26 @@ void Program::userMenu()
 		cout << "Invalid entry, try again!";
 	}
 }
+void Program::singup()
+{
+}
+User* Program::login()
+{
+	return nullptr;
+}
 User Program::getUser(int id)
 {
 	User user;
-	auto it = users.find(id);
+	auto it = usersToID.find(id);
 	user = it->second;
+	return user;
+}
+
+User Program::getUser(string username)
+{
+	User user;
+	auto it = usersToUsername.find(username);
+	user = it->second.second; //accessing map of map
 	return user;
 }
 
