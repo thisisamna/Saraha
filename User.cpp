@@ -90,13 +90,13 @@ void User::viewReceived()
 	}
 } 
 
-bool User::cmp(const pair<int, int>& a, const pair<int, int>& b)
-{
-	return a.second < b.second;
-}
+
 void User::viewcontacts() {
 	vector < pair<User, int>>sortedContacts(numberOfmsg.begin(), numberOfmsg.end());
-	sort(sortedContacts.begin(), sortedContacts.end(), cmp);
+	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b) {
+		return a.second < b.second;
+		}
+	);
 		
 	
 
