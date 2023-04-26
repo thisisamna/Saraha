@@ -34,14 +34,14 @@ void User::msgcounter(User) {
 	for (auto contact : contacts) {
 		int numOfmsgs = 0;
 		//count number of sent messages for this contact 
-		for (auto msg : sent) {
-			if (msg.get_sender() == contact.id) {
-				numOfmsgs++;
-			}
-		}
+		//for (auto msg : sent) {
+		//	if (msg.getSender() == contact.id) {
+		//		numOfmsgs++;
+		//	}
+		//}
 		//count number of received messages from this contact 
 		for (auto msg : inbox) {
-			if (msg.get_receiver() == contact.id) {
+			if (msg.getReceiver() == contact.id) {
 				numOfmsgs++;
 			}
 		}
