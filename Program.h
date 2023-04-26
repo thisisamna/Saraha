@@ -10,11 +10,13 @@ using namespace std;
 class Program
 {
 	User liveUser;
+	bool exit;
 	int choice;
 	unordered_map<int, User> usersToID;
 	unordered_map<string, pair<int, User>> usersToUsername;
 public:
 	//menu functions
+	void loop();
 	void loginMenu();
 	void userMenu();
 	void singup();

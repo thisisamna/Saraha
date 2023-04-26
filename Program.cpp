@@ -2,14 +2,25 @@
 
 #include <iostream>
 
+void Program::loop()
+{
+	do
+	{
+
+		
+	} while (!exit);
+}
+
 void Program::loginMenu()
 {
 	printCentered("S a r a h a");
 	printCentered("Annonymously send and receive messages.");
 	cout << "Welcome!" << endl;
 	cout << "Do you have an account?\n\n" << endl; //bug here, two newlines fix it but why?
-	cout << "1. Yes\n"
-		<< "2. No\n";
+	cout << "1. Yes (login)\n"
+		<< "2. No (sign up)\n"
+		<< "3. Exit\n";
+
 	cin >>choice;
 
 	switch (choice) {
@@ -20,6 +31,9 @@ void Program::loginMenu()
 	case 2:
 		printCentered("S i g n   u p");
 		//signup
+		break;
+	case 3:
+		exit = true;
 		break;
 	default:
 		cout << "Invalid entry, try again!";
