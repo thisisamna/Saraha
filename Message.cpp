@@ -12,8 +12,9 @@ void Message::viewAsReceived()
 	cout << content << "\n\n";
 }
 
-int Message::get_sender() {
+int Message::getSender() {
 	return sender;
 }
-int Message::get_receiver() {
+int Message::getReceiver() {
 	return receiver_id;
+}

@@ -12,8 +12,8 @@ private:
 public:
 	void viewAsSent();
 	void viewAsReceived();
-	int get_sender();
-	int get_receiver();
+	int getSender();
+	int getReceiver();
 
 };
 

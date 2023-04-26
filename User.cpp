@@ -38,7 +38,7 @@ void User::msgcounter(User) {
 		//count number of sent messages for this contact 
 		if (!sent.empty()) {
 			for (int i = 0; i < sent.size(); i++) {
-				if (sent.front().get_sender() == contact.id) {
+				if (sent.front().getSender() == contact.id) {
 					numOfmsgs++;
 				}
 				sent.push_back(sent.front());
@@ -47,7 +47,7 @@ void User::msgcounter(User) {
 		}
 		//count number of received messages from this contact 
 		for (auto msg : inbox) {
-			if (msg.get_receiver() == contact.id) {
+			if (msg.getReceiver() == contact.id) {
 				numOfmsgs++;
 			}
 		}
