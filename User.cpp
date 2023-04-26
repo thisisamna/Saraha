@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <stack>
+#include <deque>
 
 using namespace std;
 void User::addcontact(User u)
@@ -31,18 +32,13 @@ void User::msgcounter(User) {
 	for (auto contact : contacts) {
 		int numOfmsgs = 0;
 		//count number of sent messages for this contact 
-		/*for (auto msg : sent) {
-			if (msg.get_sender() == contact.id) {
-				numOfmsgs++;
-			}
-		}*/
 		if (!sent.empty()) {
 			for (int i = 0; i < sent.size(); i++) {
-				if (sent.top().get_sender() == contact.id) {
+				if (sent.front().get_sender() == contact.id) {
 					numOfmsgs++;
 				}
-				sent.push(sent.top());
-				sent.pop();
+				sent.push_back(sent.front());
+				sent.pop_front();
 			}
 		}
 		//count number of received messages from this contact 
@@ -78,9 +74,9 @@ void User::viewSent()
 	else
 	{
 		for (int i = 0; i < sent.size(); i++) {
-			sent.top().viewAsSent();
-			sent.push(sent.top());
-			sent.pop();
+			sent.front().viewAsSent();
+			sent.push_back(sent.front());
+			sent.pop_front();
 		}
 			
 		
@@ -96,9 +92,9 @@ void User::viewReceived()
 	else
 	{
 		for (int i = 0; i < sent.size(); i++) {
-			sent.top().viewAsReceived();
-			sent.push(sent.top());
-			sent.pop();
+			sent.front().viewAsReceived();
+			sent.push_back(sent.front());
+			sent.pop_front();
 		}
 	}
 } 
