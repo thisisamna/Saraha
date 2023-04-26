@@ -3,7 +3,8 @@
 #include <algorithm>
 #include <map>
 #include <vector>
-#include <iostream>
+#include <stack>
+
 using namespace std;
 void User::addcontact(User u)
 {
@@ -30,9 +31,18 @@ void User::msgcounter(User) {
 	for (auto contact : contacts) {
 		int numOfmsgs = 0;
 		//count number of sent messages for this contact 
-		for (auto msg : sent) {
+		/*for (auto msg : sent) {
 			if (msg.get_sender() == contact.id) {
 				numOfmsgs++;
+			}
+		}*/
+		if (!sent.empty()) {
+			for (int i = 0; i < sent.size(); i++) {
+				if (sent.top().get_sender() == contact.id) {
+					numOfmsgs++;
+				}
+				sent.push(sent.top());
+				sent.pop();
 			}
 		}
 		//count number of received messages from this contact 
@@ -67,10 +77,13 @@ void User::viewSent()
 	}
 	else
 	{
-		for(auto msg:sent)
-		{
-			msg.viewAsSent();
+		for (int i = 0; i < sent.size(); i++) {
+			sent.top().viewAsSent();
+			sent.push(sent.top());
+			sent.pop();
 		}
+			
+		
 	}
 }
 
@@ -82,9 +95,10 @@ void User::viewReceived()
 	}
 	else
 	{
-		for (auto msg : sent)
-		{
-			msg.viewAsReceived();
+		for (int i = 0; i < sent.size(); i++) {
+			sent.top().viewAsReceived();
+			sent.push(sent.top());
+			sent.pop();
 		}
 	}
 } 
