@@ -59,12 +59,33 @@ void Program::userMenu()
 		cout << "Invalid entry, try again!";
 	}
 }
-User Program::getUser(int id)
+void Program::singup()
+{
+}
+User Program::login()
+{
+	return User();
+}
+User Program::idToUser(int id)
 {
 	User user;
-	auto it = users.find(id);
+	auto it = usersToID.find(id);
 	user = it->second;
 	return user;
+}
+
+User Program::usernameToUser(string username)
+{
+	User user;
+	auto it = usersToUsername.find(username);
+	user = it->second.second; //accessing map of map
+	return user;
+}
+
+void Program::addSender(Message msg)
+{
+	User sender = idToUser(msg.getSender());
+	liveUser.addcontact(sender);
 }
 
 void Program::printCentered(string str)
