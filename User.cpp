@@ -2,9 +2,8 @@
 #include <iostream>
 #include <algorithm>
 #include <map>
-#include<vector>
-
-
+#include <vector>
+#include <iostream>
 using namespace std;
 void User::addcontact(User u)
 {
@@ -42,7 +41,7 @@ void User::msgcounter(User) {
 				numOfmsgs++;
 			}
 		}
-		numberOfmsg.insert(make_pair(contact, numOfmsgs));
+		sortedContacts.push_back(make_pair(contact, numOfmsgs));
 	}
 }
 
@@ -92,12 +91,11 @@ void User::viewReceived()
 
 
 void User::viewcontacts() {
-	vector < pair<User, int>>sortedContacts(numberOfmsg.begin(), numberOfmsg.end());
 	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b) {
-		return a.second < b.second;
+		return a.second > b.second;
 		}
 	);
-		
-	
-
+	for (auto i : sortedContacts) {
+		cout << i.first.id << "		" << i.second << '\n';
+	}
 }
