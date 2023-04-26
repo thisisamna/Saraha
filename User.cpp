@@ -1,9 +1,10 @@
 ﻿#include "User.h"
 #include <iostream>
+#include "Message.h"
 #include <algorithm>
 #include <map>
-#include<vector>
-
+#include <vector>
+#include <iostream>
 
 using namespace std;
 void User::addcontact(User u)
@@ -21,7 +22,9 @@ void User::addcontact(User u)
 	}// to check if user already exists
 
 
-	if (!userExists) { // لو اليوزر مش عندي ضيفه
+
+	if(!userExists) // لو اليوزر مش عندي ضيفه
+{
 		contacts.push_back(u);
 		msgcounter(u);
 	}
@@ -42,7 +45,7 @@ void User::msgcounter(User) {
 				numOfmsgs++;
 			}
 		}
-		numberOfmsg.insert(make_pair(contact, numOfmsgs));
+		sortedContacts.push_back(make_pair(contact, numOfmsgs));
 	}
 }
 
@@ -59,7 +62,6 @@ void User::removecontact(User u)
 	contacts.erase(contacts.begin() + i);
 }
 
-
 void User::viewSent()
 {
 	if (sent.empty())
@@ -68,9 +70,10 @@ void User::viewSent()
 	}
 	else
 	{
-		for(auto msg:sent)
+		while (!sent.empty())
 		{
-			msg.viewAsSent();
+			sent.top().viewAsSent();
+			sent.pop();
 		}
 	}
 }
@@ -83,23 +86,22 @@ void User::viewReceived()
 	}
 	else
 	{
-		for (auto msg : sent)
+		for (auto msg : inbox)
 		{
 			msg.viewAsReceived();
 		}
 	}
 } 
 
-bool User::cmp(const pair<int, int>& a, const pair<int, int>& b)
-{
-	return a.second < b.second;
-}
-void User::viewcontacts() {
-	vector < pair<User, int>>sortedContacts(numberOfmsg.begin(), numberOfmsg.end());
-	sort(sortedContacts.begin(), sortedContacts.end(), cmp);
-		
-	
 
+void User::viewcontacts() {
+	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b) {
+		return a.second > b.second;
+		}
+	);
+	for (auto i : sortedContacts) {
+		cout << i.first.id << "		" << i.second << '\n';
+	}
 }
 
 void User::sendmessage() {

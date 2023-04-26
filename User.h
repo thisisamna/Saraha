@@ -6,6 +6,7 @@
 #include <stack>
 #include <map>
 #include <stack>
+#include <iostream>
 using namespace std;
 
 class User
@@ -14,10 +15,10 @@ public:
 	int id;
 	string username;
 	string password;
-	vector<User> contacts; //vector until we choose the right data structure
-	vector<Message> sent;
+	vector<User> contacts; 
+	stack<Message> sent;
 	vector<Message> inbox;
-	map<User, int>numberOfmsg;
+	vector<pair<User, int>>sortedContacts;
 	
 	
 public:
@@ -29,7 +30,7 @@ public:
 	void viewcontacts();
 	void viewSent();
 	void viewReceived();
-	bool cmp(const pair<int, int>& a, const pair<int, int>& b);
+	//bool cmp(const pair<int, int>& a, const pair<int, int>& b);
 	void msgcounter(User u);
 	//void favourite();
 	//void RemoveOldestavorite();
