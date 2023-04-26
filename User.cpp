@@ -1,10 +1,12 @@
 ﻿#include "User.h"
 #include <iostream>
+#include "Message.h"
 #include <algorithm>
 #include <map>
 #include <vector>
 #include <stack>
 #include <deque>
+
 
 using namespace std;
 void User::addcontact(User u)
@@ -22,7 +24,9 @@ void User::addcontact(User u)
 	}// to check if user already exists
 
 
-	if (!userExists) { // لو اليوزر مش عندي ضيفه
+
+	if(!userExists) // لو اليوزر مش عندي ضيفه
+{
 		contacts.push_back(u);
 		msgcounter(u);
 	}
@@ -64,7 +68,6 @@ void User::removecontact(User u)
 	contacts.erase(contacts.begin() + i);
 }
 
-
 void User::viewSent()
 {
 	if (sent.empty())
@@ -73,13 +76,12 @@ void User::viewSent()
 	}
 	else
 	{
-		for (int i = 0; i < sent.size(); i++) {
+		for (int i = 0; i < sent.size(); i++) 
+    {
 			sent.front().viewAsSent();
 			sent.push_back(sent.front());
 			sent.pop_front();
 		}
-			
-		
 	}
 }
 
@@ -98,7 +100,6 @@ void User::viewReceived()
 		}
 	}
 } 
-
 
 void User::viewcontacts() {
 	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b) {

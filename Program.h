@@ -9,16 +9,20 @@ using namespace std;
 
 class Program
 {
+	User liveUser;
 	int choice;
-	unordered_map<int, User> users;
+	unordered_map<int, User> usersToID;
+	unordered_map<string, pair<int, User>> usersToUsername;
 public:
 	//menu functions
 	void loginMenu();
 	void userMenu();
-	//void singup();
-    //void login();
+	void singup();
+    User login();
 	//helper functions
-	User getUser(int id);
+	User idToUser(int id);
+	User usernameToUser(string username);
+	void addSender(Message msg);
 	void printCentered(string str);
 
 };
