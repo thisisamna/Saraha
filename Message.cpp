@@ -1,4 +1,6 @@
 #include "Message.h"
+#include <map>
+#include <iostream>
 void Message::viewAsSent()
 {
 	cout << "To: " << receiver << "\n";
@@ -10,8 +12,8 @@ void Message::viewAsReceived()
 	cout << content << "\n\n";
 }
 
-int Message::getSender()
-{
+int Message::get_sender() {
 	return sender;
 }
-
+int Message::get_receiver() {
+	return receiver_id;
