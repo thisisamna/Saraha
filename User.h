@@ -5,7 +5,7 @@
 #include <vector>
 #include <stack>
 #include <map>
-#include <stack>
+#include <deque>
 #include <iostream>
 using namespace std;
 
@@ -15,8 +15,8 @@ public:
 	int id;
 	string username;
 	string password;
-	vector<User> contacts; 
-	stack<Message> sent;
+	vector<User> contacts; //vector until we choose the right data structure
+	deque<Message> sent;
 	vector<Message> inbox;
 	vector<pair<User, int>>sortedContacts;
 	

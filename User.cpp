@@ -4,7 +4,9 @@
 #include <algorithm>
 #include <map>
 #include <vector>
-#include <iostream>
+#include <stack>
+#include <deque>
+
 
 using namespace std;
 void User::addcontact(User u)
@@ -34,9 +36,13 @@ void User::msgcounter(User) {
 	for (auto contact : contacts) {
 		int numOfmsgs = 0;
 		//count number of sent messages for this contact 
-		for (auto msg : sent) {
-			if (msg.get_sender() == contact.id) {
-				numOfmsgs++;
+		if (!sent.empty()) {
+			for (int i = 0; i < sent.size(); i++) {
+				if (sent.front().get_sender() == contact.id) {
+					numOfmsgs++;
+				}
+				sent.push_back(sent.front());
+				sent.pop_front();
 			}
 		}
 		//count number of received messages from this contact 
@@ -70,10 +76,11 @@ void User::viewSent()
 	}
 	else
 	{
-		while (!sent.empty())
-		{
-			sent.top().viewAsSent();
-			sent.pop();
+		for (int i = 0; i < sent.size(); i++) 
+    {
+			sent.front().viewAsSent();
+			sent.push_back(sent.front());
+			sent.pop_front();
 		}
 	}
 }
@@ -86,13 +93,13 @@ void User::viewReceived()
 	}
 	else
 	{
-		for (auto msg : inbox)
-		{
-			msg.viewAsReceived();
+		for (int i = 0; i < sent.size(); i++) {
+			sent.front().viewAsReceived();
+			sent.push_back(sent.front());
+			sent.pop_front();
 		}
 	}
 } 
-
 
 void User::viewcontacts() {
 	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b) {
