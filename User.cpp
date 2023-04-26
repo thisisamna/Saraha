@@ -101,3 +101,74 @@ void User::viewcontacts() {
 	
 
 }
+
+void User::sendmessage() {
+	// Data
+	string username_receiver, msg; char check;
+	User receiver = null;
+	// Create Message
+	cout << endl << "Enter your message:" << " ";
+	cin >> msg;
+
+	cout << "Enter receiver username:" << " ";
+	cin >> username_receiver;
+
+	for (User it : contacts)
+	{
+		if (it.username == username_receiver)
+		{
+			Message msgg_object(this.id, username_receiver, msg);
+			receiver = it;
+			break;
+		}
+		else
+		{
+			cout << "receiver username doesnot found in your contacts" << endl;
+		}
+	}
+
+	// Check
+	cout << endl << "Send message? (y/n)" << " ";
+	cin >> check;
+
+	// Send Message
+	if (c == 'y')
+	{
+		// Push in Sender messages
+		this.sent.push_back(msgg_object);
+
+		// push in reciver inbox
+		receiver.inbox.push_back(msgg_object);
+		cout << endl << "Message sent Successfully." << " " << endl;
+	}
+	else
+	{
+		cout << endl << "Message Doesnot Sent." << " " << endl;
+	}
+
+
+}
+
+void User::undolastmessage() {
+	cout << endl << "Do You Want To Delete Last Message ? (y/n)" << " " << endl;
+	char c,cc;
+	cin >> c;
+	if (c == 'y') {
+		cout << endl << "Do You Want To Delete It For You(1) OR For Everyone(0) ? " << " " << endl;
+		cin >> cc;
+		switch (cc)
+		{
+		case 1:
+			this.sent.pop();
+			break;
+		case 0:
+			receiver.inbox.pop();
+			this.sent.pop();
+			break;
+		default:
+			cout << "Invalid, PLZ try again!";
+		}
+	}
+	else
+		return;
+}
