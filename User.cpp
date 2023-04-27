@@ -138,17 +138,23 @@ void User::viewcontacts() {
 
 void favourite(Message msg) {
 	vector <Message> FavouriteMessages;
+	bool MessageIsFavourite = false;
+	char answer;
 	for (int i = 0; i < FavouriteMessages.size(); i++) {
 		
 		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
-			
+			MessageIsFavourite = true;
 			cout << "Message is already favourite press 'Y' if you want to remove it\n";
+			cin >> answer;
+			if(answer==('y' ||'y'))
 			FavouriteMessages.erase(FavouriteMessages.begin()+i);
 		}
 
-		else {
-			FavouriteMessages.push_back(msg);
+		
+			
 
-		}
+		
 	}
+	if(!MessageIsFavourite)
+	FavouriteMessages.push_back(msg);
 }
