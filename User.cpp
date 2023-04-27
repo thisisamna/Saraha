@@ -6,8 +6,7 @@
 #include <vector>
 #include <stack>
 #include <deque>
-
-
+#include "Program.h"
 using namespace std;
 User::User() //Wessal
 {
@@ -150,52 +149,39 @@ void User::viewcontacts() {
 void User::sendmessage() {
 	// Data
 	string username_receiver, msg; char check;
-	//User receiver = null;
 	// Create Message
 	cout << endl << "Enter your message:" << " ";
 	cin >> msg;
 
 	cout << "Enter receiver username:" << " ";
 	cin >> username_receiver;
-	User receiver = usernameToUser(username_receiver);
-	if (receiver == null){
-		cout <<endl<< "receiver username invalid, PLZ Try Again.<< " ";
-	break;
-	}
-	Message msgg_object(this.id, username_receiver, msg);
-	/*for (User it : contacts)
-	{
-		if (it.username == username_receiver)
+	User receiver;
+	receiver = usernameToUser(username_receiver);
+	if (receiver.id != NULL){
+		Message msgg_object(this->id, username_receiver, msg);
+	// Check
+		cout << endl << "Send message? (y/n)" << " ";
+		cin >> check;
+
+		// Send Message
+		if (check == 'y')
 		{
-			Message msgg_object(this.id, username_receiver, msg);
-			receiver = it;
-			break;
+			// Push in Sender messages
+			this->sent.push_back(msgg_object);
+
+			// push in reciver inbox
+			receiver.inbox.push_back(msgg_object);
+			cout << endl << "Message sent Successfully." << " " << endl;
 		}
 		else
 		{
-			cout << "receiver username doesnot found in your contacts" << endl;
+			cout << endl << "Message Doesnot Sent." << " " << endl;
 		}
-	}*/
 
-	// Check
-	cout << endl << "Send message? (y/n)" << " ";
-	cin >> check;
-
-	// Send Message
-	if (check == 'y')
-	{
-		// Push in Sender messages
-		this.sent.push_back(msgg_object);
-
-		// push in reciver inbox
-		receiver.inbox.push_back(msgg_object);
-		cout << endl << "Message sent Successfully." << " " << endl;
 	}
-	else
-	{
-		cout << endl << "Message Doesnot Sent." << " " << endl;
+	else {
+		cout <<endl<< "receiver username invalid, PLZ Try Again." << " ";
 	}
-
 
 }
 
@@ -203,6 +189,7 @@ void User::undolastmessage() {
 	cout << endl << "Do You Want To Delete Last Message ? (y/n)" << " " << endl;
 	char c,cc;
 	string recevier_username;
+	User receiver;
 	cin >> c;
 	if (c == 'y') {
 		cout << endl << "Do You Want To Delete It For You(1) OR For Everyone(0) ? " << " " << endl;
@@ -210,26 +197,26 @@ void User::undolastmessage() {
 		switch (cc)
 		{
 		case 1:
-			this.sent.pop();
+			this->sent.pop_back();
 			break;
 		case 0:
 			cout << "Enter receiver username:" << " ";
-			User receiver = usernameToUser(recevier_username);
-			if (receiver == null) {
-				cout << endl << "receiver username invalid, PLZ Try Again.<< " ";
-					break;
+			receiver = usernameToUser(recevier_username);
+			if (receiver.id !=  NULL) {
+				receiver.inbox.pop_back();
+				this->sent.pop_back();
 			}
-			receiver.inbox.pop();
-			this.sent.pop();
+			else {
+				cout << endl << "receiver username invalid, PLZ Try Again." << " ";
+			}
 			break;
 		default:
-			cout << "Invalid, PLZ try again!";
+			cout << "Invalid, PLZ try again!" ;
 		}
 	}
 	else
-		break;
+		return;
 }
-
 
 
 

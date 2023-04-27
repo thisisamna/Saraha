@@ -23,8 +23,8 @@ int Message::getSender() {
 int Message::getReceiver() {
 	return receiver_id;
 }
-}
-	Message::message(int id,string username_recevier,string msg) {
+
+	Message::Message(int id,string username_recevier,string msg) {
 		sender = id;
 		receiver = username_recevier;
 		content = msg;
