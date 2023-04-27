@@ -9,17 +9,16 @@ using namespace std;
 
 class Program
 {
-	User liveUser;
+	User* liveUser;
 	bool exit;
 	int choice;
 	unordered_map<int, User> usersToID;
 	unordered_map<string, pair<int, User>> usersToUsername;
 public:
 	//menu functions
-	void loop();
-	void loginMenu();
-	void userMenu(User liveUser);
-	void Inbox(User liveUser);
+	void mainMenu();
+	void userMenu(User* liveUser);
+	void Inbox(User* liveUser);
 	void singup();
     User* login(User user); //حيرجع بوينتر للهاش ماب الكبيرة
 	//helper functions

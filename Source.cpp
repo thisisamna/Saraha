@@ -1,18 +1,17 @@
 #include "Program.h"
 #include <iostream>
+using namespace std;
 
 
 //global objects & variables
 
 //function declarations
 
-using namespace std;
 
 int main() {
 	Program program;
 
-	program.loop();
-
+	program.mainMenu();
 	return 0;
 }
 

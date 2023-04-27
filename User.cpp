@@ -119,12 +119,6 @@ void User::viewReceived()
 }
 
 
-void User::viewMessageOptions(int i)
-{
-
-}
-
-
 void User::viewcontacts() {
 	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b) {
 		return a.second > b.second;

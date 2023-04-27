@@ -31,7 +31,6 @@ public:
 	void viewcontacts();
 	void viewSent();
 	void viewReceived();
-	void viewMessageOptions(int i);
 	//bool cmp(const pair<int, int>& a, const pair<int, int>& b);
 	void msgcounter(User u);
 	void favourite(Message msg);

@@ -2,13 +2,8 @@
 
 #include <iostream>
 
-void Program::loop()
-{
-	loginMenu();
 
-}
-
-void Program::loginMenu()
+void Program::mainMenu()
 {
 	while (true) {
 		printCentered("S a r a h a");
@@ -31,11 +26,11 @@ void Program::loginMenu()
 			cin >> username;
 			cout << "Password: ";
 			cin >> password;
-			User liveUser(username, password);
-			if (login(liveUser)) //if login returns null it will just break
+			User user(username, password);
+			liveUser = login(user);
+			if (liveUser) //if login returns null it will just break
 			{
 				userMenu(liveUser);
-
 			}
 			break;
 		}
@@ -52,7 +47,7 @@ void Program::loginMenu()
 	}
 }
 
-void Program::userMenu(User liveUser)
+void Program::userMenu(User* liveUser)
 {
 	while (true)
 	{
@@ -78,11 +73,11 @@ void Program::userMenu(User liveUser)
 			break;
 		case 4:
 			//sent messages
-			liveUser.viewSent();
+			liveUser->viewSent();
 			break;
 		case 5:
 			//contacts
-			liveUser.viewcontacts();
+			liveUser->viewcontacts();
 			break;
 		case 6:
 			//logout
@@ -93,10 +88,10 @@ void Program::userMenu(User liveUser)
 	}
 }
 
-void Program::Inbox(User liveUser)
+void Program::Inbox(User* liveUser)
 {
 	int msgIndex;
-	liveUser.viewReceived();
+	liveUser->viewReceived();
 	cout << "Enter message index to view details and options. \n"
 		<< "0. Back to home. \n";
 	cin >> msgIndex;
@@ -106,7 +101,7 @@ void Program::Inbox(User liveUser)
 	}
 	else
 	{
-		Message msg = liveUser.getInboxMessage(msgIndex);
+		Message msg = liveUser->getInboxMessage(msgIndex);
 		msg.viewAsReceived();
 		cout << "1. Add/remove from favorites.\n"
 			<< "2. Add sender to contacts\n"
@@ -115,7 +110,7 @@ void Program::Inbox(User liveUser)
 		switch (choice)
 		{
 		case 1:
-			liveUser.favourite(msg);
+			liveUser->favourite(msg);
 			break;
 		case 2:
 		{
@@ -154,7 +149,7 @@ User Program::usernameToUser(string username)
 void Program::addSender(Message msg)
 {
 	User sender = idToUser(msg.getSender());
-	liveUser.addcontact(sender);
+	liveUser->addcontact(sender);
 }
 
 void Program::printCentered(string str)
