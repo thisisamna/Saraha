@@ -25,7 +25,7 @@ public:
 	User(string username, string password);
 	
 	int getid();
-
+	string getUsername();
 	void addcontact(User u); //return boolean?
 	void removecontact(User u);
 	void sendmessage();

@@ -23,6 +23,11 @@ int User::getid()
 {
 	return id;
 }
+string User::getUsername()
+{
+	return username;
+}
+
 void User::addcontact(User u)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي

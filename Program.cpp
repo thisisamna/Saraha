@@ -26,11 +26,11 @@ void Program::loginMenu()
 		{
 			//login
 			printCentered("L o g   i n");
-			login();
-			if (login(liveUser)) //if login returns null it will just break
+			id = login();
+			if (id!=-1)
 			{
+				User* liveUser = &users[id];
 				userMenu(liveUser);
-
 			}
 			break;
 		}
@@ -47,7 +47,7 @@ void Program::loginMenu()
 	}
 }
 
-void Program::userMenu(User liveUser)
+void Program::userMenu(User* liveUser)
 {
 	while (true)
 	{
@@ -73,11 +73,11 @@ void Program::userMenu(User liveUser)
 			break;
 		case 4:
 			//sent messages
-			liveUser.viewSent();
+			liveUser->viewSent();
 			break;
 		case 5:
 			//contacts
-			liveUser.viewcontacts();
+			liveUser->viewcontacts();
 			break;
 		case 6:
 			//logout
@@ -88,10 +88,10 @@ void Program::userMenu(User liveUser)
 	}
 }
 
-void Program::Inbox(User liveUser)
+void Program::Inbox(User* liveUser)
 {
 	int msgIndex;
-	liveUser.viewReceived();
+	liveUser->viewReceived();
 	cout << "Enter message index to view details and options. \n"
 		<< "0. Back to home. \n";
 	cin >> msgIndex;
@@ -101,7 +101,7 @@ void Program::Inbox(User liveUser)
 	}
 	else
 	{
-		Message msg = liveUser.getInboxMessage(msgIndex);
+		Message msg = liveUser->getInboxMessage(msgIndex);
 		msg.viewAsReceived();
 		cout << "1. Add/remove from favorites.\n"
 			<< "2. Add sender to contacts\n"
@@ -110,7 +110,7 @@ void Program::Inbox(User liveUser)
 		switch (choice)
 		{
 		case 1:
-			liveUser.favourite(msg);
+			liveUser->favourite(msg);
 			break;
 		case 2:
 		{
@@ -129,17 +129,19 @@ void Program::Inbox(User liveUser)
 User Program::idToUser(int id)
 {
 	User user;
-	auto it = usersToID.find(id);
+	auto it = users.find(id);
 	user = it->second;
 	return user;
 }
 
-User Program::usernameToUser(string username)
+int Program::usernameToID(string username)
 {
-	User user;
-	auto it = usersToUsername.find(username);
-	user = it->second.second; //accessing map of map
-	return user;
+	for (auto it : users)
+	{
+		if (it.second.getUsername() == username)
+			return it.first;
+	}
+	return -1;
 }
 
 void Program::addSender(Message msg)
@@ -173,38 +175,40 @@ void Program::signup() { //wessal salah
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	usersToID[id] = User(name, pass);
-	usersToUsername[name];
+	users[id] = User(name, pass);
 	cout << "Congratulation!!\nYou now have an account";
 }
 
 int Program::login() { //wessal
+	int id;
 	string name, pass;
 	cout << "Enter your user name: \n";
 	cin.ignore();
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-
-	auto it = usersToUsername.find(name);
-	User u = it->second.second;
-	if (it != usersToUsername.end())
+	id = usernameToID(name);
+	if (id = -1)
 	{
-		if (u.comparePassword(pass))
-		{
-			cout << "Welcome back!\n";
-			return u.getid();
-		}
-		else {
-			cout << "The password is incorrect!\nplease try again\n";
-			login();
-		}
+		cout << "The username is incorrect!\nplease try again\n";
+		return -1;
 	}
 	else
 	{
-		cout << "The username is incorrect!\nplease try again\n";
-		return  - 1;
+		auto it = users.find(id);
+		User u = it->second;
+		if (u.comparePassword(pass))
+		{
+			cout << "Welcome back!\n";
+			return id;
+		}
+		else
+		{
+			cout << "The password is incorrect!\nplease try again\n";
+			return -1;
+		}
 	}
-
 }
+	
+
 
