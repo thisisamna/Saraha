@@ -144,14 +144,18 @@ void favourite(Message msg) {
 		
 		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
 			MessageIsFavourite = true;
-			cout << "Message is already favourite press 'Y' if you want to remove it\n";
+
+			cout << "Message is already favourite press 'Y' if you want to remove it \n";
+			cout << "Or 'N' to remain it\n";
 			cin >> answer;
+
+
 			if(answer==('y' ||'y'))
 			FavouriteMessages.erase(FavouriteMessages.begin()+i);
-		}
 
-		
-			
+			else if (answer == ('N' || 'n'))
+				break;
+		}
 
 		
 	}
