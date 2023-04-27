@@ -107,15 +107,20 @@ void User::viewcontacts() {
 void User::sendmessage() {
 	// Data
 	string username_receiver, msg; char check;
-	User receiver = null;
+	//User receiver = null;
 	// Create Message
 	cout << endl << "Enter your message:" << " ";
 	cin >> msg;
 
 	cout << "Enter receiver username:" << " ";
 	cin >> username_receiver;
-
-	for (User it : contacts)
+	User receiver = usernameToUser(username_receiver);
+	if (receiver == null){
+		cout <<endl<< "receiver username invalid, PLZ Try Again.<< " ";
+	break;
+	}
+	Message msgg_object(this.id, username_receiver, msg);
+	/*for (User it : contacts)
 	{
 		if (it.username == username_receiver)
 		{
@@ -127,14 +132,14 @@ void User::sendmessage() {
 		{
 			cout << "receiver username doesnot found in your contacts" << endl;
 		}
-	}
+	}*/
 
 	// Check
 	cout << endl << "Send message? (y/n)" << " ";
 	cin >> check;
 
 	// Send Message
-	if (c == 'y')
+	if (check == 'y')
 	{
 		// Push in Sender messages
 		this.sent.push_back(msgg_object);
@@ -154,6 +159,7 @@ void User::sendmessage() {
 void User::undolastmessage() {
 	cout << endl << "Do You Want To Delete Last Message ? (y/n)" << " " << endl;
 	char c,cc;
+	string recevier_username;
 	cin >> c;
 	if (c == 'y') {
 		cout << endl << "Do You Want To Delete It For You(1) OR For Everyone(0) ? " << " " << endl;
@@ -164,6 +170,12 @@ void User::undolastmessage() {
 			this.sent.pop();
 			break;
 		case 0:
+			cout << "Enter receiver username:" << " ";
+			User receiver = usernameToUser(recevier_username);
+			if (receiver == null) {
+				cout << endl << "receiver username invalid, PLZ Try Again.<< " ";
+					break;
+			}
 			receiver.inbox.pop();
 			this.sent.pop();
 			break;
@@ -172,5 +184,5 @@ void User::undolastmessage() {
 		}
 	}
 	else
-		return;
+		break;
 }

@@ -14,7 +14,7 @@ public:
 	void viewAsReceived();
 	int get_sender();
 	int get_receiver();
-
+	Message(int, string, string);
 };
 
 

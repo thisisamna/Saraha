@@ -17,3 +17,10 @@ int Message::get_sender() {
 }
 int Message::get_receiver() {
 	return receiver_id;
+}
+	Message::message(int id,string username_recevier,string msg) {
+		sender = id;
+		receiver = username_recevier;
+		content = msg;
+
+	}
