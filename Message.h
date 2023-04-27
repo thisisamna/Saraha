@@ -12,6 +12,7 @@ private:
 public:
 	void viewAsSent();
 	void viewAsReceived();
+	string getContent();
 	int getSender();
 	int getReceiver();
 

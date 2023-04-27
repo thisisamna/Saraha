@@ -9,6 +9,12 @@
 
 
 using namespace std;
+User::User() //Wessal
+{
+}
+User::User(string username, string password) //Wessal
+{
+}
 void User::addcontact(User u)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
@@ -31,11 +37,13 @@ void User::addcontact(User u)
 		msgcounter(u);
 	}
 }
+
 void User::msgcounter(User) {
 	//loop through each contact and count the number of messages exchanged 
 	for (auto contact : contacts) {
 		int numOfmsgs = 0;
 		//count number of sent messages for this contact 
+
 		if (!sent.empty()) {
 			for (int i = 0; i < sent.size(); i++) {
 				if (sent.front().getSender() == contact.id) {
@@ -55,6 +63,15 @@ void User::msgcounter(User) {
 	}
 }
 
+void User::favourite(Message msg)
+{
+}
+
+Message User::getInboxMessage(int msgID)
+{
+	return inbox[msgID];
+}
+
 void User::removecontact(User u)
 {
 	int i = -1;
@@ -72,7 +89,7 @@ void User::viewSent()
 {
 	if (sent.empty())
 	{
-		cout << "You haven't sent any messages yet.";
+		cout << "You haven't sent any messages yet.\n";
 	}
 	else
 	{
@@ -89,17 +106,24 @@ void User::viewReceived()
 {
 	if (inbox.empty())
 	{
-		cout << "Your inbox is empty.";
+		cout << "Your inbox is empty.\n";
 	}
 	else
 	{
-		for (int i = 0; i < sent.size(); i++) {
-			sent.front().viewAsReceived();
-			sent.push_back(sent.front());
-			sent.pop_front();
+		
+		for (int i = 0; i < inbox.size(); i++) 
+		{
+			cout << i << ". " << inbox[i].getContent() << endl;
 		}
 	}
-} 
+}
+
+
+void User::viewMessageOptions(int i)
+{
+
+}
+
 
 void User::viewcontacts() {
 	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b) {
