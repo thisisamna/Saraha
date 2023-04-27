@@ -10,10 +10,18 @@
 using namespace std;
 User::User() //Wessal
 {
+	id = 0;
 }
-User::User(string username, string password) //Wessal
+User::User(string name, string pass)
 {
-	
+	username = name;
+	password = pass;
+	id++;
+}
+
+int User::getid() 
+{
+	return id;
 }
 void User::addcontact(User u)
 {

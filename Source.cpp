@@ -3,8 +3,7 @@
 
 
 //global objects & variables
-
-//function declarations
+ //function declarations
 
 using namespace std;
 

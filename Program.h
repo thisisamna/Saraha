@@ -24,7 +24,7 @@ public:
 	void signup();
     //User* login(User user); //حيرجع بوينتر للهاش ماب الكبيرة
 	//helper functions
-	User* login();
+	int login();
 	User idToUser(int id);
 	User usernameToUser(string username);
 	void addSender(Message msg);

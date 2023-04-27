@@ -178,30 +178,33 @@ void Program::signup() { //wessal salah
 	cout << "Congratulation!!\nYou now have an account";
 }
 
-User* Program::login() { //wessal salah
+int Program::login() { //wessal
 	string name, pass;
 	cout << "Enter your user name: \n";
 	cin.ignore();
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	
+
 	auto it = usersToUsername.find(name);
-	if(it != usersToUsername.end()) 
+	User u = it->second.second;
+	if (it != usersToUsername.end())
 	{
-		User u = it->second.second;
 		if (u.comparePassword(pass))
 		{
 			cout << "Welcome back!\n";
+			return u.getid();
 		}
 		else {
 			cout << "The password is incorrect!\nplease try again\n";
+			login();
 		}
 	}
 	else
 	{
 		cout << "The username is incorrect!\nplease try again\n";
-
+		return  - 1;
 	}
+
 }
 
