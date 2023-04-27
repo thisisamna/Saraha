@@ -130,11 +130,7 @@ void Program::Inbox(User liveUser)
 	}
 }
 
-User* Program::login(User user) //Wessal
-{
-	User* liveUser = new User(); // السطر ده تمشية حال 
-	return liveUser;
-}
+
 User Program::idToUser(int id)
 {
 	User user;
@@ -185,24 +181,30 @@ void Program::signup() { //wessal salah
 	cout << "Congratulation!!\nYou now have an account";
 }
 
-void Program::login() { //wessal salah
-	unordered_map<int, User>::iterator it;
+User* Program::login() { //wessal salah
 	string name, pass;
 	cout << "Enter your user name: \n";
 	cin.ignore();
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	it = usersToID.begin();
-	while (it != usersToID.end()) {
-		if (name == usersToID[u.id].username && pass == usersToID[u.id].password)
+	
+	auto it = usersToUsername.find(name);
+	User u = it->second.second;
+	if(it != usersToUsername.end()) 
+	{
+		if (u.comparePassword(pass))
 		{
-			cout << "Welcome back! " << usersToID[u.id].username << "\n";
-			break;
+			cout << "Welcome back!\n";
 		}
 		else {
-			cout << "the username or password is incorrect!\nplease try again\n";
+			cout << "The password is incorrect!\nplease try again\n";
 		}
+	}
+	else
+	{
+		cout << "The username is incorrect!\nplease try again\n";
+
 	}
 }
 

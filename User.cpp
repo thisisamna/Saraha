@@ -70,6 +70,19 @@ Message User::getInboxMessage(int msgID)
 	return inbox[msgID];
 }
 
+bool User::comparePassword(string pass)
+{
+	if (password == pass)
+	{
+		return true;
+	}
+	else 
+	{
+		return false;
+
+	}
+}
+
 void User::removecontact(User u)
 {
 	int i = -1;

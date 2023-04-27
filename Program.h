@@ -14,6 +14,7 @@ class Program
 	int choice;
 	unordered_map<int, User> usersToID;
 	unordered_map<string, pair<int, User>> usersToUsername;
+
 public:
 	//menu functions
 	void loop();
@@ -23,7 +24,7 @@ public:
 	void signup();
     //User* login(User user); //حيرجع بوينتر للهاش ماب الكبيرة
 	//helper functions
-	void login();
+	User* login();
 	User idToUser(int id);
 	User usernameToUser(string username);
 	void addSender(Message msg);

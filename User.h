@@ -40,5 +40,6 @@ public:
 	
 	//helper functions
 	Message getInboxMessage(int msgID);
+	bool comparePassword(string pass);
 };
 
