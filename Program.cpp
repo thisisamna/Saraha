@@ -1,84 +1,102 @@
-#include "Program.h"
+﻿#include "Program.h"
 
 #include <iostream>
 
 void Program::loop()
 {
-	do
-	{
+	loginMenu();
 
-		
-	} while (!exit);
 }
 
 void Program::loginMenu()
 {
-	printCentered("S a r a h a");
-	printCentered("Annonymously send and receive messages.");
-	cout << "Welcome!" << endl;
-	cout << "Do you have an account?\n\n" << endl; //bug here, two newlines fix it but why?
-	cout << "1. Yes (login)\n"
-		<< "2. No (sign up)\n"
-		<< "3. Exit\n";
+	while (true) {
+		printCentered("S a r a h a");
+		printCentered("Annonymously send and receive messages.");
+		cout << "Welcome!" << endl;
+		cout << "Do you have an account?\n\n" << endl; //bug here, two newlines fix it but why?
+		cout << "1. Yes (login)\n"
+			<< "2. No (sign up)\n"
+			<< "3. Exit\n";
 
-	cin >>choice;
+		cin >> choice;
 
-	switch (choice) {
-	case 1:
-		printCentered("L o g   i n");
-		//login
-		break;
-	case 2:
-		printCentered("S i g n   u p");
-		//signup
-		break;
-	case 3:
-		exit = true;
-		break;
-	default:
-		cout << "Invalid entry, try again!";
+		switch (choice) {
+		case 1:
+		{
+			//login
+			printCentered("L o g   i n");
+			string username, password;
+			cout << "Username: ";
+			cin >> username;
+			cout << "Password: ";
+			cin >> password;
+			User liveUser(username, password);
+			if (login(liveUser)) //if login returns null it will just break
+			{
+				userMenu(liveUser);
+
+			}
+			break;
+		}
+		case 2:
+			printCentered("S i g n   u p");
+			//signup
+			break;
+		case 3:
+			//exit
+			return;
+		default:
+			cout << "Invalid entry, try again!\n";
+		}
 	}
 }
 
-void Program::userMenu()
+void Program::userMenu(User liveUser)
 {
-	cout << "1. Send a message\n"
-		<< "2. Inbox\n"
-		<< "3. Favorites\n"
-		<< "4. Sent messages\n"
-		<< "5. My contacts\n"
-		<< "6. Logout\n";
-	cin >> choice;
-	switch (choice)
+	while (true)
 	{
-	case 1:
-		//send a message
-		break;
-	case 2:
-		//inbox
-		break;
-	case 3:
-		//favorites
-		break;
-	case 4:
-		//sent messages
-		break;
-	case 5:
-		//contacts
-		break;
-	case 6:
-		//logout
-		break;
-	default:
-		cout << "Invalid entry, try again!";
+		cout << "1. Send a message\n"
+			<< "2. Inbox\n"
+			<< "3. Favorites\n"
+			<< "4. Sent messages\n"
+			<< "5. My contacts\n"
+			<< "6. Logout\n";
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			//send a message
+			break;
+		case 2:
+			liveUser.viewReceived();
+			break;
+		case 3:
+			//favorites
+			break;
+		case 4:
+			//sent messages
+			liveUser.viewSent();
+			break;
+		case 5:
+			//contacts
+			liveUser.viewcontacts();
+			break;
+		case 6:
+			//logout
+			return; //هيخرج برا اللوب وبرا الفنكشن
+		default:
+			cout << "Invalid entry, try again!\n";
+		}
 	}
 }
 void Program::singup()
 {
 }
-User Program::login()
+User* Program::login(User user) //Wessal
 {
-	return User();
+	User* liveUser = new User(); // السطر ده تمشية حال 
+	return liveUser;
 }
 User Program::idToUser(int id)
 {

@@ -9,6 +9,12 @@
 
 
 using namespace std;
+User::User() //Wessal
+{
+}
+User::User(string username, string password) //Wessal
+{
+}
 void User::addcontact(User u)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
@@ -73,7 +79,7 @@ void User::viewSent()
 {
 	if (sent.empty())
 	{
-		cout << "You haven't sent any messages yet.";
+		cout << "You haven't sent any messages yet.\n";
 	}
 	else
 	{
@@ -90,7 +96,7 @@ void User::viewReceived()
 {
 	if (inbox.empty())
 	{
-		cout << "Your inbox is empty.";
+		cout << "Your inbox is empty.\n";
 	}
 	else
 	{

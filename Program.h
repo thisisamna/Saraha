@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -18,9 +18,9 @@ public:
 	//menu functions
 	void loop();
 	void loginMenu();
-	void userMenu();
+	void userMenu(User liveUser);
 	void singup();
-    User login();
+    User* login(User user); //حيرجع بوينتر للهاش ماب الكبيرة
 	//helper functions
 	User idToUser(int id);
 	User usernameToUser(string username);
