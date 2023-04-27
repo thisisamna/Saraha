@@ -14,6 +14,7 @@ User::User() //Wessal
 }
 User::User(string username, string password) //Wessal
 {
+	
 }
 void User::addcontact(User u)
 {
@@ -68,6 +69,19 @@ void User::msgcounter(User) {
 Message User::getInboxMessage(int msgID)
 {
 	return inbox[msgID];
+}
+
+bool User::comparePassword(string pass)
+{
+	if (password == pass)
+	{
+		return true;
+	}
+	else 
+	{
+		return false;
+
+	}
 }
 
 void User::removecontact(User u)
@@ -221,17 +235,27 @@ void User::undolastmessage() {
 
 void favourite(Message msg) {
 	vector <Message> FavouriteMessages;
+	bool MessageIsFavourite = false;
+	char answer;
 	for (int i = 0; i < FavouriteMessages.size(); i++) {
 		
 		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
-			
-			cout << "Message is already favourite press 'Y' if you want to remove it\n";
+			MessageIsFavourite = true;
+
+			cout << "Message is already favourite press 'Y' if you want to remove it \n";
+			cout << "Or 'N' to remain it\n";
+			cin >> answer;
+
+
+			if(answer==('y' ||'y'))
 			FavouriteMessages.erase(FavouriteMessages.begin()+i);
+
+			else if (answer == ('N' || 'n'))
+				break;
 		}
 
-		else {
-			FavouriteMessages.push_back(msg);
-
-		}
+		
 	}
+	if(!MessageIsFavourite)
+	FavouriteMessages.push_back(msg);
 }

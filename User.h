@@ -37,9 +37,8 @@ public:
 	void favourite(Message msg);
 	void RemoveOldestavorite();
 	//void viewFavorites();
-	
-
 	//helper functions
-	Message getInboxMessage(int msgID);
+    Message getInboxMessage(int msgID);
+	bool comparePassword(string pass);
 };
 

@@ -26,12 +26,7 @@ void Program::loginMenu()
 		{
 			//login
 			printCentered("L o g   i n");
-			string username, password;
-			cout << "Username: ";
-			cin >> username;
-			cout << "Password: ";
-			cin >> password;
-			User liveUser(username, password);
+			login();
 			if (login(liveUser)) //if login returns null it will just break
 			{
 				userMenu(liveUser);
@@ -130,11 +125,7 @@ void Program::Inbox(User liveUser)
 	}
 }
 
-User* Program::login(User user) //Wessal
-{
-	User* liveUser = new User(); // السطر ده تمشية حال 
-	return liveUser;
-}
+
 User Program::idToUser(int id)
 {
 	User user;
@@ -176,33 +167,41 @@ void Program::printCentered(string str)
 
 void Program::signup() { //wessal salah
 	string name, pass;
+	int id = 0; // How to create new id?
 	cout << "Please, enter your user name: \n";
 	cin.ignore();
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	usersToID[u.id] = User(name, pass);
+	usersToID[id] = User(name, pass);
+	usersToUsername[name];
 	cout << "Congratulation!!\nYou now have an account";
 }
 
-void Program::login() { //wessal salah
-	unordered_map<int, User>::iterator it;
+User* Program::login() { //wessal salah
 	string name, pass;
 	cout << "Enter your user name: \n";
 	cin.ignore();
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	it = usersToID.begin();
-	while (it != usersToID.end()) {
-		if (name == usersToID[u.id].username && pass == usersToID[u.id].password)
+	
+	auto it = usersToUsername.find(name);
+	if(it != usersToUsername.end()) 
+	{
+		User u = it->second.second;
+		if (u.comparePassword(pass))
 		{
-			cout << "Welcome back! " << usersToID[u.id].username << "\n";
-			break;
+			cout << "Welcome back!\n";
 		}
 		else {
-			cout << "the username or password is incorrect!\nplease try again\n";
+			cout << "The password is incorrect!\nplease try again\n";
 		}
+	}
+	else
+	{
+		cout << "The username is incorrect!\nplease try again\n";
+
 	}
 }
 
