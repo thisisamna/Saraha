@@ -22,8 +22,8 @@ public:
 	void userMenu(User* liveUser);
 	void Inbox(User* liveUser);
 	void signup();
-    //User* login(User user); //حيرجع بوينتر للهاش ماب الكبيرة
-	//helper functions
+	void sendmessage(User* liveUser);
+	void undolastmessage(User* liveUser);
 	int login();
 	User idToUser(int id);
 	int usernameToID(string username);

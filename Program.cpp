@@ -210,5 +210,81 @@ int Program::login() { //wessal
 	}
 }
 	
+void Program::sendmessage(User* liveUser) {
+	// Data
+	int receiverID;
+	string username_receiver, msg; char check;
+	// Create Message
+	cout << endl << "Enter your message:" << " ";
+	cin >> msg;
 
+	cout << "Enter receiver username:" << " ";
+	cin >> username_receiver;
+
+	receiverID = usernameToID(username_receiver);
+	if (receiverID = -1) 
+	{
+		cout << endl << "receiver username invalid, PLZ Try Again." << " ";
+	}
+	else
+	{
+		User* receiver = &users[receiverID];
+
+		Message msgg_object(this->id, username_receiver, msg);
+		// Check
+		cout << endl << "Send message? (y/n)" << " ";
+		cin >> check;
+
+		// Send Message
+		if (check == 'y')
+		{
+			// Push in Sender messages
+			liveUser->addToSent(msgg_object);
+
+			// push in reciver inbox
+			receiver->addToInbox(msgg_object);
+			cout << endl << "Message sent Successfully." << " " << endl;
+		}
+		else
+		{
+			cout << endl << "Message Doesnot Sent." << " " << endl;
+		}
+
+	}
+
+
+}
+
+void Program::undolastmessage(User* liveUser) {
+	cout << endl << "Do You Want To Delete Last Message ? (y/n)" << " " << endl;
+	char c, cc;
+	string recevier_username;
+	User receiver;
+	cin >> c;
+	if (c == 'y') {
+		cout << endl << "Do You Want To Delete It For You(1) OR For Everyone(0) ? " << " " << endl;
+		cin >> cc;
+		switch (cc)
+		{
+		case 1:
+			this->sent.pop_back();
+			break;
+		case 0:
+			cout << "Enter receiver username:" << " ";
+			receiver = usernameToUser(recevier_username);
+			if (receiver.id != NULL) {
+				receiver.inbox.pop_back();
+				this->sent.pop_back();
+			}
+			else {
+				cout << endl << "receiver username invalid, PLZ Try Again." << " ";
+			}
+			break;
+		default:
+			cout << "Invalid, PLZ try again!";
+		}
+	}
+	else
+		return;
+}
 
