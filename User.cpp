@@ -4,9 +4,17 @@
 #include <algorithm>
 #include <map>
 #include <vector>
-#include <iostream>
+#include <stack>
+#include <deque>
+
 
 using namespace std;
+User::User() //Wessal
+{
+}
+User::User(string username, string password) //Wessal
+{
+}
 void User::addcontact(User u)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
@@ -29,24 +37,37 @@ void User::addcontact(User u)
 		msgcounter(u);
 	}
 }
+
 void User::msgcounter(User) {
 	//loop through each contact and count the number of messages exchanged 
 	for (auto contact : contacts) {
 		int numOfmsgs = 0;
 		//count number of sent messages for this contact 
-		for (auto msg : sent) {
-			if (msg.get_sender() == contact.id) {
-				numOfmsgs++;
+
+		if (!sent.empty()) {
+			for (int i = 0; i < sent.size(); i++) {
+				if (sent.front().getSender() == contact.id) {
+					numOfmsgs++;
+				}
+				sent.push_back(sent.front());
+				sent.pop_front();
 			}
 		}
 		//count number of received messages from this contact 
 		for (auto msg : inbox) {
-			if (msg.get_receiver() == contact.id) {
+			if (msg.getReceiver() == contact.id) {
 				numOfmsgs++;
 			}
 		}
 		sortedContacts.push_back(make_pair(contact, numOfmsgs));
 	}
+}
+
+
+
+Message User::getInboxMessage(int msgID)
+{
+	return inbox[msgID];
 }
 
 void User::removecontact(User u)
@@ -66,14 +87,15 @@ void User::viewSent()
 {
 	if (sent.empty())
 	{
-		cout << "You haven't sent any messages yet.";
+		cout << "You haven't sent any messages yet.\n";
 	}
 	else
 	{
-		while (!sent.empty())
-		{
-			sent.top().viewAsSent();
-			sent.pop();
+		for (int i = 0; i < sent.size(); i++) 
+    {
+			sent.front().viewAsSent();
+			sent.push_back(sent.front());
+			sent.pop_front();
 		}
 	}
 }
@@ -82,16 +104,23 @@ void User::viewReceived()
 {
 	if (inbox.empty())
 	{
-		cout << "Your inbox is empty.";
+		cout << "Your inbox is empty.\n";
 	}
 	else
 	{
-		for (auto msg : inbox)
+		
+		for (int i = 0; i < inbox.size(); i++) 
 		{
-			msg.viewAsReceived();
+			cout << i << ". " << inbox[i].getContent() << endl;
 		}
 	}
-} 
+}
+
+
+void User::viewMessageOptions(int i)
+{
+
+}
 
 
 void User::viewcontacts() {
@@ -185,4 +214,24 @@ void User::undolastmessage() {
 	}
 	else
 		break;
+}
+
+
+
+
+void favourite(Message msg) {
+	vector <Message> FavouriteMessages;
+	for (int i = 0; i < FavouriteMessages.size(); i++) {
+		
+		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
+			
+			cout << "Message is already favourite press 'Y' if you want to remove it\n";
+			FavouriteMessages.erase(FavouriteMessages.begin()+i);
+		}
+
+		else {
+			FavouriteMessages.push_back(msg);
+
+		}
+	}
 }

@@ -11,7 +11,7 @@ using namespace std;
 int main() {
 	Program program;
 
-	program.loginMenu();
+	program.loop();
 
 	return 0;
 }

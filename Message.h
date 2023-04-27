@@ -15,6 +15,10 @@ public:
 	int get_sender();
 	int get_receiver();
 	Message(int, string, string);
+	string getContent();
+	int getSender();
+	int getReceiver();
+
 };
 
 

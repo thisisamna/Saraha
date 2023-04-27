@@ -1,70 +1,139 @@
-#include "Program.h"
+﻿#include "Program.h"
 
 #include <iostream>
 
+void Program::loop()
+{
+	loginMenu();
+
+}
+
 void Program::loginMenu()
 {
-	printCentered("S a r a h a");
-	printCentered("Annonymously send and receive messages.");
-	cout << "Welcome!" << endl;
-	cout << "Do you have an account?\n\n" << endl; //bug here, two newlines fix it but why?
-	cout << "1. Yes\n"
-		<< "2. No\n";
-	cin >>choice;
+	while (true) {
+		printCentered("S a r a h a");
+		printCentered("Annonymously send and receive messages.");
+		cout << "Welcome!" << endl;
+		cout << "Do you have an account?\n\n" << endl; //bug here, two newlines fix it but why?
+		cout << "1. Yes (login)\n"
+			<< "2. No (sign up)\n"
+			<< "3. Exit\n";
 
-	switch (choice) {
-	case 1:
-		printCentered("L o g   i n");
-		//login
-		break;
-	case 2:
-		printCentered("S i g n   u p");
-		//signup
-		break;
-	default:
-		cout << "Invalid entry, try again!";
+		cin >> choice;
+
+		switch (choice) {
+		case 1:
+		{
+			//login
+			printCentered("L o g   i n");
+			string username, password;
+			cout << "Username: ";
+			cin >> username;
+			cout << "Password: ";
+			cin >> password;
+			User liveUser(username, password);
+			if (login(liveUser)) //if login returns null it will just break
+			{
+				userMenu(liveUser);
+
+			}
+			break;
+		}
+		case 2:
+			printCentered("S i g n   u p");
+			//signup
+			break;
+		case 3:
+			//exit
+			return;
+		default:
+			cout << "Invalid entry, try again!\n";
+		}
 	}
 }
 
-void Program::userMenu()
+void Program::userMenu(User liveUser)
 {
-	cout << "1. Send a message\n"
-		<< "2. Inbox\n"
-		<< "3. Favorites\n"
-		<< "4. Sent messages\n"
-		<< "5. My contacts\n"
-		<< "6. Logout\n";
-	cin >> choice;
-	switch (choice)
+	while (true)
 	{
-	case 1:
-		//send a message
-		break;
-	case 2:
-		//inbox
-		break;
-	case 3:
-		//favorites
-		break;
-	case 4:
-		//sent messages
-		break;
-	case 5:
-		//contacts
-		break;
-	case 6:
-		//logout
-		break;
-	default:
-		cout << "Invalid entry, try again!";
+		cout << "1. Send a message\n"
+			<< "2. Inbox\n"
+			<< "3. Favorites\n"
+			<< "4. Sent messages\n"
+			<< "5. My contacts\n"
+			<< "6. Logout\n";
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			//send a message
+			break;
+		case 2:
+		{
+			//inbox
+			Inbox(liveUser);
+		}
+		case 3:
+			//favorites
+			break;
+		case 4:
+			//sent messages
+			liveUser.viewSent();
+			break;
+		case 5:
+			//contacts
+			liveUser.viewcontacts();
+			break;
+		case 6:
+			//logout
+			return; //هيخرج برا اللوب وبرا الفنكشن
+		default:
+			cout << "Invalid entry, try again!\n";
+		}
 	}
 }
-void Program::singup()
+
+void Program::Inbox(User liveUser)
 {
+	int msgIndex;
+	liveUser.viewReceived();
+	cout << "Enter message index to view details and options. \n"
+		<< "0. Back to home. \n";
+	cin >> msgIndex;
+	if (msgIndex == 0)
+	{
+		return;
+	}
+	else
+	{
+		Message msg = liveUser.getInboxMessage(msgIndex);
+		msg.viewAsReceived();
+		cout << "1. Add/remove from favorites.\n"
+			<< "2. Add sender to contacts\n"
+			<< "0. Back to previous menu.\n";
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			liveUser.favourite(msg);
+			break;
+		case 2:
+		{
+			addSender(msg);
+		case 0:
+			break;
+		default:
+			cout << "Invalid entry.";
+		}
+		break;
+		}
+	}
 }
-User Program::login()
+
+User* Program::login(User user) //Wessal
 {
-	return User();
+	User* liveUser = new User(); // السطر ده تمشية حال 
+	return liveUser;
 }
 User Program::idToUser(int id)
 {
@@ -103,5 +172,37 @@ void Program::printCentered(string str)
 		ss << " ";
 	}
 	cout << ss.str() << endl;
+}
+
+void Program::signup() { //wessal salah
+	string name, pass;
+	cout << "Please, enter your user name: \n";
+	cin.ignore();
+	getline(cin, name);
+	cout << "Enter your password: \n";
+	cin >> pass;
+	usersToID[u.id] = User(name, pass);
+	cout << "Congratulation!!\nYou now have an account";
+}
+
+void Program::login() { //wessal salah
+	unordered_map<int, User>::iterator it;
+	string name, pass;
+	cout << "Enter your user name: \n";
+	cin.ignore();
+	getline(cin, name);
+	cout << "Enter your password: \n";
+	cin >> pass;
+	it = usersToID.begin();
+	while (it != usersToID.end()) {
+		if (name == usersToID[u.id].username && pass == usersToID[u.id].password)
+		{
+			cout << "Welcome back! " << usersToID[u.id].username << "\n";
+			break;
+		}
+		else {
+			cout << "the username or password is incorrect!\nplease try again\n";
+		}
+	}
 }
 
