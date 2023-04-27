@@ -177,7 +177,7 @@ void Program::signup() { //wessal salah
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	usersToID[u.id] = User(name, pass);
+	usersToID[] = User(name, pass);
 	cout << "Congratulation!!\nYou now have an account";
 }
 
