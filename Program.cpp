@@ -174,3 +174,35 @@ void Program::printCentered(string str)
 	cout << ss.str() << endl;
 }
 
+void Program::signup() { //wessal salah
+	string name, pass;
+	cout << "Please, enter your user name: \n";
+	cin.ignore();
+	getline(cin, name);
+	cout << "Enter your password: \n";
+	cin >> pass;
+	users[u.id] = User(name, pass);
+	cout << "Congratulation!!\nYou now have an account";
+}
+
+void Program::login() { //wessal salah
+	unordered_map<int, User>::iterator it;
+	string name, pass;
+	cout << "Enter your user name: \n";
+	cin.ignore();
+	getline(cin, name);
+	cout << "Enter your password: \n";
+	cin >> pass;
+	it = users.begin();
+	while (it != users.end()) {
+		if (name == users[u.id].username && pass == users[u.id].password)
+		{
+			cout << "Welcome back! " << users[u.id].username << "\n";
+			break;
+		}
+		else {
+			cout << "the username or password is incorrect!\nplease try again\n";
+		}
+	}
+}
+

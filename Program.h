@@ -21,8 +21,9 @@ public:
 	void userMenu(User liveUser);
 	void Inbox(User liveUser);
 	void singup();
-    User* login(User user); //حيرجع بوينتر للهاش ماب الكبيرة
+    //User* login(User user); //حيرجع بوينتر للهاش ماب الكبيرة
 	//helper functions
+	void login();
 	User idToUser(int id);
 	User usernameToUser(string username);
 	void addSender(Message msg);
