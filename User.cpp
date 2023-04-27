@@ -63,9 +63,7 @@ void User::msgcounter(User) {
 	}
 }
 
-void User::favourite(Message msg)
-{
-}
+
 
 Message User::getInboxMessage(int msgID)
 {
@@ -132,5 +130,25 @@ void User::viewcontacts() {
 	);
 	for (auto i : sortedContacts) {
 		cout << i.first.id << "		" << i.second << '\n';
+	}
+}
+
+
+
+
+void favourite(Message msg) {
+	vector <Message> FavouriteMessages;
+	for (int i = 0; i < FavouriteMessages.size(); i++) {
+		
+		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
+			
+			cout << "Message is already favourite press 'Y' if you want to remove it\n";
+			FavouriteMessages.erase(FavouriteMessages.begin()+i);
+		}
+
+		else {
+			FavouriteMessages.push_back(msg);
+
+		}
 	}
 }

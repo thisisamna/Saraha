@@ -35,7 +35,7 @@ public:
 	//bool cmp(const pair<int, int>& a, const pair<int, int>& b);
 	void msgcounter(User u);
 	void favourite(Message msg);
-	//void RemoveOldestavorite();
+	void RemoveOldestavorite();
 	//void viewFavorites();
 	
 	//helper functions
