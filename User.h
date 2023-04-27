@@ -11,7 +11,6 @@ using namespace std;
 
 class User
 {
-public:
 	int id;
 	string username;
 	string password;
@@ -32,12 +31,14 @@ public:
 	void viewcontacts();
 	void viewSent();
 	void viewReceived();
+	void viewMessageOptions(int i);
 	//bool cmp(const pair<int, int>& a, const pair<int, int>& b);
 	void msgcounter(User u);
-	//void favourite();
+	void favourite(Message msg);
 	//void RemoveOldestavorite();
 	//void viewFavorites();
 	
 	//helper functions
+	Message getInboxMessage(int msgID);
 };
 

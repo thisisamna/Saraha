@@ -19,6 +19,7 @@ public:
 	void loop();
 	void loginMenu();
 	void userMenu(User liveUser);
+	void Inbox(User liveUser);
 	void singup();
     User* login(User user); //حيرجع بوينتر للهاش ماب الكبيرة
 	//helper functions

@@ -69,8 +69,10 @@ void Program::userMenu(User liveUser)
 			//send a message
 			break;
 		case 2:
-			liveUser.viewReceived();
-			break;
+		{
+			//inbox
+			Inbox(liveUser);
+		}
 		case 3:
 			//favorites
 			break;
@@ -90,9 +92,44 @@ void Program::userMenu(User liveUser)
 		}
 	}
 }
-void Program::singup()
+
+void Program::Inbox(User liveUser)
 {
+	int msgIndex;
+	liveUser.viewReceived();
+	cout << "Enter message index to view details and options. \n"
+		<< "0. Back to home. \n";
+	cin >> msgIndex;
+	if (msgIndex == 0)
+	{
+		return;
+	}
+	else
+	{
+		Message msg = liveUser.getInboxMessage(msgIndex);
+		msg.viewAsReceived();
+		cout << "1. Add/remove from favorites.\n"
+			<< "2. Add sender to contacts\n"
+			<< "0. Back to previous menu.\n";
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			liveUser.favourite(msg);
+			break;
+		case 2:
+		{
+			addSender(msg);
+		case 0:
+			break;
+		default:
+			cout << "Invalid entry.";
+		}
+		break;
+		}
+	}
 }
+
 User* Program::login(User user) //Wessal
 {
 	User* liveUser = new User(); // السطر ده تمشية حال 

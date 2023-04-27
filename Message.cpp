@@ -12,6 +12,11 @@ void Message::viewAsReceived()
 	cout << content << "\n\n";
 }
 
+string Message::getContent()
+{
+	return content;
+}
+
 int Message::getSender() {
 	return sender;
 }

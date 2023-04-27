@@ -37,6 +37,7 @@ void User::addcontact(User u)
 		msgcounter(u);
 	}
 }
+
 void User::msgcounter(User) {
 	//loop through each contact and count the number of messages exchanged 
 	for (auto contact : contacts) {
@@ -60,6 +61,15 @@ void User::msgcounter(User) {
 		}
 		sortedContacts.push_back(make_pair(contact, numOfmsgs));
 	}
+}
+
+void User::favourite(Message msg)
+{
+}
+
+Message User::getInboxMessage(int msgID)
+{
+	return inbox[msgID];
 }
 
 void User::removecontact(User u)
@@ -100,13 +110,20 @@ void User::viewReceived()
 	}
 	else
 	{
-		for (int i = 0; i < sent.size(); i++) {
-			sent.front().viewAsReceived();
-			sent.push_back(sent.front());
-			sent.pop_front();
+		
+		for (int i = 0; i < inbox.size(); i++) 
+		{
+			cout << i << ". " << inbox[i].getContent() << endl;
 		}
 	}
-} 
+}
+
+
+void User::viewMessageOptions(int i)
+{
+
+}
+
 
 void User::viewcontacts() {
 	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b) {
