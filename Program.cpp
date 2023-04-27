@@ -26,12 +26,7 @@ void Program::loginMenu()
 		{
 			//login
 			printCentered("L o g   i n");
-			string username, password;
-			cout << "Username: ";
-			cin >> username;
-			cout << "Password: ";
-			cin >> password;
-			User liveUser(username, password);
+			login();
 			if (login(liveUser)) //if login returns null it will just break
 			{
 				userMenu(liveUser);
@@ -172,12 +167,14 @@ void Program::printCentered(string str)
 
 void Program::signup() { //wessal salah
 	string name, pass;
+	int id = 0; // How to create new id?
 	cout << "Please, enter your user name: \n";
 	cin.ignore();
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	usersToID[u.id] = User(name, pass);
+	usersToID[id] = User(name, pass);
+	usersToUsername[name];
 	cout << "Congratulation!!\nYou now have an account";
 }
 
@@ -190,9 +187,9 @@ User* Program::login() { //wessal salah
 	cin >> pass;
 	
 	auto it = usersToUsername.find(name);
-	User u = it->second.second;
 	if(it != usersToUsername.end()) 
 	{
+		User u = it->second.second;
 		if (u.comparePassword(pass))
 		{
 			cout << "Welcome back!\n";
