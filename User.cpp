@@ -14,6 +14,7 @@ User::User() //Wessal
 }
 User::User(string username, string password) //Wessal
 {
+	
 }
 void User::addcontact(User u)
 {
