@@ -181,7 +181,7 @@ void Program::signup() { //wessal salah
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	users[u.id] = User(name, pass);
+	usersToID[u.id] = User(name, pass);
 	cout << "Congratulation!!\nYou now have an account";
 }
 
@@ -193,11 +193,11 @@ void Program::login() { //wessal salah
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	it = users.begin();
-	while (it != users.end()) {
-		if (name == users[u.id].username && pass == users[u.id].password)
+	it = usersToID.begin();
+	while (it != usersToID.end()) {
+		if (name == usersToID[u.id].username && pass == usersToID[u.id].password)
 		{
-			cout << "Welcome back! " << users[u.id].username << "\n";
+			cout << "Welcome back! " << usersToID[u.id].username << "\n";
 			break;
 		}
 		else {

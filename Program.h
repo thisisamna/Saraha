@@ -20,7 +20,7 @@ public:
 	void loginMenu();
 	void userMenu(User liveUser);
 	void Inbox(User liveUser);
-	void singup();
+	void signup();
     //User* login(User user); //حيرجع بوينتر للهاش ماب الكبيرة
 	//helper functions
 	void login();
