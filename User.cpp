@@ -106,6 +106,15 @@ void User::addToInbox(Message msg)
 	inbox.push_back(msg);
 }
 
+void User::removeFromSent()
+{
+	sent.pop_back();
+}
+void User::removeFromInbox()
+{
+	inbox.pop_back();
+}
+
 void User::removecontact(User u)
 {
 	int i = -1;

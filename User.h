@@ -45,5 +45,7 @@ public:
 	bool comparePassword(string pass);
 	void addToSent(Message msg);
 	void addToInbox(Message msg);
+	void removeFromSent();
+	void removeFromInbox();
 };
 
