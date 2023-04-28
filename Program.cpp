@@ -37,6 +37,7 @@ void Program::loginMenu()
 		case 2:
 			printCentered("S i g n   u p");
 			//signup
+			signup();
 			break;
 		case 3:
 			//exit
@@ -62,6 +63,7 @@ void Program::userMenu(User* liveUser)
 		{
 		case 1:
 			//send a message
+			sendmessage(liveUser);
 			break;
 		case 2:
 		{
@@ -95,7 +97,8 @@ void Program::Inbox(User* liveUser)
 	cout << "Enter message index to view details and options. \n"
 		<< "0. Back to home. \n";
 	cin >> msgIndex;
-	if (msgIndex == 0)
+	msgIndex--;
+	if (msgIndex == -1) // was 0 but 0 is an index in msg vector
 	{
 		return;
 	}
@@ -168,8 +171,10 @@ void Program::printCentered(string str)
 }
 
 void Program::signup() { //wessal salah
+
+	id++; //for now to test program
 	string name, pass;
-	int id = 0; // How to create new id?
+	//id = 0; // How to create new id?
 	cout << "Please, enter your user name: \n";
 	cin.ignore();
 	getline(cin, name);
@@ -188,7 +193,7 @@ int Program::login() { //wessal
 	cout << "Enter your password: \n";
 	cin >> pass;
 	id = usernameToID(name);
-	if (id = -1)
+	if (id == -1)
 	{
 		cout << "The username is incorrect!\nplease try again\n";
 		return -1;
@@ -216,6 +221,7 @@ void Program::sendmessage(User* liveUser) {
 	string username_receiver, msg; 
 	char check;
 	// Create Message
+
 	cout << endl << "Enter your message:" << " ";
 	cin >> msg;
 
@@ -223,7 +229,7 @@ void Program::sendmessage(User* liveUser) {
 	cin >> username_receiver;
 
 	receiverID = usernameToID(username_receiver);
-	if (receiverID = -1) 
+	if (receiverID == -1) 
 	{
 		cout << endl << "receiver username invalid, PLZ Try Again." << " ";
 	}
@@ -252,7 +258,6 @@ void Program::sendmessage(User* liveUser) {
 		}
 
 	}
-
 
 }
 

@@ -44,14 +44,14 @@ void User::addcontact(User u)
 
 
 
-	if(!userExists) // لو اليوزر مش عندي ضيفه
-{
+	if(!userExists) {// لو اليوزر مش عندي ضيفه
 		contacts.push_back(u);
 		msgcounter(u);
+		cout << "User added\n";
 	}
 }
 
-void User::msgcounter(User) {
+void User::msgcounter(User u) {
 	//loop through each contact and count the number of messages exchanged 
 	for (auto contact : contacts) {
 		int numOfmsgs = 0;
@@ -156,7 +156,7 @@ void User::viewReceived()
 		
 		for (int i = 0; i < inbox.size(); i++) 
 		{
-			cout << i << ". " << inbox[i].getContent() << endl;
+			cout << i+1 << ". " << inbox[i].getContent() << endl;
 		}
 	}
 }
@@ -169,7 +169,8 @@ void User::viewMessageOptions(int i)
 
 
 void User::viewcontacts() {
-	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b) {
+	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b)
+		{
 		return a.second > b.second;
 		}
 	);

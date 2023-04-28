@@ -9,7 +9,7 @@ using namespace std;
 
 class Program
 {
-	int id;
+	int id = -1;
 	User liveUser;
 	bool exit;
 	int choice;
