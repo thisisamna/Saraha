@@ -220,7 +220,7 @@ void User::undolastmessage() {
 					break;
 			}
 			receiver.inbox.pop();
-			this.sent.pop();
+			this sent.pop();
 			break;
 		default:
 			cout << "Invalid, PLZ try again!";
@@ -247,9 +247,10 @@ void favourite(Message msg) {
 			cin >> answer;
 
 
-			if(answer==('y' ||'y'))
-			FavouriteMessages.erase(FavouriteMessages.begin()+i);
-
+			if (answer == ('y' || 'y')) {
+				FavouriteMessages.erase(FavouriteMessages.begin() + i);
+				break;
+			}
 			else if (answer == ('N' || 'n'))
 				break;
 		}

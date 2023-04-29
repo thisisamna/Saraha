@@ -25,8 +25,8 @@ public:
 	User(string username, string password);
 	void addcontact(User u); //return boolean?
 	void removecontact(User u);
-	//void sendmessage();
-	//void unsend();
+	void sendmessage();
+	void undolastmessage();
 	//void searchcontact(); //boolean?
 	void viewcontacts();
 	void viewSent();
