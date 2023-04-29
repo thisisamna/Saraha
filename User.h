@@ -23,8 +23,7 @@ class User
 	
 public:
 	User();
-	User(string username, string password);
-	
+	User(string username, string password, int id);
 	int getid();
 	string getUsername();
 	void addcontact(User u); //return boolean?

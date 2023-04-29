@@ -10,14 +10,15 @@
 using namespace std;
 User::User() //Wessal
 {
-	id = 0;
+	//id = 0;
 }
-User::User(string name, string pass)
+User::User(string name, string pass, int ID)
 {
 	username = name;
 	password = pass;
-	id++;
-}
+	id = ID;
+	
+} // added the id to constructor to set the id for every user
 
 int User::getid() 
 {
@@ -51,29 +52,35 @@ void User::addcontact(User u)
 	}
 }
 
-void User::msgcounter(User u) {
-	//loop through each contact and count the number of messages exchanged 
-	for (auto contact : contacts) {
-		int numOfmsgs = 0;
-		//count number of sent messages for this contact 
+//void User::msgcounter(User u) {
+//	//loop through each contact and count the number of messages exchanged 
+//	for (auto contact : contacts) {
+//		int numOfmsgs = 0;
+//		//count number of sent messages for this contact 
+//
+//		if (!sent.empty()) {
+//			for (int i = 0; i < sent.size(); i++) {
+//				if (sent.front().getSender() == contact.id) {
+//					numOfmsgs++;
+//				}
+//				sent.push_back(sent.front());
+//				sent.pop_front();
+//			}
+//		}
+//		//count number of received messages from this contact 
+//		for (auto msg : inbox) {
+//			if (msg.getReceiver() == contact.id) {
+//				numOfmsgs++;
+//			}
+//		}
+//		sortedContacts.push_back(make_pair(contact, numOfmsgs));
+//	}
+//}
 
-		if (!sent.empty()) {
-			for (int i = 0; i < sent.size(); i++) {
-				if (sent.front().getSender() == contact.id) {
-					numOfmsgs++;
-				}
-				sent.push_back(sent.front());
-				sent.pop_front();
-			}
-		}
-		//count number of received messages from this contact 
-		for (auto msg : inbox) {
-			if (msg.getReceiver() == contact.id) {
-				numOfmsgs++;
-			}
-		}
-		sortedContacts.push_back(make_pair(contact, numOfmsgs));
-	}
+void User::msgcounter(User u) // still cant figure how to get the id of the user calling the function
+{
+	cout << "SENDER id: " << u.getid() << endl;
+	cout << "RECIVER ID: " << getid() << endl;
 }
 
 
@@ -137,7 +144,7 @@ void User::viewSent()
 	else
 	{
 		for (int i = 0; i < sent.size(); i++) 
-    {
+		{
 			sent.front().viewAsSent();
 			sent.push_back(sent.front());
 			sent.pop_front();
