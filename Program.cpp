@@ -180,10 +180,17 @@ void Program::signup() { //wessal salah
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	users[id] = User(name, pass , id);
-	cout << "Congratulation!!\nYou now have an account";
-	//cout << "Your ID is : " << id << endl;
+	int current_id = usernameToID(name);
+	if (current_id != -1) {
+		cout << "You already have an acount. please log in!";
+	}
+	else {
+		users[id] = User(name, pass, id);
+		cout << "Congratulation!!\nYou now have an account";
+	}
 }
+	
+	
 
 int Program::login() { //wessal
 
