@@ -172,7 +172,7 @@ void Program::printCentered(string str)
 
 void Program::signup() { //wessal salah
 
-	id++; //for now to test program
+	++id; //for now to test program
 	string name, pass;
 	//id = 0; // How to create new id?
 	cout << "Please, enter your user name: \n";
@@ -180,12 +180,13 @@ void Program::signup() { //wessal salah
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	users[id] = User(name, pass);
+	users[id] = User(name, pass , id);
 	cout << "Congratulation!!\nYou now have an account";
+	//cout << "Your ID is : " << id << endl;
 }
 
 int Program::login() { //wessal
-	int id;
+
 	string name, pass;
 	cout << "Enter your user name: \n";
 	cin.ignore();
@@ -229,6 +230,8 @@ void Program::sendmessage(User* liveUser) {
 	cin >> username_receiver;
 
 	receiverID = usernameToID(username_receiver);
+
+	
 	if (receiverID == -1) 
 	{
 		cout << endl << "receiver username invalid, PLZ Try Again." << " ";
@@ -238,9 +241,14 @@ void Program::sendmessage(User* liveUser) {
 		User* receiver = & users[receiverID];
 
 		Message msgg_object(this->id, username_receiver, msg);
+
+		// khira trying to get the receiver id
+		msgg_object.setReceiver(receiverID); 
+
 		// Check
 		cout << endl << "Send message? (y/n)" << " ";
 		cin >> check;
+
 
 		// Send Message
 		if (check == 'y')
@@ -251,6 +259,8 @@ void Program::sendmessage(User* liveUser) {
 			// push in reciver inbox
 			receiver->addToInbox(msgg_object);
 			cout << endl << "Message sent Successfully." << " " << endl;
+
+			
 		}
 		else
 		{

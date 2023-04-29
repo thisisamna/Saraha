@@ -29,6 +29,6 @@ public:
 	int usernameToID(string username);
 	void addSender(Message msg);
 	void printCentered(string str);
-
+	
 };
 
