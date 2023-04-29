@@ -6,16 +6,29 @@
 #include <vector>
 #include <stack>
 #include <deque>
-
-
+#include "Program.h"
 using namespace std;
 User::User() //Wessal
 {
+	//id = 0;
 }
-User::User(string username, string password) //Wessal
+User::User(string name, string pass, int ID)
 {
+	username = name;
+	password = pass;
+	id = ID;
 	
+} // added the id to constructor to set the id for every user
+
+int User::getid() 
+{
+	return id;
 }
+string User::getUsername()
+{
+	return username;
+}
+
 void User::addcontact(User u)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
@@ -32,36 +45,42 @@ void User::addcontact(User u)
 
 
 
-	if(!userExists) // لو اليوزر مش عندي ضيفه
-{
+	if(!userExists) {// لو اليوزر مش عندي ضيفه
 		contacts.push_back(u);
 		msgcounter(u);
+		cout << "User added\n";
 	}
 }
 
-void User::msgcounter(User) {
-	//loop through each contact and count the number of messages exchanged 
-	for (auto contact : contacts) {
-		int numOfmsgs = 0;
-		//count number of sent messages for this contact 
+//void User::msgcounter(User u) {
+//	//loop through each contact and count the number of messages exchanged 
+//	for (auto contact : contacts) {
+//		int numOfmsgs = 0;
+//		//count number of sent messages for this contact 
+//
+//		if (!sent.empty()) {
+//			for (int i = 0; i < sent.size(); i++) {
+//				if (sent.front().getSender() == contact.id) {
+//					numOfmsgs++;
+//				}
+//				sent.push_back(sent.front());
+//				sent.pop_front();
+//			}
+//		}
+//		//count number of received messages from this contact 
+//		for (auto msg : inbox) {
+//			if (msg.getReceiver() == contact.id) {
+//				numOfmsgs++;
+//			}
+//		}
+//		sortedContacts.push_back(make_pair(contact, numOfmsgs));
+//	}
+//}
 
-		if (!sent.empty()) {
-			for (int i = 0; i < sent.size(); i++) {
-				if (sent.front().getSender() == contact.id) {
-					numOfmsgs++;
-				}
-				sent.push_back(sent.front());
-				sent.pop_front();
-			}
-		}
-		//count number of received messages from this contact 
-		for (auto msg : inbox) {
-			if (msg.getReceiver() == contact.id) {
-				numOfmsgs++;
-			}
-		}
-		sortedContacts.push_back(make_pair(contact, numOfmsgs));
-	}
+void User::msgcounter(User u) // still cant figure how to get the id of the user calling the function
+{
+	cout << "SENDER id: " << u.getid() << endl;
+	cout << "RECIVER ID: " << getid() << endl;
 }
 
 
@@ -82,6 +101,25 @@ bool User::comparePassword(string pass)
 		return false;
 
 	}
+}
+
+void User::addToSent(Message msg)
+{
+	sent.push_back(msg);
+}
+
+void User::addToInbox(Message msg)
+{
+	inbox.push_back(msg);
+}
+
+void User::removeFromSent()
+{
+	sent.pop_back();
+}
+void User::removeFromInbox()
+{
+	inbox.pop_back();
 }
 
 void User::removecontact(User u)
@@ -106,7 +144,7 @@ void User::viewSent()
 	else
 	{
 		for (int i = 0; i < sent.size(); i++) 
-    {
+		{
 			sent.front().viewAsSent();
 			sent.push_back(sent.front());
 			sent.pop_front();
@@ -125,7 +163,7 @@ void User::viewReceived()
 		
 		for (int i = 0; i < inbox.size(); i++) 
 		{
-			cout << i << ". " << inbox[i].getContent() << endl;
+			cout << i+1 << ". " << inbox[i].getContent() << endl;
 		}
 	}
 }
@@ -138,7 +176,8 @@ void User::viewMessageOptions(int i)
 
 
 void User::viewcontacts() {
-	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b) {
+	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b)
+		{
 		return a.second > b.second;
 		}
 	);
@@ -147,45 +186,9 @@ void User::viewcontacts() {
 	}
 }
 
-void User::sendmessage() {
-	// Data
-	string username_receiver, msg; char check;
-	//User receiver = null;
-	// Create Message
-	cout << endl << "Enter your message:" << " ";
-	cin >> msg;
 
-	cout << "Enter receiver username:" << " ";
-	cin >> username_receiver;
-	User receiver = usernameToUser(username_receiver);
-	if (receiver == null){
-		cout <<endl<< "receiver username invalid, PLZ Try Again.<< " ";
-	break;
-	}
-	Message msgg_object(this.id, username_receiver, msg);
-	/*for (User it : contacts)
-	{
-		if (it.username == username_receiver)
-		{
-			Message msgg_object(this.id, username_receiver, msg);
-			receiver = it;
-			break;
-		}
-		else
-		{
-			cout << "receiver username doesnot found in your contacts" << endl;
-		}
-	}*/
 
-	// Check
-	cout << endl << "Send message? (y/n)" << " ";
-	cin >> check;
 
-	// Send Message
-	if (check == 'y')
-	{
-		// Push in Sender messages
-		this.sent.push_back(msgg_object);
 
 		// push in reciver inbox
 		receiver.inbox.push_back(msgg_object);
@@ -220,7 +223,7 @@ void User::undolastmessage() {
 					break;
 			}
 			receiver.inbox.pop();
-			this sent.pop();
+			this.sent.pop();
 			break;
 		default:
 			cout << "Invalid, PLZ try again!";

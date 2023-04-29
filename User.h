@@ -18,15 +18,18 @@ class User
 	deque<Message> sent;
 	vector<Message> inbox;
 	vector<pair<User, int>>sortedContacts;
-	
+	vector <Message> FavouriteMessages;
+
 	
 public:
 	User();
-	User(string username, string password);
+	User(string username, string password, int id);
+	int getid();
+	string getUsername();
 	void addcontact(User u); //return boolean?
 	void removecontact(User u);
 	void sendmessage();
-	void undolastmessage();
+	void unsend();
 	//void searchcontact(); //boolean?
 	void viewcontacts();
 	void viewSent();
@@ -40,5 +43,9 @@ public:
 	//helper functions
     Message getInboxMessage(int msgID);
 	bool comparePassword(string pass);
+	void addToSent(Message msg);
+	void addToInbox(Message msg);
+	void removeFromSent();
+	void removeFromInbox();
 };
 

@@ -12,12 +12,15 @@ private:
 public:
 	void viewAsSent();
 	void viewAsReceived();
-	int get_sender();
-	int get_receiver();
+	//int get_sender();
+	//int get_receiver();
 	Message(int, string, string);
 	string getContent();
 	int getSender();
 	int getReceiver();
+
+
+	void setReceiver(int r); // had to until we figure out another way
 
 };
 

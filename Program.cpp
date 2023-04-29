@@ -26,17 +26,18 @@ void Program::loginMenu()
 		{
 			//login
 			printCentered("L o g   i n");
-			login();
-			if (login(liveUser)) //if login returns null it will just break
+			id = login();
+			if (id!=-1)
 			{
+				User* liveUser = &users[id];
 				userMenu(liveUser);
-
 			}
 			break;
 		}
 		case 2:
 			printCentered("S i g n   u p");
 			//signup
+			signup();
 			break;
 		case 3:
 			//exit
@@ -47,7 +48,7 @@ void Program::loginMenu()
 	}
 }
 
-void Program::userMenu(User liveUser)
+void Program::userMenu(User* liveUser)
 {
 	while (true)
 	{
@@ -62,6 +63,7 @@ void Program::userMenu(User liveUser)
 		{
 		case 1:
 			//send a message
+			sendmessage(liveUser);
 			break;
 		case 2:
 		{
@@ -73,11 +75,11 @@ void Program::userMenu(User liveUser)
 			break;
 		case 4:
 			//sent messages
-			liveUser.viewSent();
+			liveUser->viewSent();
 			break;
 		case 5:
 			//contacts
-			liveUser.viewcontacts();
+			liveUser->viewcontacts();
 			break;
 		case 6:
 			//logout
@@ -88,20 +90,21 @@ void Program::userMenu(User liveUser)
 	}
 }
 
-void Program::Inbox(User liveUser)
+void Program::Inbox(User* liveUser)
 {
 	int msgIndex;
-	liveUser.viewReceived();
+	liveUser->viewReceived();
 	cout << "Enter message index to view details and options. \n"
 		<< "0. Back to home. \n";
 	cin >> msgIndex;
-	if (msgIndex == 0)
+	msgIndex--;
+	if (msgIndex == -1) // was 0 but 0 is an index in msg vector
 	{
 		return;
 	}
 	else
 	{
-		Message msg = liveUser.getInboxMessage(msgIndex);
+		Message msg = liveUser->getInboxMessage(msgIndex);
 		msg.viewAsReceived();
 		cout << "1. Add/remove from favorites.\n"
 			<< "2. Add sender to contacts\n"
@@ -110,7 +113,7 @@ void Program::Inbox(User liveUser)
 		switch (choice)
 		{
 		case 1:
-			liveUser.favourite(msg);
+			liveUser->favourite(msg);
 			break;
 		case 2:
 		{
@@ -129,17 +132,19 @@ void Program::Inbox(User liveUser)
 User Program::idToUser(int id)
 {
 	User user;
-	auto it = usersToID.find(id);
+	auto it = users.find(id);
 	user = it->second;
 	return user;
 }
 
-User Program::usernameToUser(string username)
+int Program::usernameToID(string username)
 {
-	User user;
-	auto it = usersToUsername.find(username);
-	user = it->second.second; //accessing map of map
-	return user;
+	for (auto it : users)
+	{
+		if (it.second.getUsername() == username)
+			return it.first;
+	}
+	return -1;
 }
 
 void Program::addSender(Message msg)
@@ -166,42 +171,143 @@ void Program::printCentered(string str)
 }
 
 void Program::signup() { //wessal salah
+
+	++id; //for now to test program
 	string name, pass;
-	int id = 0; // How to create new id?
+	//id = 0; // How to create new id?
 	cout << "Please, enter your user name: \n";
 	cin.ignore();
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	usersToID[id] = User(name, pass);
-	usersToUsername[name];
-	cout << "Congratulation!!\nYou now have an account";
+	int current_id = usernameToID(name);
+	if (current_id != -1) {
+		cout << "You already have an acount. please log in!";
+	}
+	else {
+		users[id] = User(name, pass, id);
+		cout << "Congratulation!!\nYou now have an account";
+	}
 }
+	
+	
 
-User* Program::login() { //wessal salah
+int Program::login() { //wessal
+
 	string name, pass;
 	cout << "Enter your user name: \n";
 	cin.ignore();
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	
-	auto it = usersToUsername.find(name);
-	if(it != usersToUsername.end()) 
+	id = usernameToID(name);
+	if (id == -1)
 	{
-		User u = it->second.second;
-		if (u.comparePassword(pass))
-		{
-			cout << "Welcome back!\n";
-		}
-		else {
-			cout << "The password is incorrect!\nplease try again\n";
-		}
+		cout << "The username is incorrect!\nplease try again\n";
+		return -1;
 	}
 	else
 	{
-		cout << "The username is incorrect!\nplease try again\n";
+		auto it = users.find(id);
+		User u = it->second;
+		if (u.comparePassword(pass))
+		{
+			cout << "Welcome back!\n";
+			return id;
+		}
+		else
+		{
+			cout << "The password is incorrect!\nplease try again\n";
+			return -1;
+		}
+	}
+}
+	
+void Program::sendmessage(User* liveUser) {
+	// Data
+	int receiverID;
+	string username_receiver, msg; 
+	char check;
+	// Create Message
+
+	cout << endl << "Enter your message:" << " ";
+	cin >> msg;
+
+	cout << "Enter receiver username:" << " ";
+	cin >> username_receiver;
+
+	receiverID = usernameToID(username_receiver);
+
+	
+	if (receiverID == -1) 
+	{
+		cout << endl << "receiver username invalid, PLZ Try Again." << " ";
+	}
+	else
+	{
+		User* receiver = & users[receiverID];
+
+		Message msgg_object(this->id, username_receiver, msg);
+
+		// khira trying to get the receiver id
+		msgg_object.setReceiver(receiverID); 
+
+		// Check
+		cout << endl << "Send message? (y/n)" << " ";
+		cin >> check;
+
+
+		// Send Message
+		if (check == 'y')
+		{
+			// Push in Sender messages
+			liveUser->addToSent(msgg_object);
+
+			// push in reciver inbox
+			receiver->addToInbox(msgg_object);
+			cout << endl << "Message sent Successfully." << " " << endl;
+
+			
+		}
+		else
+		{
+			cout << endl << "Message Doesnot Sent." << " " << endl;
+		}
 
 	}
+
+}
+
+void Program::undolastmessage(User* liveUser) {
+	cout << endl << "Do You Want To Delete Last Message ? (y/n)" << " " << endl;
+	char c, cc;
+	//string recevier_username;
+	//User receiver;   
+	cin >> c;
+	if (c == 'y') {
+		cout << endl << "Do You Want To Delete It For You(1) OR For Everyone(0) ? " << " " << endl;
+		cin >> cc;
+		switch (cc)
+		{
+		case 1:
+			// Pop in Sender messages
+			liveUser->removeFromSent();
+			break;
+		case 0:
+			//cout << "Enter receiver username:" << " ";
+			//receiver = usernameToUser(recevier_username);
+			//if (receiver.id != NULL) {
+			 //receiver->removeFromInbox();                    /////
+				liveUser->removeFromSent();
+				break;
+		default:
+			cout << "Invalid, PLZ try again!";
+			}
+			/*else {
+				cout << endl << "receiver username invalid, PLZ Try Again." << " ";
+			}*/
+		}
+	else
+		return;
 }
 
