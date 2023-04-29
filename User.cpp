@@ -190,48 +190,7 @@ void User::viewcontacts() {
 
 
 
-		// push in reciver inbox
-		receiver.inbox.push_back(msgg_object);
-		cout << endl << "Message sent Successfully." << " " << endl;
-	}
-	else
-	{
-		cout << endl << "Message Doesnot Sent." << " " << endl;
-	}
 
-
-}
-
-void User::undolastmessage() {
-	cout << endl << "Do You Want To Delete Last Message ? (y/n)" << " " << endl;
-	char c,cc;
-	string recevier_username;
-	cin >> c;
-	if (c == 'y') {
-		cout << endl << "Do You Want To Delete It For You(1) OR For Everyone(0) ? " << " " << endl;
-		cin >> cc;
-		switch (cc)
-		{
-		case 1:
-			this.sent.pop();
-			break;
-		case 0:
-			cout << "Enter receiver username:" << " ";
-			User receiver = usernameToUser(recevier_username);
-			if (receiver == null) {
-				cout << endl << "receiver username invalid, PLZ Try Again.<< " ";
-					break;
-			}
-			receiver.inbox.pop();
-			this.sent.pop();
-			break;
-		default:
-			cout << "Invalid, PLZ try again!";
-		}
-	}
-	else
-		break;
-}
 
 
 
@@ -250,7 +209,7 @@ void favourite(Message msg) {
 			cin >> answer;
 
 
-			if (answer == ('y' || 'y')) {
+			if (answer == ('Y' || 'y')) {
 				FavouriteMessages.erase(FavouriteMessages.begin() + i);
 				break;
 			}
