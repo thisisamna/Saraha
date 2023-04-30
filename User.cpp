@@ -8,10 +8,12 @@
 #include <deque>
 #include "Program.h"
 using namespace std;
-User::User() //Wessal
+
+User::User() 
 {
-	//id = 0;
+
 }
+
 User::User(string name, string pass, int ID)
 {
 	username = name;

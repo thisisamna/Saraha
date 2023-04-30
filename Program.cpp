@@ -129,11 +129,18 @@ void Program::Inbox(User* liveUser)
 }
 
 
-User Program::idToUser(int id)
+User* Program::idToUser(int id) //returns pointer to user in hashmap, or nullptr if not found
 {
-	User user;
+	User* user;
 	auto it = users.find(id);
-	user = it->second;
+	if(it!=users.end())
+	{
+		user = &it->second;
+	}
+	else
+	{
+		user = nullptr;
+	}
 	return user;
 }
 
@@ -149,7 +156,7 @@ int Program::usernameToID(string username)
 
 void Program::addSender(Message msg)
 {
-	User sender = idToUser(msg.getSender());
+	User* sender = idToUser(msg.getSenderID());
 	liveUser.addcontact(sender);
 }
 

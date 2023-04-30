@@ -25,7 +25,7 @@ public:
 	void sendmessage(User* liveUser);
 	void undolastmessage(User* liveUser);
 	int login();
-	User idToUser(int id);
+	User* idToUser(int id);
 	int usernameToID(string username);
 	void addSender(Message msg);
 	void printCentered(string str);
