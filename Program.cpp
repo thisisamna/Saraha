@@ -165,8 +165,8 @@ void Program::addSendertoContacts(Message msg)
 {
 	User* sender = idToUser(msg.getSenderID());
 	User* receiver = idToUser(msg.getReceiverID()); // liveuser
-	int count = liveUser.msgcounter(sender, receiver);
-	liveUser.addcontact(receiver, sender , count);
+	int count = liveUser->msgcounter(sender, receiver);
+	liveUser->addcontact(receiver, sender , count);
 
 }
 
