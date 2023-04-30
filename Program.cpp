@@ -189,10 +189,10 @@ void Program::signup() { //wessal salah
 	}
 	else 
 	{
+		++userCount;
 		users[userCount] = User(username, pass, userCount);
 		cout << "Congratulation!!\nYou now have an account";
 	}
-	++userCount;
 }
 	
 	
@@ -236,10 +236,10 @@ void Program::sendmessage(User* liveUser) {
 	// Create Message
 
 	cout << endl << "Enter your message:" << " ";
-	cin.ignore();
 	getline(cin, msg);
 
 	cout << "Enter receiver username:" << " ";
+	cin.ignore();
 	cin >> username_receiver;
 
 	receiverID = usernameToID(username_receiver);
@@ -247,7 +247,7 @@ void Program::sendmessage(User* liveUser) {
 	
 	if (receiverID == -1) 
 	{
-		cout << endl << "receiver username invalid, PLZ Try Again." << endl;
+		cout << endl << "User does not exist, please try again." << endl;
 	}
 	else
 	{
@@ -268,13 +268,13 @@ void Program::sendmessage(User* liveUser) {
 
 			// push in reciver inbox
 			receiver->addToInbox(msgg_object);
-			cout << endl << "Message sent Successfully." << " " << endl;
+			cout << endl << "Message sent successfully." << " " << endl;
 
 			
 		}
 		else
 		{
-			cout << endl << "Message Doesnot Sent." << " " << endl;
+			cout << endl << "Message canceled." << " " << endl;
 		}
 
 	}

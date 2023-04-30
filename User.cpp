@@ -216,7 +216,6 @@ void User::favourite(Message msg) {
 				break;
 		}
 
-		
 	}
 	if(!MessageIsFavourite){
 		if(FavouriteMessages.size()<=10){
