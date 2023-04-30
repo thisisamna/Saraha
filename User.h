@@ -38,7 +38,7 @@ public:
 	void msgcounter(User u);
 	void favourite(Message msg);
 	void RemoveOldestFavorite();
-	//void viewFavorites();
+	void viewFavorites();
 	//helper functions
     Message getInboxMessage(int msgID);
 	bool comparePassword(string pass);

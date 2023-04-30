@@ -197,11 +197,10 @@ void User::viewcontacts() {
 
 
 void User::favourite(Message msg) {
-	vector <Message> FavouriteMessages;
 	bool MessageIsFavourite = false;
 	char answer;
 	for (int i = 0; i < FavouriteMessages.size(); i++) {
-
+		
 		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
 			MessageIsFavourite = true;
 
@@ -210,14 +209,34 @@ void User::favourite(Message msg) {
 			cin >> answer;
 
 
-			if (answer == ('Y' || 'y')) {
-				FavouriteMessages.erase(FavouriteMessages.begin() + i);
-				break;
-			}
+			if(answer==('y' ||'Y'))
+			FavouriteMessages.erase(FavouriteMessages.begin()+i);
+
 			else if (answer == ('N' || 'n'))
 				break;
 		}
+
+		
 	}
-	if (!MessageIsFavourite)
-		FavouriteMessages.push_back(msg);
+	if(!MessageIsFavourite){
+		if(FavouriteMessages.size()<=10){
+			FavouriteMessages.push_back(msg);
+		}
+		else{
+			RemoveOldestFavorite();
+			FavouriteMessages.push_back(msg);
+		}
+	}
+	
+}
+//Favourites have 10 only if more we remove the oldest favourite
+void User::RemoveOldestFavorite(){
+   FavouriteMessages.erase(FavouriteMessages.begin()+0);
+}
+
+void User::viewFavorites(){
+	for(int i = 0; i < FavouriteMessages.size(); i++){
+		cout << FavouriteMessages[i].getContent();
+		cout << endl;
+	}
 }
