@@ -105,7 +105,7 @@ bool User::comparePassword(string pass)
 
 void User::addToSent(Message msg)
 {
-	sent.push_back(msg);
+	sent.push_front(msg);
 }
 
 void User::addToInbox(Message msg)
@@ -113,13 +113,24 @@ void User::addToInbox(Message msg)
 	inbox.push_back(msg);
 }
 
-void User::removeFromSent()
+Message User::popSent()
 {
-	sent.pop_back();
+	Message msg = sent.front();
+	sent.pop_front();
+	return msg;
 }
-void User::removeFromInbox()
+void User::removeFromInbox(Message msg)
 {
-	inbox.pop_back();
+	Message inboxMsg;
+	for (int i=0; i<inbox.size(); i++)
+	{
+		if (inboxMsg.equals(msg))
+		{
+			inbox.erase(inbox.begin() + i);
+			cout << "Message removed";
+			break;
+		}
+	}
 }
 
 void User::removecontact(User u)

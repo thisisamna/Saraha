@@ -37,14 +37,14 @@ public:
 	//bool cmp(const pair<int, int>& a, const pair<int, int>& b);
 	void msgcounter(User u);
 	void favourite(Message msg);
-	void RemoveOldestavorite();
+	void RemoveOldestFavorite();
 	//void viewFavorites();
 	//helper functions
     Message getInboxMessage(int msgID);
 	bool comparePassword(string pass);
 	void addToSent(Message msg);
 	void addToInbox(Message msg);
-	void removeFromSent();
-	void removeFromInbox();
+	Message popSent();
+	void removeFromInbox(Message msg);
 };
 

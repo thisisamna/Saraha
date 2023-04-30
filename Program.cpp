@@ -236,7 +236,7 @@ void Program::sendmessage(User* liveUser) {
 	// Create Message
 
 	cout << endl << "Enter your message:" << " ";
-	cin >> msg;
+	getline(cin, msg);
 
 	cout << "Enter receiver username:" << " ";
 	cin >> username_receiver;
@@ -283,31 +283,27 @@ void Program::sendmessage(User* liveUser) {
 void Program::undolastmessage(User* liveUser) {
 	cout << endl << "Do You Want To Delete Last Message ? (y/n)" << " " << endl;
 	char c, cc;
-	//string recevier_username;
-	//User receiver;   
+	Message lastMsg;
 	cin >> c;
 	if (c == 'y') {
-		cout << endl << "Do You Want To Delete It For You(1) OR For Everyone(0) ? " << " " << endl;
+		// Pop in Sender messages and store popped message
+		lastMsg = liveUser->popSent();
+
+		cout << endl << "Do You Want To Delete It For You (1) OR For Everyone(0) ? " << endl;
 		cin >> cc;
 		switch (cc)
 		{
 		case 1:
-			// Pop in Sender messages
-			liveUser->removeFromSent();
 			break;
 		case 0:
-			//cout << "Enter receiver username:" << " ";
-			//receiver = usernameToUser(recevier_username);
-			//if (receiver.id != NULL) {
-			 //receiver->removeFromInbox();                    /////
-				liveUser->removeFromSent();
-				break;
+		{
+			//Pop in receiver inboء
+			User* receiver = idToUser(lastMsg.getReceiverID());
+			receiver->removeFromInbox(lastMsg);
+		}
 		default:
-			cout << "Invalid, PLZ try again!";
+			cout << "Invalid choice, please try again!";
 			}
-			/*else {
-				cout << endl << "receiver username invalid, PLZ Try Again." << " ";
-			}*/
 		}
 	else
 		return;

@@ -11,13 +11,14 @@ private:
 	string content;
 public:
 	Message(int sender_ID, int receiver_ID, string receiver_username, string msg);
+	Message();
 	void viewAsSent();
 	void viewAsReceived();
 	string getContent();
 	int getSenderID();
 	int getReceiverID();
 	string getReceiverUsername();
-
+	bool equals(Message msg);
 
 
 };
