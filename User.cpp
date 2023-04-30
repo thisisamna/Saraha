@@ -5,6 +5,7 @@
 #include <vector>
 #include <stack>
 #include <deque>
+#include <queue>
 using namespace std;
 
 User::User() 
@@ -29,58 +30,58 @@ string User::getUsername()
 	return username;
 }
 
-void User::addcontact(User u)
+void User::addcontact(User * liveUser ,User *Added, int numOfmsgs)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
-
-	for (User it : contacts) 
+	int s = liveUser->contacts.size();
+	while(s>0)
 	{
-		if (it.id == u.id)
+		--s;
+		if (liveUser->contacts.top().first->getid() == Added->getid())
 		{
 			cout << "\nUser already exists\n";
 			userExists = true;
 			break;
 		}
-	}// to check if user already exists
+		liveUser->contacts.push(contacts.top());
+		liveUser->contacts.pop();
+
+	} // to check if user already exists
 
 
 
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
-		contacts.push_back(u);
-		msgcounter(u);
-		cout << "User added\n";
+		liveUser->contacts.push(make_pair(Added, numOfmsgs));
 	}
+
+
 }
 
-//void User::msgcounter(User u) {
-//	//loop through each contact and count the number of messages exchanged 
-//	for (auto contact : contacts) {
-//		int numOfmsgs = 0;
-//		//count number of sent messages for this contact 
-//
-//		if (!sent.empty()) {
-//			for (int i = 0; i < sent.size(); i++) {
-//				if (sent.front().getSender() == contact.id) {
-//					numOfmsgs++;
-//				}
-//				sent.push_back(sent.front());
-//				sent.pop_front();
-//			}
-//		}
-//		//count number of received messages from this contact 
-//		for (auto msg : inbox) {
-//			if (msg.getReceiver() == contact.id) {
-//				numOfmsgs++;
-//			}
-//		}
-//		sortedContacts.push_back(make_pair(contact, numOfmsgs));
-//	}
-//}
 
-void User::msgcounter(User u) // still cant figure how to get the id of the user calling the function
+
+int User::msgcounter(User *AddedContact, User* liveUser) 
 {
-	cout << "SENDER id: " << u.getid() << endl;
-	cout << "RECIVER ID: " << getid() << endl;
+	int numOfmsgs = 0;
+			//count number of sent messages for this contact 
+	
+	if (!liveUser->sent.empty()) {
+		for (int i = 0; i < liveUser->sent.size(); i++) {
+			if (liveUser->sent.front().getReceiverID() == AddedContact->getid()) {
+				numOfmsgs++;
+			}
+			liveUser->sent.push_back(liveUser->sent.front());
+			liveUser->sent.pop_front();
+		}
+	}
+
+	if (!liveUser->inbox.empty()) {
+		for (int i = 0; i < liveUser->inbox.size(); i++) {
+			if (liveUser->inbox[i].getSenderID() == AddedContact->getid()) 
+				numOfmsgs++;
+		}
+	}
+	
+	return numOfmsgs;
 }
 
 
@@ -124,7 +125,7 @@ void User::removeFromInbox()
 
 void User::removecontact(User u)
 {
-	int i = -1;
+	/*int i = -1;
 
 	for (User it : contacts)
 	{
@@ -132,7 +133,7 @@ void User::removecontact(User u)
 		if (it.id == u.id)
 			break;
 	}
-	contacts.erase(contacts.begin() + i);
+	contacts.erase(contacts.begin() + i);*/
 }
 
 void User::viewSent()
@@ -175,13 +176,13 @@ void User::viewMessageOptions(int i)
 }
 
 void User::viewcontacts() {
-	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b)
-		{
-		return a.second > b.second;
-		}
-	);
-	for (auto i : sortedContacts) {
-		cout << i.first.id << "		" << i.second << '\n';
+	cout << "Contacts: " << endl;
+
+	for (int i = 0; i < contacts.size(); i++) {
+		cout << i+1 << "." << contacts.top().first->getUsername() << endl;
+		contacts.push(contacts.top());
+		contacts.pop();
+
 	}
 }
 
