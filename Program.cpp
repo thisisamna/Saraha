@@ -28,7 +28,7 @@ void Program::loginMenu()
 			liveUserID = login();
 			if (liveUserID !=-1)
 			{
-				User* liveUser = &users[liveUserID];
+				liveUser = &users[liveUserID];
 				userMenu(liveUser);
 			}
 			break;
@@ -156,7 +156,7 @@ int Program::usernameToID(string username)
 void Program::addSendertoContacts(Message msg)
 {
 	User* sender = idToUser(msg.getSenderID());
-	liveUser.addcontact(*sender);
+	liveUser->addcontact(*sender);
 
 }
 

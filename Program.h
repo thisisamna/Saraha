@@ -11,7 +11,7 @@ class Program
 {
 	int liveUserID = -1;
 	int userCount = 0;
-	User liveUser;
+	User* liveUser;
 	bool exit;
 	int choice;
 	unordered_map<int, User> users;
