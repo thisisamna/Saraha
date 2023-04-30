@@ -236,7 +236,6 @@ void Program::sendmessage(User* liveUser) {
 	// Create Message
 
 	cout << endl << "Enter your message:" << " ";
-	cin.ignore();
 	getline(cin, msg);
 
 	cout << "Enter receiver username:" << " ";
