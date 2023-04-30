@@ -106,7 +106,7 @@ bool User::comparePassword(string pass)
 
 void User::addToSent(Message msg)
 {
-	sent.push_back(msg);
+	sent.push_front(msg);
 }
 
 void User::addToInbox(Message msg)
@@ -114,13 +114,24 @@ void User::addToInbox(Message msg)
 	inbox.push_back(msg);
 }
 
-void User::removeFromSent()
+Message User::popSent()
 {
-	sent.pop_back();
+	Message msg = sent.front();
+	sent.pop_front();
+	return msg;
 }
-void User::removeFromInbox()
+void User::removeFromInbox(Message msg)
 {
-	inbox.pop_back();
+	Message inboxMsg;
+	for (int i=0; i<inbox.size(); i++)
+	{
+		if (inboxMsg.equals(msg))
+		{
+			inbox.erase(inbox.begin() + i);
+			cout << "Message removed";
+			break;
+		}
+	}
 }
 
 void User::removecontact(User u)
@@ -188,11 +199,10 @@ void User::viewcontacts() {
 
 
 void User::favourite(Message msg) {
-	vector <Message> FavouriteMessages;
 	bool MessageIsFavourite = false;
 	char answer;
 	for (int i = 0; i < FavouriteMessages.size(); i++) {
-
+		
 		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
 			MessageIsFavourite = true;
 
@@ -201,14 +211,34 @@ void User::favourite(Message msg) {
 			cin >> answer;
 
 
-			if (answer == ('Y' || 'y')) {
-				FavouriteMessages.erase(FavouriteMessages.begin() + i);
-				break;
-			}
+			if(answer==('y' ||'Y'))
+			FavouriteMessages.erase(FavouriteMessages.begin()+i);
+
 			else if (answer == ('N' || 'n'))
 				break;
 		}
+
+		
 	}
-	if (!MessageIsFavourite)
-		FavouriteMessages.push_back(msg);
+	if(!MessageIsFavourite){
+		if(FavouriteMessages.size()<=10){
+			FavouriteMessages.push_back(msg);
+		}
+		else{
+			RemoveOldestFavorite();
+			FavouriteMessages.push_back(msg);
+		}
+	}
+	
+}
+//Favourites have 10 only if more we remove the oldest favourite
+void User::RemoveOldestFavorite(){
+   FavouriteMessages.erase(FavouriteMessages.begin()+0);
+}
+
+void User::viewFavorites(){
+	for(int i = 0; i < FavouriteMessages.size(); i++){
+		cout << FavouriteMessages[i].getContent();
+		cout << endl;
+	}
 }

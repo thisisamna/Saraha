@@ -1,0 +1,70 @@
+>>>>>Create 7 users.>>>>>>>>>>>>
+2
+Amna
+a
+2
+Khira
+k
+2
+Rana
+r
+2
+Habiba
+f
+2
+Habeba
+h
+2
+Fatma
+f
+2
+Wessal
+w
+
+========================================
+>>>>>>>>>Send message 1>>>>>
+1
+Amna
+a
+1
+HelloKhira
+Khira
+y
+1
+Hello Wrong Wessal
+Wessaaaal
+4
+6
+
+===============================
+ >>>>>>>>>>>>>Check inbox 
+1
+Khira
+k
+2
+0
+6
+========================
+ >>>>>>>>>>>>>Check inbox and add to contact
+1
+Khira
+k
+2
+1
+2
+5
+.....
+6
+==================
+ >>>>>>>>>>>>>Check inbox and add to favorites
+1
+Khira
+k
+2
+1
+1
+....
+3
+....
+6
+=================

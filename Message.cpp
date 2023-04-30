@@ -29,10 +29,26 @@ string Message::getReceiverUsername()
 	return receiverUsername;
 }
 
+bool Message::equals(Message msg)
+{
+	if (senderID != msg.getSenderID())
+		return false;
+	else if (receiverID != msg.getReceiverID())
+		return false;
+	else if (content != msg.getContent())
+		return false;
+	else
+		return true;
+}
+
 
 Message::Message(int sender_ID, int receiver_ID, string receiver_username ,string msg) {
 	senderID = sender_ID;
 	receiverID = receiver_ID;
 	receiverUsername = receiver_username;
 	content = msg;
+}
+Message::Message()
+{
+
 }
