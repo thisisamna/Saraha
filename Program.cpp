@@ -25,10 +25,10 @@ void Program::loginMenu()
 		{
 			//login
 			printCentered("L o g   i n");
-			id = login();
-			if (id!=-1)
+			liveUserID = login();
+			if (liveUserID !=-1)
 			{
-				User* liveUser = &users[id];
+				User* liveUser = &users[liveUserID];
 				userMenu(liveUser);
 			}
 			break;
@@ -178,23 +178,21 @@ void Program::printCentered(string str)
 }
 
 void Program::signup() { //wessal salah
-
-	++id; //for now to test program
-	string name, pass;
-	//id = 0; // How to create new id?
+	string username, pass;
 	cout << "Please, enter your user name: \n";
 	cin.ignore();
-	getline(cin, name);
+	getline(cin, username);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	int current_id = usernameToID(name);
-	if (current_id != -1) {
+	if (usernameToID(username) != -1) {
 		cout << "You already have an acount. please log in!";
 	}
-	else {
-		users[id] = User(name, pass, id);
+	else 
+	{
+		users[userCount] = User(username, pass, userCount);
 		cout << "Congratulation!!\nYou now have an account";
 	}
+	++userCount;
 }
 	
 	
@@ -207,20 +205,20 @@ int Program::login() { //wessal
 	getline(cin, name);
 	cout << "Enter your password: \n";
 	cin >> pass;
-	id = usernameToID(name);
-	if (id == -1)
+	liveUserID = usernameToID(name);
+	if (liveUserID == -1)
 	{
 		cout << "The username is incorrect!\nplease try again\n";
 		return -1;
 	}
 	else
 	{
-		auto it = users.find(id);
+		auto it = users.find(liveUserID);
 		User u = it->second;
 		if (u.comparePassword(pass))
 		{
 			cout << "Welcome back!\n";
-			return id;
+			return liveUserID;
 		}
 		else
 		{
