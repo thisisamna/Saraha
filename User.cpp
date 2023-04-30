@@ -79,8 +79,7 @@ void User::addcontact(User u)
 
 void User::msgcounter(User u) // still cant figure how to get the id of the user calling the function
 {
-	cout << "SENDER id: " << u.getid() << endl;
-	cout << "RECIVER ID: " << getid() << endl;
+
 }
 
 
