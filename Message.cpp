@@ -31,14 +31,10 @@ string Message::getReceiverUsername()
 
 bool Message::equals(Message msg)
 {
-	if (senderID != msg.getSenderID())
-		return false;
-	else if (receiverID != msg.getReceiverID())
-		return false;
-	else if (content != msg.getContent())
-		return false;
-	else
+	if (senderID == msg.getSenderID() && receiverID == msg.getReceiverID() && content == msg.getContent())
 		return true;
+	else
+		return false;
 }
 
 

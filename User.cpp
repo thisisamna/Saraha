@@ -37,13 +37,11 @@ void User::addcontact(User u)
 	{
 		if (it.id == u.id)
 		{
-			cout << "\nUser already exists\n";
+			cout << "\nUser already exists in contacts\n";
 			userExists = true;
 			break;
 		}
 	}// to check if user already exists
-
-
 
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
 		contacts.push_back(u);
@@ -123,6 +121,7 @@ void User::removeFromInbox(Message msg)
 	Message inboxMsg;
 	for (int i=0; i<inbox.size(); i++)
 	{
+		inboxMsg = inbox[i];
 		if (inboxMsg.equals(msg))
 		{
 			inbox.erase(inbox.begin() + i);

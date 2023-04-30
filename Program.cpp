@@ -74,7 +74,15 @@ void Program::userMenu(User* liveUser)
 			break;
 		case 4:
 			//sent messages
+			cout << "Sent messages from latest to oldest: " << endl;
 			liveUser->viewSent();
+			cout << "1. Undo the latest message\n"
+				<< "0. Back to previous menu\n";
+			cin >> choice;
+			if (choice == 1)
+			{
+				undolastmessage(liveUser);
+			}
 			break;
 		case 5:
 			//contacts
@@ -157,7 +165,6 @@ void Program::addSendertoContacts(Message msg)
 {
 	User* sender = idToUser(msg.getSenderID());
 	liveUser->addcontact(*sender);
-
 }
 
 void Program::printCentered(string str)
@@ -236,10 +243,10 @@ void Program::sendmessage(User* liveUser) {
 	// Create Message
 
 	cout << endl << "Enter your message:" << " ";
+	cin.ignore();
 	getline(cin, msg);
 
 	cout << "Enter receiver username:" << " ";
-	cin.ignore();
 	cin >> username_receiver;
 
 	receiverID = usernameToID(username_receiver);
@@ -269,8 +276,6 @@ void Program::sendmessage(User* liveUser) {
 			// push in reciver inbox
 			receiver->addToInbox(msgg_object);
 			cout << endl << "Message sent successfully." << " " << endl;
-
-			
 		}
 		else
 		{
@@ -283,29 +288,31 @@ void Program::sendmessage(User* liveUser) {
 
 void Program::undolastmessage(User* liveUser) {
 	cout << endl << "Do You Want To Delete Last Message ? (y/n)" << " " << endl;
-	char c, cc;
+	char c;
+	int cc;
 	Message lastMsg;
 	cin >> c;
 	if (c == 'y') {
 		// Pop in Sender messages and store popped message
 		lastMsg = liveUser->popSent();
-
-		cout << endl << "Do You Want To Delete It For You (1) OR For Everyone(0) ? " << endl;
+		cout << "1. Delete for me\n"
+			<< "2. Delete for everyone\n";
 		cin >> cc;
 		switch (cc)
 		{
 		case 1:
 			break;
-		case 0:
+		case 2:
 		{
-			//Pop in receiver inboء
+			//Pop in receiver inbox //BUG HERE
 			User* receiver = idToUser(lastMsg.getReceiverID());
 			receiver->removeFromInbox(lastMsg);
+			break;
 		}
 		default:
 			cout << "Invalid choice, please try again!";
-			}
 		}
+	}
 	else
 		return;
 }
