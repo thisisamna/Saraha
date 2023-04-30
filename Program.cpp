@@ -247,7 +247,7 @@ void Program::sendmessage(User* liveUser) {
 	
 	if (receiverID == -1) 
 	{
-		cout << endl << "receiver username invalid, PLZ Try Again." << " ";
+		cout << endl << "receiver username invalid, PLZ Try Again." << endl;
 	}
 	else
 	{
