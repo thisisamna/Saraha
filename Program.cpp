@@ -164,7 +164,10 @@ int Program::usernameToID(string username)
 void Program::addSendertoContacts(Message msg)
 {
 	User* sender = idToUser(msg.getSenderID());
-	liveUser->addcontact(*sender);
+	User* receiver = idToUser(msg.getReceiverID()); // liveuser
+	int count = liveUser.msgcounter(sender, receiver);
+	liveUser.addcontact(receiver, sender , count);
+
 }
 
 void Program::printCentered(string str)
