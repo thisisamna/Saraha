@@ -5,9 +5,9 @@ using namespace std;
 class Message
 {
 private:
-	int sender; //id
-	int receiver_id;
-	string receiver; //username
+	int senderID; 
+	int receiverID;
+	string receiverUsername; //username
 	string content;
 public:
 	void viewAsSent();
@@ -16,8 +16,9 @@ public:
 	//int get_receiver();
 	Message(int, string, string);
 	string getContent();
-	int getSender();
-	int getReceiver();
+	int getSenderID();
+	int getReceiverID();
+	string getReceiverUsername();
 
 
 	void setReceiver(int r); // had to until we figure out another way

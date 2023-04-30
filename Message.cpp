@@ -8,7 +8,7 @@ void Message::viewAsSent()
 }
 void Message::viewAsReceived()
 {
-	cout << "From: " << sender << "\n";
+	cout << "From: " << senderID << "\n";
 	cout << content << "\n\n";
 }
 
@@ -17,15 +17,20 @@ string Message::getContent()
 	return content;
 }
 
-int Message::getSender() {
-	return sender;
+int Message::getSenderID() {
+	return senderID;
 }
-int Message::getReceiver() {
-	return receiver_id;
+int Message::getReceiverID() {
+	return receiverID;
+}
+
+string Message::getReceiverUsername()
+{
+	return receiverUsername;
 }
 
 void Message:: setReceiver(int r) {
-	receiver_id = r;
+	receiverID = r;
 }
 
 Message::Message(int id,string username_recevier,string msg) {
