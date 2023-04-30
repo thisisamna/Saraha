@@ -3,7 +3,7 @@
 #include <iostream>
 void Message::viewAsSent()
 {
-	cout << "To: " << receiver << "\n";
+	cout << "To: " << receiverUsername << "\n";
 	cout << content << "\n\n";
 }
 void Message::viewAsReceived()
@@ -29,13 +29,10 @@ string Message::getReceiverUsername()
 	return receiverUsername;
 }
 
-void Message:: setReceiver(int r) {
-	receiverID = r;
-}
 
-Message::Message(int id,string username_recevier,string msg) {
-	sender = id;
-	receiver = username_recevier;
+Message::Message(int sender_ID, int receiver_ID, string receiver_username ,string msg) {
+	senderID = sender_ID;
+	receiverID = receiver_ID;
+	receiverUsername = receiver_username;
 	content = msg;
-
 }

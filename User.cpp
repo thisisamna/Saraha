@@ -1,12 +1,10 @@
 ﻿#include "User.h"
 #include <iostream>
-#include "Message.h"
 #include <algorithm>
 #include <map>
 #include <vector>
 #include <stack>
 #include <deque>
-#include "Program.h"
 using namespace std;
 
 User::User() 
@@ -176,7 +174,6 @@ void User::viewMessageOptions(int i)
 
 }
 
-
 void User::viewcontacts() {
 	sort(sortedContacts.begin(), sortedContacts.end(), [](pair<User,int>& a, pair<User,int>& b)
 		{
@@ -189,20 +186,12 @@ void User::viewcontacts() {
 }
 
 
-
-
-
-
-
-
-
-
-void favourite(Message msg) {
+void User::favourite(Message msg) {
 	vector <Message> FavouriteMessages;
 	bool MessageIsFavourite = false;
 	char answer;
 	for (int i = 0; i < FavouriteMessages.size(); i++) {
-		
+
 		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
 			MessageIsFavourite = true;
 
@@ -218,9 +207,7 @@ void favourite(Message msg) {
 			else if (answer == ('N' || 'n'))
 				break;
 		}
-
-		
 	}
-	if(!MessageIsFavourite)
-	FavouriteMessages.push_back(msg);
+	if (!MessageIsFavourite)
+		FavouriteMessages.push_back(msg);
 }

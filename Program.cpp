@@ -1,5 +1,4 @@
 ﻿#include "Program.h"
-
 #include <iostream>
 
 void Program::loop()
@@ -117,7 +116,7 @@ void Program::Inbox(User* liveUser)
 			break;
 		case 2:
 		{
-			addSender(msg);
+			addSendertoContacts(msg);
 		case 0:
 			break;
 		default:
@@ -151,13 +150,14 @@ int Program::usernameToID(string username)
 		if (it.second.getUsername() == username)
 			return it.first;
 	}
-	return -1;
+	return -1; //not found
 }
 
-void Program::addSender(Message msg)
+void Program::addSendertoContacts(Message msg)
 {
 	User* sender = idToUser(msg.getSenderID());
-	liveUser.addcontact(sender);
+	liveUser.addcontact(*sender);
+
 }
 
 void Program::printCentered(string str)
@@ -254,10 +254,7 @@ void Program::sendmessage(User* liveUser) {
 	{
 		User* receiver = & users[receiverID];
 
-		Message msgg_object(this->id, username_receiver, msg);
-
-		// khira trying to get the receiver id
-		msgg_object.setReceiver(receiverID); 
+		Message msgg_object(liveUser->getid(), receiverID, username_receiver, msg);
 
 		// Check
 		cout << endl << "Send message? (y/n)" << " ";

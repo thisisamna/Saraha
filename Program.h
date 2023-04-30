@@ -1,9 +1,9 @@
 ﻿#pragma once
+#include "User.h"
 #include <string>
 #include <iostream>
 #include <sstream>
 #include <unordered_map>
-#include "User.h"
 
 using namespace std;
 
@@ -27,7 +27,7 @@ public:
 	int login();
 	User* idToUser(int id);
 	int usernameToID(string username);
-	void addSender(Message msg);
+	void addSendertoContacts(Message msg);
 	void printCentered(string str);
 	
 };

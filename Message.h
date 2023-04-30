@@ -10,18 +10,15 @@ private:
 	string receiverUsername; //username
 	string content;
 public:
+	Message(int sender_ID, int receiver_ID, string receiver_username, string msg);
 	void viewAsSent();
 	void viewAsReceived();
-	//int get_sender();
-	//int get_receiver();
-	Message(int, string, string);
 	string getContent();
 	int getSenderID();
 	int getReceiverID();
 	string getReceiverUsername();
 
 
-	void setReceiver(int r); // had to until we figure out another way
 
 };
 
