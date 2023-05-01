@@ -9,7 +9,7 @@ void Program::loop()
 
 void Program::loginMenu()
 {
-	savefile();
+	
 	while (true) {
 		printCentered("S a r a h a");
 		printCentered("Annonymously send and receive messages.");
@@ -46,6 +46,7 @@ void Program::loginMenu()
 			cout << "Invalid entry, try again!\n";
 		}
 	}
+	
 }
 
 void Program::userMenu(User* liveUser)
@@ -322,13 +323,13 @@ void Program::undolastmessage(User* liveUser) {
 }
 
 void Program::savefile() {
-	ofstream ourfile;
-	ourfile.open("ourdata.txt", ios::app);
+	ofstream ourfile("ourdata.txt", ios::app);
 	if (ourfile.is_open()) {
-		for (const auto& data : users) {
-			ourfile << data.first << " " <<data.second << endl;
+		for (auto& data : users)
+		{
+			ourfile << data.first << ": " << data.second.username << "\t" << data.second.password << "\t" << endl;
 		}
-		ourfile.close();
 	}
+		ourfile.close();
 }
 
