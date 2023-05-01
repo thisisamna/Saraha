@@ -9,6 +9,7 @@ void Program::loop()
 
 void Program::loginMenu()
 {
+	savefile();
 	while (true) {
 		printCentered("S a r a h a");
 		printCentered("Annonymously send and receive messages.");
