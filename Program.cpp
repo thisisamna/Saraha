@@ -324,10 +324,19 @@ void Program::undolastmessage(User* liveUser) {
 
 void Program::savefile() {
 	ofstream ourfile("ourdata.txt", ios::app);
+	User u;
 	if (ourfile.is_open()) {
 		for (auto& data : users)
 		{
-			ourfile << data.first << ": " << data.second.username << "\t" << data.second.password << "\t" << endl;
+			ourfile << data.first << ":  " << data.second.username << "\t" << data.second.password << endl;
+			for (auto& data : u.sent)
+			{
+				ourfile << data.getContent();
+				for (auto& data : u.inbox)
+				{
+					ourfile << data.getReceiverID();
+				}
+			}
 		}
 	}
 		ourfile.close();
