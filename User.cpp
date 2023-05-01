@@ -30,26 +30,21 @@ string User::getUsername()
 	return username;
 }
 
-void User::addcontact(User * liveUser ,User *Added, int numOfmsgs)
+void User::addcontact(User* liveUser, User* Added)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
 	int s = liveUser->contacts.size();
-	while(s>0)
-	{
-		--s;
-		if (liveUser->contacts.top().first->getid() == Added->getid())
-		{
+	for (int i = 0; i < s; i++){
+		if (liveUser->contacts[i].first->getid()== Added->getid()) {
 			cout << "\nUser already exists in contacts\n";
 			userExists = true;
 			break;
 		}
-		liveUser->contacts.push(contacts.top());
-		liveUser->contacts.pop();
-
-	} // to check if user already exists
+    }
+	// to check if user already exists
 
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
-		liveUser->contacts.push(make_pair(Added, numOfmsgs));
+		liveUser->contacts.push_back(make_pair(Added, msgcounter(liveUser, Added)));
 	}
 
 
@@ -105,11 +100,14 @@ bool User::comparePassword(string pass)
 void User::addToSent(Message msg)
 {
 	sent.push_front(msg);
+	contacts[msg.getReceiverID()].second++;
+
 }
 
 void User::addToInbox(Message msg)
 {
 	inbox.push_back(msg);
+	contacts[msg.getSenderID()].second++;
 }
 
 Message User::popSent()
@@ -189,9 +187,8 @@ void User::viewcontacts() {
 	cout << "Contacts: " << endl;
 
 	for (int i = 0; i < contacts.size(); i++) {
-		cout << i+1 << "." << contacts.top().first->getUsername() << endl;
-		contacts.push(contacts.top());
-		contacts.pop();
+		cout << i+1 << "." << contacts[i].first->getUsername() << endl;
+		
 
 	}
 }
