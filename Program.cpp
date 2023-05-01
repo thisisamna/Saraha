@@ -1,6 +1,6 @@
 ﻿#include "Program.h"
 #include <iostream>
-
+#include<fstream>
 void Program::loop()
 {
 	loginMenu();
@@ -318,5 +318,16 @@ void Program::undolastmessage(User* liveUser) {
 	}
 	else
 		return;
+}
+
+void Program::savefile() {
+	ofstream ourfile;
+	ourfile.open("ourdata.txt", ios::app);
+	if (ourfile.is_open()) {
+		for (const auto& data : users) {
+			ourfile << data.first << " " <<data.second << endl;
+		}
+		ourfile.close();
+	}
 }
 

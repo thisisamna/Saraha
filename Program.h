@@ -30,6 +30,6 @@ public:
 	int usernameToID(string username);
 	void addSendertoContacts(Message msg);
 	void printCentered(string str);
-	
+	void savefile();
 };
 
