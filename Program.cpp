@@ -29,7 +29,7 @@ void Program::loginMenu()
 			liveUserID = login();
 			if (liveUserID !=-1)
 			{
-				liveUser = &users[liveUserID];
+				liveUser = users[liveUserID];
 				userMenu(liveUser);
 			}
 			break;
@@ -49,7 +49,7 @@ void Program::loginMenu()
 	
 }
 
-void Program::userMenu(User* liveUser)
+void Program::userMenu(User liveUser)
 {
 	while (true)
 	{
@@ -77,7 +77,7 @@ void Program::userMenu(User* liveUser)
 		case 4:
 			//sent messages
 			cout << "Sent messages from latest to oldest: " << endl;
-			liveUser->viewSent();
+			liveUser.viewSent();
 			cout << "1. Undo the latest message\n"
 				<< "0. Back to previous menu\n";
 			cin >> choice;
@@ -88,7 +88,7 @@ void Program::userMenu(User* liveUser)
 			break;
 		case 5:
 			//contacts
-			liveUser->viewcontacts();
+			liveUser.viewcontacts();
 			break;
 		case 6:
 			//logout
@@ -99,10 +99,10 @@ void Program::userMenu(User* liveUser)
 	}
 }
 
-void Program::Inbox(User* liveUser)
+void Program::Inbox(User liveUser)
 {
 	int msgIndex;
-	liveUser->viewReceived();
+	liveUser.viewReceived();
 	cout << "Enter message index to view details and options. \n"
 		<< "0. Back to home. \n";
 	cin >> msgIndex;
@@ -113,7 +113,7 @@ void Program::Inbox(User* liveUser)
 	}
 	else
 	{
-		Message msg = liveUser->getInboxMessage(msgIndex);
+		Message msg = liveUser.getInboxMessage(msgIndex);
 		msg.viewAsReceived();
 		cout << "1. Add/remove from favorites.\n"
 			<< "2. Add sender to contacts\n"
@@ -122,7 +122,7 @@ void Program::Inbox(User* liveUser)
 		switch (choice)
 		{
 		case 1:
-			liveUser->favourite(msg);
+			liveUser.favourite(msg);
 			break;
 		case 2:
 		{
@@ -138,19 +138,20 @@ void Program::Inbox(User* liveUser)
 }
 
 
-User* Program::idToUser(int id) //returns pointer to user in hashmap, or nullptr if not found
+/*User Program::idToUser(int id)
 {
-	User* user;
-	auto it = users.find(id);
-	if(it!=users.end())
-	{
-		user = &it->second;
-	}
-	else
-	{
-		user = nullptr;
+	User user;
+	if (users.find(id) != users.end()) {
+		user = *users.find(id);
 	}
 	return user;
+}*/
+User* Program::idToUser(int id) {//returns pointer to user in hashmap, or nullptr if not found
+	auto it = users.find(id);
+	if (it != users.end()) {
+		return &(it->second);
+	}
+	return nullptr;
 }
 
 int Program::usernameToID(string username)
@@ -165,10 +166,10 @@ int Program::usernameToID(string username)
 
 void Program::addSendertoContacts(Message msg)
 {
-	User* sender = idToUser(msg.getSenderID());
-	User* receiver = idToUser(msg.getReceiverID()); // liveuser
-	int count = liveUser->msgcounter(sender, receiver);
-	liveUser->addcontact(receiver, sender , count);
+	User sender = *idToUser(msg.getSenderID());
+	User receiver = *idToUser(msg.getReceiverID()); // liveuser
+	int count = liveUser.msgcounter(sender, receiver);
+	liveUser.addcontact(receiver, sender);
 
 }
 
@@ -240,7 +241,7 @@ int Program::login() { //wessal
 	}
 }
 	
-void Program::sendmessage(User* liveUser) {
+void Program::sendmessage(User liveUser) {
 	// Data
 	int receiverID;
 	string username_receiver, msg; 
@@ -263,9 +264,9 @@ void Program::sendmessage(User* liveUser) {
 	}
 	else
 	{
-		User* receiver = & users[receiverID];
+		User receiver = users[receiverID];
 
-		Message msgg_object(liveUser->getid(), receiverID, username_receiver, msg);
+		Message msgg_object(liveUser.getid(), receiverID, username_receiver, msg);
 
 		// Check
 		cout << endl << "Send message? (y/n)" << " ";
@@ -276,10 +277,10 @@ void Program::sendmessage(User* liveUser) {
 		if (check == 'y')
 		{
 			// Push in Sender messages
-			liveUser->addToSent(msgg_object);
+			liveUser.addToSent(msgg_object, liveUser,receiver);
 
 			// push in reciver inbox
-			receiver->addToInbox(msgg_object);
+			receiver.addToInbox(msgg_object,liveUser,receiver);
 			cout << endl << "Message sent successfully." << " " << endl;
 		}
 		else
@@ -291,7 +292,7 @@ void Program::sendmessage(User* liveUser) {
 
 }
 
-void Program::undolastmessage(User* liveUser) {
+void Program::undolastmessage(User liveUser) {
 	cout << endl << "Do You Want To Delete Last Message ? (y/n)" << " " << endl;
 	char c;
 	int cc;
@@ -299,7 +300,7 @@ void Program::undolastmessage(User* liveUser) {
 	cin >> c;
 	if (c == 'y') {
 		// Pop in Sender messages and store popped message
-		lastMsg = liveUser->popSent();
+		lastMsg = liveUser.popSent();
 		cout << "1. Delete for me\n"
 			<< "2. Delete for everyone\n";
 		cin >> cc;
