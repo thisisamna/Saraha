@@ -18,6 +18,7 @@ class Program
 
 public:
 	//menu functions
+	Program();
 	void loop();
 	void loginMenu();
 	void userMenu(User* liveUser);
@@ -30,6 +31,8 @@ public:
 	int usernameToID(string username);
 	void addSendertoContacts(Message msg);
 	void printCentered(string str);
+	void loadfile();
 	void savefile();
+	~Program();
 };
 

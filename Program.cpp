@@ -1,6 +1,10 @@
 ﻿#include "Program.h"
 #include <iostream>
 #include<fstream>
+Program::Program()
+{
+	loadfile();
+}
 void Program::loop()
 {
 	loginMenu();
@@ -340,5 +344,12 @@ void Program::savefile() {
 		}
 	}
 		ourfile.close();
+}
+void Program::loadfile()
+{
+}
+Program::~Program()
+{
+	savefile();
 }
 
