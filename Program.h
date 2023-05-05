@@ -11,7 +11,7 @@ class Program
 {
 	int liveUserID = -1;
 	int userCount = 0;
-	User* liveUser;
+	User liveUser;
 	bool exit;
 	int choice;
 	unordered_map<int, User> users;
@@ -21,11 +21,11 @@ public:
 	Program();
 	void loop();
 	void loginMenu();
-	void userMenu(User* liveUser);
-	void Inbox(User* liveUser);
+	void userMenu(User liveUser);
+	void Inbox(User liveUser);
 	void signup();
-	void sendmessage(User* liveUser);
-	void undolastmessage(User* liveUser);
+	void sendmessage(User liveUser);
+	void undolastmessage(User liveUser);
 	int login();
 	User* idToUser(int id);
 	int usernameToID(string username);
