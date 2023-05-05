@@ -180,14 +180,16 @@ void User::viewMessageOptions(int i)
 
 void User::viewcontacts() {
 	cout << "Contacts: " << endl;
-	vector<pair<User*, int>>sorted_contacts (contacts.begin(), contacts.end());
-	sort(sorted_contacts.begin(),sorted_contacts.end(), [](pair<User, int>& a, pair<User, int>& b) {
+	vector<pair<User, int>>sorted_contacts;
+	for (auto i : contacts) {
+		sorted_contacts.push_back(i);
+	}
+	sort(sorted_contacts.begin(), sorted_contacts.end(), [](const pair<User, int>& a, const pair<User, int>& b) {
 		return a.second > b.second;
-		}
-	);
+		});
 	int cnt = 1;
 	for (auto i : sorted_contacts) {
-		cout << cnt << ' ' << i.first->getid() << "   number of messages : " << i.second << '\n';
+		cout << cnt << ' ' << i.first.getid() << "   number of messages : " << i.second << '\n';
 	}
 }
 

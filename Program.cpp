@@ -166,11 +166,12 @@ int Program::usernameToID(string username)
 
 void Program::addSendertoContacts(Message msg)
 {
-	User sender = *idToUser(msg.getSenderID());
-	User receiver = *idToUser(msg.getReceiverID()); // liveuser
-	int count = liveUser.msgcounter(sender, receiver);
-	liveUser.addcontact(receiver, sender);
-
+	if (idToUser(msg.getSenderID()) != nullptr && idToUser(msg.getReceiverID()) !=nullptr) {
+		User sender = *idToUser(msg.getSenderID());
+		User receiver = *idToUser(msg.getReceiverID()); // liveuser
+		int count = liveUser.msgcounter(sender, receiver);
+	    liveUser.addcontact(receiver, sender);
+	}
 }
 
 void Program::printCentered(string str)
@@ -311,9 +312,11 @@ void Program::undolastmessage(User liveUser) {
 		case 2:
 		{
 			//Pop in receiver inbox //BUG HERE
-			User* receiver = idToUser(lastMsg.getReceiverID());
-			receiver->removeFromInbox(lastMsg);
-			break;
+			if (idToUser(lastMsg.getReceiverID()) != nullptr) {
+				User* receiver = idToUser(lastMsg.getReceiverID());
+				receiver->removeFromInbox(lastMsg);
+				break;
+			}
 		}
 		default:
 			cout << "Invalid choice, please try again!";
