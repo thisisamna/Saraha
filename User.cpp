@@ -20,7 +20,9 @@ User::User(string name, string pass, int ID)
 	id = ID;
 	
 } // added the id to constructor to set the id for every user
-
+bool User:: operator<(const User& other) const {
+	return id < other.id;
+}
 int User::getid() 
 {
 	return id;
@@ -33,10 +35,11 @@ string User::getUsername()
 void User::addcontact(User  liveUser ,User Added)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
-	int s = liveUser.contacts.size();
+	int s = (int)liveUser.contacts.size();
 	map<User, int>temp = liveUser.contacts;
 	// to check if user already exists
 	if (liveUser.contacts.find(Added) != liveUser.contacts.end()) {
+		userExists = true;
 		cout << "This contact is already exist!\n";
 	}
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
@@ -207,10 +210,10 @@ void User::favourite(Message msg) {
 			cin >> answer;
 
 
-			if(answer==('y' ||'Y'))
+			if(answer==('y' )||answer=='Y')
 			FavouriteMessages.erase(FavouriteMessages.begin()+i);
 
-			else if (answer == ('N' || 'n'))
+			else if (answer == ('N')||answer== 'n')
 				break;
 		}
 

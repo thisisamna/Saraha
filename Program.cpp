@@ -74,6 +74,7 @@ void Program::userMenu(User liveUser)
 		{
 			//inbox
 			Inbox(liveUser);
+			break;
 		}
 		case 3:
 			//favorites
@@ -107,8 +108,7 @@ void Program::Inbox(User liveUser)
 {
 	int msgIndex;
 	liveUser.viewReceived();
-	cout << "Enter message index to view details and options. \n"
-		<< "0. Back to home. \n";
+	cout << "Enter message index to view details and options. \n" << "0. Back to home. \n";
 	cin >> msgIndex;
 	msgIndex--;
 	if (msgIndex == -1) // was 0 but 0 is an index in msg vector
@@ -131,10 +131,14 @@ void Program::Inbox(User liveUser)
 		case 2:
 		{
 			addSendertoContacts(msg);
+			break;
+
 		case 0:
 			break;
 		default:
 			cout << "Invalid entry.";
+			break;
+
 		}
 		break;
 		}
@@ -160,7 +164,7 @@ User* Program::idToUser(int id) {//returns pointer to user in hashmap, or nullpt
 
 int Program::usernameToID(string username)
 {
-	for (auto it : users)
+	for (auto& it : users)
 	{
 		if (it.second.getUsername() == username)
 			return it.first;

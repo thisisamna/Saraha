@@ -25,7 +25,11 @@ public:
 public:
 	User();
 	User(string username, string password, int id);
+	bool operator<(const User& other) const;
+	//operator<(const User& other) const;
+	//bool operator<(const User& other);
 	int getid();
+
 	string getUsername();
 	void addcontact(User liveUser, User Added); //return boolean?
 	void removecontact(User u);
@@ -48,5 +52,6 @@ public:
 	void addToInbox(Message msg,User liveUser, User Sender);
 	Message popSent();
 	void removeFromInbox(Message msg);
+	//bool operator<(const User& other) const;
 };
 
