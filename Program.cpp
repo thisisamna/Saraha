@@ -1,6 +1,10 @@
 ﻿#include "Program.h"
 #include <iostream>
 #include<fstream>
+Program::Program()
+{
+	loadfile();
+}
 void Program::loop()
 {
 	loginMenu();
@@ -328,21 +332,31 @@ void Program::undolastmessage(User liveUser) {
 
 void Program::savefile() {
 	ofstream ourfile("ourdata.txt", ios::app);
-	User u;
+	Message m;
 	if (ourfile.is_open()) {
-		for (auto& data : users)
+		for (auto data : users)
 		{
-			ourfile << data.first << ":  " << data.second.username << "\t" << data.second.password << endl;
-			for (auto& data : u.sent)
-			{
-				ourfile << data.getContent();
-				for (auto& data : u.inbox)
-				{
-					ourfile << data.getReceiverID();
-				}
+			ourfile << data.first << ":  " << data.second.username << "\t" << data.second.password << "\t";
+			for (auto& elem : data.second.sent) {
+				ourfile << elem.getContent();
 			}
+			
+			/*for (int i = 0; i < data.second.sent.size(); i++) {
+				ourfile << data.second.sent.front() << endl;
+				data.second.sent.push_back(data.second.sent.front());
+				data.second.sent.pop_front();
+
+			}*/
+			
 		}
 	}
 		ourfile.close();
+}
+void Program::loadfile()
+{
+}
+Program::~Program()
+{
+	savefile();
 }
 

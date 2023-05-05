@@ -10,7 +10,7 @@ using namespace std;
 int main() {
 	Program program;
 	program.loop();
-	program.savefile();
+
 	return 0;
 }
 
