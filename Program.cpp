@@ -55,7 +55,7 @@ void Program::loginMenu()
 	
 }
 
-void Program::userMenu(User liveUser)
+void Program::userMenu(User &liveUser)
 {
 	while (true)
 	{
@@ -107,7 +107,7 @@ void Program::userMenu(User liveUser)
 	}
 }
 
-void Program::Inbox(User liveUser)
+void Program::Inbox(User &liveUser)
 {
 	int msgIndex;
 	liveUser.viewReceived();
@@ -254,7 +254,7 @@ int Program::login() { //wessal
 	}
 }
 	
-void Program::sendmessage(User liveUser) {
+void Program::sendmessage(User &liveUser) {
 	// Data
 	int receiverID;
 	string username_receiver, msg; 
@@ -277,7 +277,7 @@ void Program::sendmessage(User liveUser) {
 	}
 	else
 	{
-		User receiver = users[receiverID];
+		User *receiver = &users[receiverID];
 
 		Message msgg_object(liveUser.getid(), receiverID, username_receiver, msg);
 
@@ -290,10 +290,10 @@ void Program::sendmessage(User liveUser) {
 		if (check == 'y')
 		{
 			// Push in Sender messages
-			liveUser.addToSent(msgg_object, liveUser,receiver);
+			liveUser.addToSent(msgg_object, liveUser,*receiver);
 
 			// push in reciver inbox
-			receiver.addToInbox(msgg_object,liveUser,receiver);
+			receiver->addToInbox(msgg_object,liveUser,*receiver);
 			cout << endl << "Message sent successfully." << " " << endl;
 			UpdateLiveUserData();
 		}
@@ -306,7 +306,7 @@ void Program::sendmessage(User liveUser) {
 
 }
 
-void Program::undolastmessage(User liveUser) {
+void Program::undolastmessage(User &liveUser) {
 	cout << endl << "Do You Want To Delete Last Message ? (y/n)" << " " << endl;
 	char c;
 	int cc;
@@ -321,6 +321,7 @@ void Program::undolastmessage(User liveUser) {
 		switch (cc)
 		{
 		case 1:
+			cout << "Message removed for you" << endl;
 			break;
 		case 2:
 		{
@@ -328,7 +329,6 @@ void Program::undolastmessage(User liveUser) {
 			if (idToUser(lastMsg.getReceiverID()) != nullptr) {
 				User* receiver = idToUser(lastMsg.getReceiverID());
 				receiver->removeFromInbox(lastMsg);
-				UpdateLiveUserData();
 				break;
 			}
 		}
