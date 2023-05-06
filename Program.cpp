@@ -48,7 +48,9 @@ void Program::loginMenu()
 			return;
 		default:
 			cout << "Invalid entry, try again!\n";
+				break;
 		}
+		UpdateLiveUserData();
 	}
 	
 }
@@ -101,6 +103,7 @@ void Program::userMenu(User liveUser)
 		default:
 			cout << "Invalid entry, try again!\n";
 		}
+		UpdateLiveUserData();
 	}
 }
 
@@ -142,6 +145,7 @@ void Program::Inbox(User liveUser)
 		}
 		break;
 		}
+		UpdateLiveUserData();
 	}
 }
 
@@ -291,13 +295,14 @@ void Program::sendmessage(User liveUser) {
 			// push in reciver inbox
 			receiver.addToInbox(msgg_object,liveUser,receiver);
 			cout << endl << "Message sent successfully." << " " << endl;
+			UpdateLiveUserData();
 		}
 		else
 		{
 			cout << endl << "Message canceled." << " " << endl;
 		}
-
 	}
+	UpdateLiveUserData();
 
 }
 
@@ -323,6 +328,7 @@ void Program::undolastmessage(User liveUser) {
 			if (idToUser(lastMsg.getReceiverID()) != nullptr) {
 				User* receiver = idToUser(lastMsg.getReceiverID());
 				receiver->removeFromInbox(lastMsg);
+				UpdateLiveUserData();
 				break;
 			}
 		}
@@ -332,6 +338,10 @@ void Program::undolastmessage(User liveUser) {
 	}
 	else
 		return;
+}
+
+void Program::UpdateLiveUserData() {
+	users[liveUserID] = liveUser;
 }
 
 void Program::savefile() {
@@ -361,6 +371,7 @@ void Program::loadfile()
 }
 Program::~Program()
 {
+	users[liveUserID] = liveUser;
 	savefile();
 }
 

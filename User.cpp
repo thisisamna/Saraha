@@ -182,17 +182,23 @@ void User::viewMessageOptions(int i)
 }
 
 void User::viewcontacts() {
-	cout << "Contacts: " << endl;
-	vector<pair<User, int>>sorted_contacts;
-	for (auto i : contacts) {
-		sorted_contacts.push_back(i);
+
+	if (contacts.size() == 0) {
+		cout << "You don't have any contacts yet!\n";
 	}
-	sort(sorted_contacts.begin(), sorted_contacts.end(), [](const pair<User, int>& a, const pair<User, int>& b) {
-		return a.second > b.second;
-		});
-	int cnt = 1;
-	for (auto i : sorted_contacts) {
-		cout << cnt << ' ' << i.first.getid() << "   number of messages : " << i.second << '\n';
+	else {
+		cout << "Contacts: " << endl;
+		vector<pair<User, int>>sorted_contacts;
+		for (auto i : contacts) {
+			sorted_contacts.push_back(i);
+		}
+		sort(sorted_contacts.begin(), sorted_contacts.end(), [](const pair<User, int>& a, const pair<User, int>& b) {
+			return a.second > b.second;
+			});
+		int cnt = 1;
+		for (auto i : sorted_contacts) {
+			cout << cnt << ' ' << i.first.getid() << "   number of messages : " << i.second << '\n';
+		}
 	}
 }
 
