@@ -19,7 +19,7 @@ public:
 	deque<Message> sent;
 	vector<Message> inbox;
 	priority_queue<pair<User *, int>>contacts;
-	vector <Message> FavouriteMessages;
+	list<Message> FavouriteMessages;
 	
 	
 public:
