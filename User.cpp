@@ -123,7 +123,6 @@ void User::removeFromInbox(Message msg)
 		if (inboxMsg.equals(msg))
 		{
 			inbox.erase(inbox.begin() + i);
-			cout << "Message removed";
 			break;
 		}
 	}
