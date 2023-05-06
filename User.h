@@ -31,8 +31,8 @@ public:
 	int getid();
 
 	string getUsername();
-	void addcontact(User liveUser, User Added); //return boolean?
-	void removecontact(User u);
+	void addcontact(User &liveUser, User &Added); //return boolean?
+	void removecontact(User &u);
 	void sendmessage();
 	void unsend();
 	//void searchcontact(); //boolean?
@@ -41,15 +41,15 @@ public:
 	void viewReceived();
 	void viewMessageOptions(int i);
 	//bool cmp(const pair<int, int>& a, const pair<int, int>& b);
-	int msgcounter(User u, User liveUser);
+	int msgcounter(User &u, User &liveUser);
 	void favourite(Message msg);
 	void RemoveOldestFavorite();
 	void viewFavorites();
 	//helper functions
     Message getInboxMessage(int msgID);
 	bool comparePassword(string pass);
-	void addToSent(Message msg,User liveUser,User recevier);
-	void addToInbox(Message msg,User liveUser, User Sender);
+	void addToSent(Message msg,User &liveUser,User &recevier);
+	void addToInbox(Message msg,User &liveUser, User &Sender);
 	Message popSent();
 	void removeFromInbox(Message msg);
 	//bool operator<(const User& other) const;

@@ -32,7 +32,7 @@ string User::getUsername()
 	return username;
 }
 
-void User::addcontact(User  liveUser ,User Added)
+void User::addcontact(User  &liveUser ,User &Added)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
 	int s = (int)liveUser.contacts.size();
@@ -40,10 +40,12 @@ void User::addcontact(User  liveUser ,User Added)
 	// to check if user already exists
 	if (liveUser.contacts.find(Added) != liveUser.contacts.end()) {
 		userExists = true;
-		cout << "This contact is already exist!\n";
+		cout << "This user is already in your contacts.\n";
 	}
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
 		liveUser.contacts.insert({ Added,msgcounter(Added,liveUser) });
+		cout << "Sender added to contacts.\n";
+
 	}
 
 
@@ -51,7 +53,7 @@ void User::addcontact(User  liveUser ,User Added)
 
 
 
-int User::msgcounter(User AddedContact, User liveUser) 
+int User::msgcounter(User &AddedContact, User &liveUser) 
 {
 	int numOfmsgs = 0;
 			//count number of sent messages for this contact 
@@ -96,13 +98,13 @@ bool User::comparePassword(string pass)
 	}
 }
 
-void User::addToSent(Message msg,User liveUser,User received)
+void User::addToSent(Message msg,User &liveUser,User &received)
 {
 	sent.push_front(msg);
 	liveUser.contacts[received]++;
 }
 
-void User::addToInbox(Message msg, User liveUser, User sender) 
+void User::addToInbox(Message msg, User &liveUser, User &sender) 
 {
 	inbox.push_back(msg);
 	liveUser.contacts[sender]++;
@@ -128,7 +130,7 @@ void User::removeFromInbox(Message msg)
 	}
 }
 
-void User::removecontact(User u)
+void User::removecontact(User &u)
 {
 	/*int i = -1;
 
