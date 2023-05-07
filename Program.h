@@ -34,6 +34,7 @@ public:
 	void printCentered(string str);
 	void loadfile();
 	void savefile();
+	void UpdateLiveUserData();
 	~Program();
 };
 

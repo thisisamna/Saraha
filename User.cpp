@@ -36,14 +36,22 @@ void User::addcontact(User  &liveUser ,User &Added)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
 	int s = (int)liveUser.contacts.size();
-	map<User, int>temp = liveUser.contacts;
+
+
 	// to check if user already exists
-	if (liveUser.contacts.find(Added) != liveUser.contacts.end()) {
-		userExists = true;
-		cout << "This user is already in your contacts.\n";
+	for (auto i : liveUser.contacts) {
+		if (i.first.id == Added.getid()) {
+			userExists = true;
+			cout << "This user is already in your contacts.\n";
+			break;
+		}
 	}
+	
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
+		cout<<"before   :  " << liveUser.contacts.size() << '\n';
 		liveUser.contacts.insert({ Added,msgcounter(Added,liveUser) });
+		cout << liveUser.contacts.size() << '\n';
+		//cout << Added.getUsername() << ' ' << Added.getid() << '\n';
 		cout << "Sender added to contacts.\n";
 
 	}
@@ -182,18 +190,24 @@ void User::viewMessageOptions(int i)
 
 }
 
-void User::viewcontacts() {
-	cout << "Contacts: " << endl;
-	vector<pair<User, int>>sorted_contacts;
-	for (auto i : contacts) {
-		sorted_contacts.push_back(i);
+void User::viewcontacts(User liveuser) {
+
+	if (liveuser.contacts.size() == 0) {
+		cout << "You don't have any contacts yet!\n";
 	}
-	sort(sorted_contacts.begin(), sorted_contacts.end(), [](const pair<User, int>& a, const pair<User, int>& b) {
-		return a.second > b.second;
-		});
-	int cnt = 1;
-	for (auto i : sorted_contacts) {
-		cout << cnt << ' ' << i.first.getid() << "   number of messages : " << i.second << '\n';
+	else {
+		cout << "Contacts: " << endl;
+		vector<pair<User, int>>sorted_contacts;
+		for (auto i : liveuser.contacts) {
+			sorted_contacts.push_back(i);
+		}
+		sort(sorted_contacts.begin(), sorted_contacts.end(), [](const pair<User, int>& a, const pair<User, int>& b) {
+			return a.second > b.second;
+			});
+		int cnt = 1;
+		for (auto i : sorted_contacts) {
+			cout << cnt << ' ' << i.first.getid() << "   number of messages : " << i.second << '\n';
+		}
 	}
 }
 
@@ -240,4 +254,43 @@ void User::viewFavorites(){
 		cout << FavouriteMessages[i].getContent();
 		cout << endl;
 	}
+}
+
+
+//search contact by his id
+void User::searchContactbyid(int id) {
+	bool found = false;
+	User it;
+	for (auto i : contacts) {
+		if (i.first.id == id) {
+			found = true;
+			it = i.first;
+			break;
+		}
+	}
+	if (found) {
+		cout << "Contact Found !\n Name : " << it.getUsername() << "\t Id : " << id << '\n';
+	}
+	else {
+		cout << "Contact not Found ! , check if the entered id is correct \n";
+	}
+}
+
+void User::searchContactbyname(string username) {
+	bool found = false;
+	User it;
+	for (auto i : contacts) {
+		if (i.first.username == username) {
+			found = true;
+			it = i.first;
+			break;
+		}
+	}
+	if (found) {
+		cout << "Contact Found !\n Name : " << username << "\t Id : " << it.getid() << '\n';
+	}
+	else {
+		cout << "Contact not Found ! , check if the entered username is correct \n";
+	}
+
 }

@@ -48,7 +48,9 @@ void Program::loginMenu()
 			return;
 		default:
 			cout << "Invalid entry, try again!\n";
+				break;
 		}
+		UpdateLiveUserData();
 	}
 	
 }
@@ -98,7 +100,7 @@ void Program::userMenu(User &liveUser)
 			break;
 		case 5:
 			//contacts
-			liveUser.viewcontacts();
+			liveUser.viewcontacts(liveUser);
 			break;
 		case 6:
 			//logout
@@ -106,6 +108,7 @@ void Program::userMenu(User &liveUser)
 		default:
 			cout << "Invalid entry, try again!\n";
 		}
+		UpdateLiveUserData();
 	}
 }
 
@@ -147,6 +150,7 @@ void Program::Inbox(User &liveUser)
 		}
 		break;
 		}
+		UpdateLiveUserData();
 	}
 }
 
@@ -298,14 +302,13 @@ void Program::sendmessage(User &liveUser) {
 			// push in reciver inbox
 			receiver->addToInbox(msgg_object,liveUser,*receiver);
 			cout << endl << "Message sent successfully." << " " << endl;
-
 		}
 		else
 		{
 			cout << endl << "Message canceled." << " " << endl;
 		}
-
 	}
+	UpdateLiveUserData();
 
 }
 
@@ -332,8 +335,6 @@ void Program::undolastmessage(User &liveUser) {
 			if (idToUser(lastMsg.getReceiverID()) != nullptr) {
 				User* receiver = idToUser(lastMsg.getReceiverID());
 				receiver->removeFromInbox(lastMsg);
-				cout << "Message removed for everyone" << endl;
-
 				break;
 			}
 		}
@@ -343,26 +344,6 @@ void Program::undolastmessage(User &liveUser) {
 	}
 	else
 		return;
-}
-
-void Program::contactsMenu() {
-
-	cout << "1. View sent messages\n"
-		<< "2. Report\n"
-		<< "3. Block\n";
-
-	int choice; cin >> choice;
-	switch (choice) {
-	case 1: 
-		// view sent function
-		break;
-	case 2: 
-		// report function
-		break;
-	case 3: 
-		// block function
-		break;
-	}
 }
 
 void Program::savefile() {
@@ -413,6 +394,7 @@ void Program::loadfile()
 }
 Program::~Program()
 {
+	users[liveUserID] = liveUser;
 	savefile();
 }
 
