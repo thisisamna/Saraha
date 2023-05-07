@@ -1,5 +1,4 @@
 ﻿#include "Program.h"
-#include "User.h"
 #include <iostream>
 #include<fstream>
 Program::Program()
