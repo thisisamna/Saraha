@@ -398,3 +398,22 @@ Program::~Program()
 	savefile();
 }
 
+void Program::contactsMenu() {
+
+	cout << "1. View sent messages\n"
+		<< "2. Report\n"
+		<< "3. Block\n";
+
+	int choice; cin >> choice;
+	switch (choice) {
+	case 1:
+		// view sent function
+		break;
+	case 2:
+		// report function
+		break;
+	case 3:
+		// block function
+		break;
+	}
+}

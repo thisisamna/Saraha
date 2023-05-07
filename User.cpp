@@ -50,7 +50,7 @@ void User::addcontact(User  &liveUser ,User &Added)
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
 		cout<<"before   :  " << liveUser.contacts.size() << '\n';
 		liveUser.contacts.insert({ Added,msgcounter(Added,liveUser) });
-		cout << liveUser.contacts.size() << '\n';
+		cout <<"After: " << liveUser.contacts.size() << '\n';
 		//cout << Added.getUsername() << ' ' << Added.getid() << '\n';
 		cout << "Sender added to contacts.\n";
 
