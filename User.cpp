@@ -35,9 +35,6 @@ string User::getUsername()
 void User::addcontact(User  &liveUser ,User &Added)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
-	int s = (int)liveUser.contacts.size();
-
-
 	// to check if user already exists
 	for (auto i : liveUser.contacts) {
 		if (i.first.id == Added.getid()) {
@@ -48,15 +45,12 @@ void User::addcontact(User  &liveUser ,User &Added)
 	}
 	
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
-		cout<<"before   :  " << liveUser.contacts.size() << '\n';
 		liveUser.contacts.insert({ Added,msgcounter(Added,liveUser) });
-		cout << liveUser.contacts.size() << '\n';
-		//cout << Added.getUsername() << ' ' << Added.getid() << '\n';
-		cout << "Sender added to contacts.\n";
-
+		if (liveUser.contacts.find(Added) != liveUser.contacts.end())
+			cout << "Sender added to contacts.\n";
+		else
+			cout << "متضافش يا رنا \n";
 	}
-
-
 }
 
 
@@ -190,7 +184,7 @@ void User::viewMessageOptions(int i)
 
 }
 
-void User::viewcontacts(User liveuser) {
+void User::viewcontacts(User &liveuser) {
 
 	if (liveuser.contacts.size() == 0) {
 		cout << "You don't have any contacts yet!\n";

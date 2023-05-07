@@ -1,4 +1,5 @@
 ﻿#include "Program.h"
+#include "User.h"
 #include <iostream>
 #include<fstream>
 Program::Program()
@@ -75,6 +76,7 @@ void Program::userMenu(User &liveUser)
 		case 1:
 			//send a message
 			sendmessage(liveUser);
+			UpdateLiveUserData();
 			break;
 		case 2:
 		{
@@ -97,6 +99,7 @@ void Program::userMenu(User &liveUser)
 			{
 				undolastmessage(liveUser);
 			}
+			UpdateLiveUserData();
 			break;
 		case 5:
 			//contacts
@@ -135,10 +138,12 @@ void Program::Inbox(User &liveUser)
 		{
 		case 1:
 			liveUser.favourite(msg);
+			UpdateLiveUserData();
 			break;
 		case 2:
 		{
 			addSendertoContacts(msg);
+			UpdateLiveUserData();
 			break;
 
 		case 0:
@@ -186,9 +191,12 @@ void Program::addSendertoContacts(Message msg)
 	if (idToUser(msg.getSenderID()) != nullptr && idToUser(msg.getReceiverID()) !=nullptr) {
 		User sender = *idToUser(msg.getSenderID());
 		User receiver = *idToUser(msg.getReceiverID()); // liveuser
-		int count = liveUser.msgcounter(sender, receiver);
-	    liveUser.addcontact(receiver, sender);
+	    receiver.addcontact(receiver, sender);
 	}
+	else {
+		cout << "Error During Adding Contact\n";
+	}
+	UpdateLiveUserData();
 }
 
 void Program::printCentered(string str)
@@ -312,6 +320,10 @@ void Program::sendmessage(User &liveUser) {
 
 }
 
+void Program::UpdateLiveUserData() {
+	users[liveUserID] = liveUser;
+}
+
 void Program::undolastmessage(User &liveUser) {
 	cout << endl << "Do You Want To Delete Last Message ? (y/n)" << " " << endl;
 	char c;
@@ -341,6 +353,7 @@ void Program::undolastmessage(User &liveUser) {
 		default:
 			cout << "Invalid choice, please try again!";
 		}
+		UpdateLiveUserData();
 	}
 	else
 		return;
