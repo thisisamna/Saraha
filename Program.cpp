@@ -410,3 +410,36 @@ Program::~Program()
 	savefile();
 }
 
+void Program::contactsMenu() {
+
+	cout << "1. View sent messages\n"
+		<< "2. Report\n"
+		<< "3. Block\n";
+
+	int choice; cin >> choice;
+	switch (choice) {
+	case 1:
+		// view sent function
+		break;
+	case 2:
+		// report function
+		break;
+	case 3:
+		// block function
+		break;
+	}
+}
+
+void Program::viewMsgs(User & liveUser, User & currentContact) { //khira -- not sure if it works because i cant test it ):
+	int j = 0;
+	if (liveUser.inbox.size() == 0) 
+		cout << "No messeges found\n";
+	
+	else {
+		for (int i = 0; i < liveUser.inbox.size(); i++) {
+			if (liveUser.inbox[i].getSenderID() == currentContact.getid()) {
+				cout << ++j << "." << liveUser.inbox[i].getContent() << endl;
+			}
+		}
+	}
+}
