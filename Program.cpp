@@ -417,3 +417,17 @@ void Program::contactsMenu() {
 		break;
 	}
 }
+
+void Program::viewMsgs(User & liveUser, User & currentContact) { //khira -- not sure if it works because i cant test it ):
+	int j = 0;
+	if (liveUser.inbox.size() == 0) 
+		cout << "No messeges found\n";
+	
+	else {
+		for (int i = 0; i < liveUser.inbox.size(); i++) {
+			if (liveUser.inbox[i].getSenderID() == currentContact.getid()) {
+				cout << ++j << "." << liveUser.inbox[i].getContent() << endl;
+			}
+		}
+	}
+}
