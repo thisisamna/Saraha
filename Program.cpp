@@ -346,10 +346,6 @@ void Program::undolastmessage(User &liveUser) {
 		return;
 }
 
-void Program::UpdateLiveUserData() {
-	users[liveUserID] = liveUser;
-}
-
 void Program::savefile() {
 	ofstream ourfile("ourdata.txt", ios::app);
 	if (ourfile.is_open()) {
