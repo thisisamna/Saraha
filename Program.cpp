@@ -59,6 +59,10 @@ void Program::userMenu(User &liveUser)
 {
 	while (true)
 	{
+		if (liveUser.newMsgs != 0) 
+			cout << "you have " << liveUser.newMsgs << " unread messages\n";
+			
+		
 		cout << "1. Send a message\n"
 			<< "2. Inbox\n"
 			<< "3. Favorites\n"
@@ -76,6 +80,7 @@ void Program::userMenu(User &liveUser)
 		{
 			//inbox
 			Inbox(liveUser);
+			liveUser.newMsgs = 0;
 			break;
 		}
 		case 3:
@@ -289,13 +294,14 @@ void Program::sendmessage(User &liveUser) {
 		// Send Message
 		if (check == 'y')
 		{
+
+			receiver->newMsgs++;
 			// Push in Sender messages
 			liveUser.addToSent(msgg_object, liveUser,*receiver);
 
 			// push in reciver inbox
 			receiver->addToInbox(msgg_object,liveUser,*receiver);
 			cout << endl << "Message sent successfully." << " " << endl;
-			UpdateLiveUserData();
 		}
 		else
 		{
@@ -346,15 +352,23 @@ void Program::UpdateLiveUserData() {
 
 void Program::savefile() {
 	ofstream ourfile("ourdata.txt", ios::app);
-	Message m;
 	if (ourfile.is_open()) {
 		for (auto data : users)
 		{
 			ourfile << data.first << ":  " << data.second.username << "\t" << data.second.password << "\t";
 			for (auto& elem : data.second.sent) {
-				ourfile << elem.getContent();
+				ourfile << elem.getContent()<<"\t";
 			}
-			
+			for (auto& elem : data.second.inbox) {
+				ourfile << elem.getReceiverID()<<"\t"<<elem.getContent()<<"\t";
+			}
+			for (auto& elem : data.second.contacts) { // I don't know what should it return!
+				ourfile << elem.second << "\t";
+			}
+			for (auto& elem : data.second.FavouriteMessages) {
+				ourfile << elem.getReceiverID() << "\t" << elem.getContent();
+			}
+			ourfile << endl;
 			/*for (int i = 0; i < data.second.sent.size(); i++) {
 				ourfile << data.second.sent.front() << endl;
 				data.second.sent.push_back(data.second.sent.front());
@@ -368,6 +382,19 @@ void Program::savefile() {
 }
 void Program::loadfile()
 {
+	ifstream ourfile("ourdata.txt");
+	int id;
+	User obj;
+	while (ourfile >> id) {
+		getline(ourfile, obj.username);
+		getline(ourfile, obj.password);
+		//users.insert(make_pair(id, obj));
+		users[id] = User(obj.username, obj.password, id);
+		/*for (auto it : users) {
+			cout << it.first << it.second.username << " " << it.second.password;
+		}*/
+	}
+	ourfile.close();
 }
 Program::~Program()
 {
