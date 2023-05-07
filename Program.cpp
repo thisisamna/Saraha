@@ -339,15 +339,23 @@ void Program::undolastmessage(User &liveUser) {
 
 void Program::savefile() {
 	ofstream ourfile("ourdata.txt", ios::app);
-	Message m;
 	if (ourfile.is_open()) {
 		for (auto data : users)
 		{
 			ourfile << data.first << ":  " << data.second.username << "\t" << data.second.password << "\t";
 			for (auto& elem : data.second.sent) {
-				ourfile << elem.getContent();
+				ourfile << elem.getContent()<<"\t";
 			}
-			
+			for (auto& elem : data.second.inbox) {
+				ourfile << elem.getReceiverID()<<"\t"<<elem.getContent()<<"\t";
+			}
+			for (auto& elem : data.second.contacts) { // I don't know what should it return!
+				ourfile << elem.second << "\t";
+			}
+			for (auto& elem : data.second.FavouriteMessages) {
+				ourfile << elem.getReceiverID() << "\t" << elem.getContent();
+			}
+			ourfile << endl;
 			/*for (int i = 0; i < data.second.sent.size(); i++) {
 				ourfile << data.second.sent.front() << endl;
 				data.second.sent.push_back(data.second.sent.front());
@@ -361,6 +369,7 @@ void Program::savefile() {
 }
 void Program::loadfile()
 {
+	ifstream ourfile("ourdata.txt");
 }
 Program::~Program()
 {

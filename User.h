@@ -12,9 +12,9 @@ using namespace std;
 class User
 {
 public:
-	int id;
-	string username;
-	string password;
+	int id; //change
+	string username; //change
+	string password; //change
 	//vector<User> contacts; //working but waste of memory because we have sorted contacts, let's deal with it at the end
 	deque<Message> sent;
 	vector<Message> inbox;
