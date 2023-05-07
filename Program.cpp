@@ -57,6 +57,10 @@ void Program::userMenu(User &liveUser)
 {
 	while (true)
 	{
+		if (liveUser.newMsgs != 0) 
+			cout << "you have " << liveUser.newMsgs << " unread messages\n";
+			
+		
 		cout << "1. Send a message\n"
 			<< "2. Inbox\n"
 			<< "3. Favorites\n"
@@ -74,6 +78,7 @@ void Program::userMenu(User &liveUser)
 		{
 			//inbox
 			Inbox(liveUser);
+			liveUser.newMsgs = 0;
 			break;
 		}
 		case 3:
@@ -285,12 +290,15 @@ void Program::sendmessage(User &liveUser) {
 		// Send Message
 		if (check == 'y')
 		{
+
+			receiver->newMsgs++;
 			// Push in Sender messages
 			liveUser.addToSent(msgg_object, liveUser,*receiver);
 
 			// push in reciver inbox
 			receiver->addToInbox(msgg_object,liveUser,*receiver);
 			cout << endl << "Message sent successfully." << " " << endl;
+
 		}
 		else
 		{

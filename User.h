@@ -20,6 +20,7 @@ public:
 	vector<Message> inbox;
 	map<User , int>contacts;
 	vector <Message> FavouriteMessages;
+	int newMsgs = 0;
 	
 	
 public:
