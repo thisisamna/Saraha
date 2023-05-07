@@ -370,6 +370,18 @@ void Program::savefile() {
 void Program::loadfile()
 {
 	ifstream ourfile("ourdata.txt");
+	int id;
+	User obj;
+	while (ourfile >> id) {
+		getline(ourfile, obj.username);
+		getline(ourfile, obj.password);
+		//users.insert(make_pair(id, obj));
+		users[id] = User(obj.username, obj.password, id);
+		/*for (auto it : users) {
+			cout << it.first << it.second.username << " " << it.second.password;
+		}*/
+	}
+	ourfile.close();
 }
 Program::~Program()
 {
