@@ -36,14 +36,22 @@ void User::addcontact(User  &liveUser ,User &Added)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
 	int s = (int)liveUser.contacts.size();
-	map<User, int>temp = liveUser.contacts;
+
+
 	// to check if user already exists
-	if (liveUser.contacts.find(Added) != liveUser.contacts.end()) {
-		userExists = true;
-		cout << "This user is already in your contacts.\n";
+	for (auto i : liveUser.contacts) {
+		if (i.first.id == Added.getid()) {
+			userExists = true;
+			cout << "This user is already in your contacts.\n";
+			break;
+		}
 	}
+	
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
+		cout<<"before   :  " << liveUser.contacts.size() << '\n';
 		liveUser.contacts.insert({ Added,msgcounter(Added,liveUser) });
+		cout << liveUser.contacts.size() << '\n';
+		//cout << Added.getUsername() << ' ' << Added.getid() << '\n';
 		cout << "Sender added to contacts.\n";
 
 	}
@@ -182,15 +190,15 @@ void User::viewMessageOptions(int i)
 
 }
 
-void User::viewcontacts() {
+void User::viewcontacts(User liveuser) {
 
-	if (contacts.size() == 0) {
+	if (liveuser.contacts.size() == 0) {
 		cout << "You don't have any contacts yet!\n";
 	}
 	else {
 		cout << "Contacts: " << endl;
 		vector<pair<User, int>>sorted_contacts;
-		for (auto i : contacts) {
+		for (auto i : liveuser.contacts) {
 			sorted_contacts.push_back(i);
 		}
 		sort(sorted_contacts.begin(), sorted_contacts.end(), [](const pair<User, int>& a, const pair<User, int>& b) {

@@ -100,7 +100,7 @@ void Program::userMenu(User &liveUser)
 			break;
 		case 5:
 			//contacts
-			liveUser.viewcontacts();
+			liveUser.viewcontacts(liveUser);
 			break;
 		case 6:
 			//logout

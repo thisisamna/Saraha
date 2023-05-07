@@ -35,7 +35,7 @@ public:
 	void sendmessage();
 	void unsend();
 	//void searchcontact(); //boolean?
-	void viewcontacts();
+	void viewcontacts(User liveuser);
 	void viewSent();
 	void viewReceived();
 	void viewMessageOptions(int i);
