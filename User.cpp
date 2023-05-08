@@ -180,17 +180,15 @@ void User::notify()
 
 }
 
-void User::removecontact(User &u)
+void User::removecontact(User contact)
 {
-	/*int i = -1;
-
-	for (User it : contacts)
-	{
-		i++;
-		if (it.id == u.id)
+	for (auto it = contacts.begin(); it != contacts.end();) {
+		if (it->first.id == contact.id)
+		{
+			it = contacts.erase(it);
 			break;
+		}
 	}
-	contacts.erase(contacts.begin() + i);*/
 }
 
 void User::viewSent()
@@ -245,7 +243,8 @@ void User::viewcontacts() {
 			});
 		int cnt = 1;
 		for (auto i : sorted_contacts) {
-			cout << cnt << ' ' << i.first.getid() << "   number of messages : " << i.second << '\n';
+			cout << cnt << ". ID: " << i.first.getid() << "\tNumber of messages: " << i.second << '\n';
+			cnt++;
 		}
 	}
 }
@@ -293,7 +292,7 @@ void User::viewFavorites(){
 
 
 //search contact by his id
-void User::searchContactbyid(int id) {
+void User::searchContact(int id) {
 	bool found = false;
 	for (auto i : contacts) {
 		if (i.first.id == id) {

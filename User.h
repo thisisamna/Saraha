@@ -30,20 +30,17 @@ public:
 	string getUsername();
 	string getPassword();
 	void addcontact(User contact);
-	void removecontact(User &u);
-	//void searchcontact(); //boolean?
+	void removecontact(User contact);
 	void viewcontacts();
 	void viewSent();
 	void viewReceived();
-	void viewMessageOptions(int i);
 	//bool cmp(const pair<int, int>& a, const pair<int, int>& b);
 	int msgcounter(User contact);
 	void favourite(Message msg);
 	void RemoveOldestFavorite();
 	void viewFavorites();
-	void searchContactbyid(int id);
+	void searchContact(int id);
 	void viewContactMessages(User contact); // khira -- view msges sent by a specific user
-	void searchContactbyname(string username);
 	//helper functions
     Message getInboxMessage(int msgID);
 	bool comparePassword(string pass);
