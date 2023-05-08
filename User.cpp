@@ -242,10 +242,8 @@ void User::viewcontacts() {
 		sort(sorted_contacts.begin(), sorted_contacts.end(), [](const pair<User, int>& a, const pair<User, int>& b) {
 			return a.second > b.second;
 			});
-		int cnt = 1;
 		for (auto i : sorted_contacts) {
-			cout << cnt << ". ID: " << i.first.getid() << "\tNumber of messages: " << i.second << '\n';
-			cnt++;
+			cout << "- ID: " << i.first.getid() << "\tNumber of messages: " << i.second << '\n';
 		}
 	}
 }
