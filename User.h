@@ -11,7 +11,6 @@ using namespace std;
 
 class User
 {
-public:
 	int id; //change
 	string username; //change
 	string password; //change
@@ -29,6 +28,7 @@ public:
 	bool operator<(const User& other) const;
 	int getid();
 	string getUsername();
+	string getPassword();
 	void addcontact(User contact);
 	void removecontact(User &u);
 	//void searchcontact(); //boolean?
@@ -42,6 +42,7 @@ public:
 	void RemoveOldestFavorite();
 	void viewFavorites();
 	void searchContactbyid(int id);
+	void viewContactMessages(User contact); // khira -- view msges sent by a specific user
 	void searchContactbyname(string username);
 	//helper functions
     Message getInboxMessage(int msgID);
@@ -52,6 +53,7 @@ public:
 	void removeFromInbox(Message msg);
 	void beReported();
 	bool isBanned();
+	void notify();
 	
 };
 

@@ -59,10 +59,7 @@ void Program::userMenu(User &liveUser)
 {
 	while (true)
 	{
-		if (liveUser.newMsgs != 0) 
-			cout << "you have " << liveUser.newMsgs << " unread messages\n";
-			
-		
+		liveUser.notify();
 		cout << "1. Send a message\n"
 			<< "2. Inbox\n"
 			<< "3. Favorites\n"
@@ -81,7 +78,6 @@ void Program::userMenu(User &liveUser)
 		{
 			//inbox
 			Inbox(liveUser);
-			liveUser.newMsgs = 0;
 			break;
 		}
 		case 3:
@@ -311,7 +307,6 @@ void Program::sendmessage(User &liveUser) {
 		if (check == 'y')
 		{
 
-			receiver->newMsgs++;
 			// Push in Sender messages
 			liveUser.addToSent(msgg_object, *receiver);
 
@@ -424,7 +419,7 @@ void Program::savefile()
 	ofstream file("data.txt");
 	for (auto it : users)
 	{
-		file << it.second.getid() << " " << it.second.getUsername() << " " << it.second.password << endl;
+		file << it.second.getid() << " " << it.second.getUsername() << " " << it.second.getPassword() << endl;
 		file << endl;
 
 	}
@@ -470,19 +465,7 @@ void Program::contactsMenu() {
 	}
 }
 
-void Program::viewMsgs(User& liveUser, User& currentContact) { //khira -- not sure if it works because i cant test it ):
-	int j = 0;
-	if (liveUser.inbox.size() == 0)
-		cout << "No messeges found\n";
 
-	else {
-		for (int i = 0; i < liveUser.inbox.size(); i++) {
-			if (liveUser.inbox[i].getSenderID() == currentContact.getid()) {
-				cout << ++j << "." << liveUser.inbox[i].getContent() << endl;
-			}
-		}
-	}
-}
 //stack<string> Program::split(string s, char delim) 
 //{
 //	stack<string> result;

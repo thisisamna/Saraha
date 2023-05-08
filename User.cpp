@@ -35,7 +35,22 @@ string User::getUsername()
 	return username;
 }
 
+string User::getPassword()
+{
+	return password;
+}
 
+void User::viewContactMessages(User contact) { //khira -- not sure if it works because i cant test it ):
+	int j = 0;
+	for (int i = 0; i < inbox.size(); i++) {
+		if (inbox[i].getSenderID() == contact.getid()) 
+		{
+			cout << ++j << ". " << inbox[i].getContent() << endl;
+		}
+	}
+	if (j == 0)
+		cout << "No messages found!"; //if they were unsent
+}
 void User::addcontact(User contact)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
@@ -121,6 +136,8 @@ void User::addToInbox(Message msg, User &sender)
 	{
 		contacts[sender]++;
 	}
+	newMsgs++;
+
 }
 
 Message User::popSent()
@@ -154,6 +171,13 @@ bool User::isBanned()
 		return true;
 	else
 		return false;
+}
+
+void User::notify()
+{
+	if (newMsgs != 0)
+		cout << "you have " << newMsgs << " unread messages. \n";
+
 }
 
 void User::removecontact(User &u)
@@ -200,6 +224,8 @@ void User::viewReceived()
 			cout << i+1 << ". " << inbox[i].getContent() << endl;
 		}
 	}
+	newMsgs = 0; //all messages are read
+
 }
 
 

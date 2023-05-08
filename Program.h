@@ -37,7 +37,6 @@ public:
 	void loadfile();
 	void savefile();
 	void UpdateLiveUserData();
-	void viewMsgs(User& liveUser, User& currentContact); // khira -- view msges sent by a specific user
 	~Program();
 };
 
