@@ -132,6 +132,7 @@ void Program::Inbox(User &liveUser)
 		msg.viewAsReceived();
 		cout << "1. Add/remove from favorites.\n"
 			<< "2. Add sender to contacts\n"
+			<< "3. Report sender\n"
 			<< "0. Back to previous menu.\n";
 		cin >> choice;
 		switch (choice)
@@ -141,19 +142,25 @@ void Program::Inbox(User &liveUser)
 			UpdateLiveUserData();
 			break;
 		case 2:
-		{
 			addSendertoContacts(msg);
 			UpdateLiveUserData();
 			break;
-
+		case 3:
+			cout << endl << "Report the sender of this message? (y/n) ";
+			cin >> check;
+			// Send Message
+			if (check == 'y')
+			{
+				idToUser(msg.getSenderID())->beReported();
+				cout << "Sender reported.\n";
+			}
+			break;
 		case 0:
 			break;
 		default:
 			cout << "Invalid entry.";
 			break;
 
-		}
-		break;
 		}
 		UpdateLiveUserData();
 	}
@@ -254,15 +261,24 @@ int Program::login() { //wessal
 	{
 		auto it = users.find(liveUserID);
 		User u = it->second;
-		if (u.comparePassword(pass))
-		{
-			cout << "Welcome back!\n";
-			return liveUserID;
-		}
-		else
+		if (!u.comparePassword(pass))
 		{
 			cout << "The password is incorrect!\nplease try again\n";
 			return -1;
+		}
+		else
+		{
+			if (u.isBanned())
+			{
+				cout << "Uh oh! Your account is banned :( \n"
+					<< "Looks like you have been reported too many times.\n";
+				return -1;
+			}
+			else
+			{
+				cout << "Welcome back!\n";
+				return liveUserID;
+			}
 		}
 	}
 }
@@ -271,7 +287,6 @@ void Program::sendmessage(User &liveUser) {
 	// Data
 	int receiverID;
 	string username_receiver, msg; 
-	char check;
 	// Create Message
 
 	cout << endl << "Enter your message:" << " ";
@@ -295,9 +310,8 @@ void Program::sendmessage(User &liveUser) {
 		Message msgg_object(liveUser.getid(), receiverID, username_receiver, msg);
 
 		// Check
-		cout << endl << "Send message? (y/n)" << " ";
+		cout << "Send message? (y/n)" << " ";
 		cin >> check;
-
 
 		// Send Message
 		if (check == 'y')
@@ -309,11 +323,11 @@ void Program::sendmessage(User &liveUser) {
 
 			// push in reciver inbox
 			receiver->addToInbox(msgg_object,liveUser,*receiver);
-			cout << endl << "Message sent successfully." << " " << endl;
+			cout << "Message sent successfully." << " " << endl;
 		}
 		else
 		{
-			cout << endl << "Message canceled." << " " << endl;
+			cout << "Message canceled." << " " << endl;
 		}
 	}
 	UpdateLiveUserData();
@@ -475,18 +489,18 @@ void Program::viewMsgs(User& liveUser, User& currentContact) { //khira -- not su
 		}
 	}
 }
-stack<string> Program::split(string s, char delim) 
-{
-	stack<string> result;
-	stringstream ss(s);
-	string item;
-
-	while (getline(ss, item, delim)) {
-		result.push(item);
-	}
-
-	return result;
-}
+//stack<string> Program::split(string s, char delim) 
+//{
+//	stack<string> result;
+//	stringstream ss(s);
+//	string item;
+//
+//	while (getline(ss, item, delim)) {
+//		result.push(item);
+//	}
+//
+//	return result;
+//}
 //usage
 //vector<string> v = split(str, delimiter);
 //for (auto i : v) cout << i << endl;

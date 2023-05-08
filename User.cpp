@@ -20,6 +20,7 @@ User::User(string name, string pass, int ID)
 	username = name;
 	password = pass;
 	id = ID;
+	reported = 0;
 	
 } // added the id to constructor to set the id for every user
 bool User:: operator<(const User& other) const {
@@ -34,7 +35,7 @@ string User::getUsername()
 	return username;
 }
 
-void User::addcontact(User  &liveUser ,User &Added)
+void User::addcontact(User &liveUser ,User &Added)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
 	// to check if user already exists
@@ -47,7 +48,7 @@ void User::addcontact(User  &liveUser ,User &Added)
 	}
 	
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
-		liveUser.contacts.insert({ Added,msgcounter(Added,liveUser) });
+		liveUser.contacts[Added]=msgcounter(Added,liveUser);
 		//cout << liveUser.contacts.size() << '\n';
 		//cout << Added.getUsername() << ' ' << Added.getid() << '\n';
 		cout << "Sender added to contacts.\n";
@@ -135,6 +136,19 @@ void User::removeFromInbox(Message msg)
 	}
 }
 
+void User::beReported()
+{
+	reported++;
+}
+
+bool User::isBanned()
+{
+	if (reported >= 2)
+		return true;
+	else
+		return false;
+}
+
 void User::removecontact(User &u)
 {
 	/*int i = -1;
@@ -182,13 +196,8 @@ void User::viewReceived()
 }
 
 
-void User::viewMessageOptions(int i)
-{
-
-}
 
 void User::viewcontacts(User &liveuser) {
-
 	if (liveuser.contacts.size() == 0) {
 		cout << "You don't have any contacts yet!\n";
 	}

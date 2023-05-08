@@ -14,6 +14,7 @@ class Program
 	User liveUser;
 	bool exit;
 	int choice;
+	char check;
 	unordered_map<int, User> users;
 
 public:

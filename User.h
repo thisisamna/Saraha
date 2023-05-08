@@ -21,7 +21,7 @@ public:
 	map<User , int>contacts;
 	vector <Message> FavouriteMessages;
 	int newMsgs = 0; // khira -- incremencts every time a msge is sent to a user and once the user opens their inbox the variable is set to 0 again
-	
+	int reported;
 	
 public:
 	User();
@@ -50,6 +50,8 @@ public:
 	void addToInbox(Message msg,User &liveUser, User &Sender);
 	Message popSent();
 	void removeFromInbox(Message msg);
+	void beReported();
+	bool isBanned();
 	
 };
 
