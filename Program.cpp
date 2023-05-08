@@ -33,8 +33,8 @@ void Program::loginMenu()
 			liveUserID = login();
 			if (liveUserID !=-1)
 			{
-				liveUser = users[liveUserID];
-				userMenu(liveUser);
+				liveUser = &users[liveUserID];
+				userMenu(*liveUser);
 			}
 			break;
 		}
@@ -50,7 +50,7 @@ void Program::loginMenu()
 			cout << "Invalid entry, try again!\n";
 				break;
 		}
-		UpdateLiveUserData();
+
 	}
 	
 }
@@ -72,7 +72,7 @@ void Program::userMenu(User &liveUser)
 		case 1:
 			//send a message
 			sendmessage(liveUser);
-			UpdateLiveUserData();
+	
 			break;
 		case 2:
 		{
@@ -95,7 +95,7 @@ void Program::userMenu(User &liveUser)
 			{
 				undolastmessage(liveUser);
 			}
-			UpdateLiveUserData();
+	
 			break;
 		case 5:
 			//contacts
@@ -116,7 +116,7 @@ void Program::userMenu(User &liveUser)
 		default:
 			cout << "Invalid entry, try again!\n";
 		}
-		UpdateLiveUserData();
+
 	}
 }
 
@@ -144,11 +144,11 @@ void Program::Inbox(User &liveUser)
 		{
 		case 1:
 			liveUser.favourite(msg);
-			UpdateLiveUserData();
+	
 			break;
 		case 2:
 			addSendertoContacts(liveUser, msg);
-			UpdateLiveUserData();
+	
 			break;
 		case 3:
 			cout << endl << "Report the sender of this message? (y/n) ";
@@ -167,7 +167,7 @@ void Program::Inbox(User &liveUser)
 			break;
 
 		}
-		UpdateLiveUserData();
+
 	}
 }
 
@@ -202,7 +202,7 @@ void Program::addSendertoContacts(User& liveUser, Message msg)
 {
 	User sender = *idToUser(msg.getSenderID());
 	liveUser.addcontact(sender);
-	UpdateLiveUserData();
+
 }
 
 void Program::printCentered(string str)
@@ -328,13 +328,11 @@ void Program::sendmessage(User &liveUser) {
 			cout << "Message canceled." << " " << endl;
 		}
 	}
-	UpdateLiveUserData();
+
 
 }
 
-void Program::UpdateLiveUserData() {
-	users[liveUserID] = liveUser;
-}
+
 
 void Program::undolastmessage(User &liveUser) {
 	cout << endl << "Do You Want To Delete Last Message ? (y/n)" << " " << endl;
@@ -365,7 +363,7 @@ void Program::undolastmessage(User &liveUser) {
 		default:
 			cout << "Invalid choice, please try again!";
 		}
-		UpdateLiveUserData();
+
 	}
 	else
 		return;
@@ -450,7 +448,6 @@ void Program::loadfile()
 }
 Program::~Program()
 {
-	users[liveUserID] = liveUser;
 	savefile();
 }
 

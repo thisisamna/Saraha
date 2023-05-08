@@ -11,7 +11,7 @@ class Program
 {
 	int liveUserID = -1;
 	int userCount = 0;
-	User liveUser;
+	User *liveUser;
 	bool exit;
 	int choice;
 	char check;
@@ -36,7 +36,6 @@ public:
 	stack<string> split(string s, char delim);
 	void loadfile();
 	void savefile();
-	void UpdateLiveUserData();
 	~Program();
 };
 
