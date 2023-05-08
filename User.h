@@ -28,7 +28,6 @@ public:
 	User(string username, string password, int id);
 	bool operator<(const User& other) const;
 	int getid();
-
 	string getUsername();
 	void addcontact(User &liveUser, User &Added); //return boolean?
 	void removecontact(User &u);

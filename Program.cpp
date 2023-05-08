@@ -362,32 +362,26 @@ void Program::undolastmessage(User &liveUser) {
 void Program::savefile() {
 	ofstream ourfile("ourdata.txt", ios::app);
 	if (ourfile.is_open()) {
-		for (auto data : users)
+		for (auto it : users)
 		{
-			ourfile << data.first << ":  " << data.second.username << "\t" << data.second.password << "\t";
-			for (auto& elem : data.second.sent) {
-				ourfile << elem.getContent()<<"\t";
+			ourfile << it.first << " " << it.second.username << " " << it.second.password << "\n";
+			for (auto msg : it.second.sent) {
+				ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
 			}
-			for (auto& elem : data.second.inbox) {
-				ourfile << elem.getReceiverID()<<"\t"<<elem.getContent()<<"\t";
+			for (auto msg : it.second.inbox) {
+				ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
+				/*	}
+					for (auto elem : it.second.contacts) {
+						ourfile << elem.second << endl;
+					}*/
+				for (auto elem : it.second.FavouriteMessages) {
+					ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
+				}
+				ourfile << endl;
 			}
-			for (auto& elem : data.second.contacts) { // I don't know what should it return!
-				ourfile << elem.second << "\t";
-			}
-			for (auto& elem : data.second.FavouriteMessages) {
-				ourfile << elem.getReceiverID() << "\t" << elem.getContent();
-			}
-			ourfile << endl;
-			/*for (int i = 0; i < data.second.sent.size(); i++) {
-				ourfile << data.second.sent.front() << endl;
-				data.second.sent.push_back(data.second.sent.front());
-				data.second.sent.pop_front();
-
-			}*/
-			
 		}
-	}
 		ourfile.close();
+	}
 }
 void Program::loadfile()
 {
