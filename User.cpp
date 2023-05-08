@@ -10,9 +10,11 @@ using namespace std;
 
 User::User() 
 {
+	id = 0;
+	username = "please";
+	password = "work";
 
 }
-
 User::User(string name, string pass, int ID)
 {
 	username = name;
@@ -251,37 +253,36 @@ void User::viewFavorites(){
 //search contact by his id
 void User::searchContactbyid(int id) {
 	bool found = false;
-	User it;
 	for (auto i : contacts) {
 		if (i.first.id == id) {
 			found = true;
-			it = i.first;
 			break;
 		}
 	}
 	if (found) {
-		cout << "Contact Found !\n Name : " << it.getUsername() << "\t Id : " << id << '\n';
+		cout << "Contact Found !\n";
 	}
 	else {
-		cout << "Contact not Found ! , check if the entered id is correct \n";
+		cout << "Contact not Found ! \n";
 	}
 }
-
-void User::searchContactbyname(string username) {
-	bool found = false;
-	User it;
-	for (auto i : contacts) {
-		if (i.first.username == username) {
-			found = true;
-			it = i.first;
-			break;
-		}
-	}
-	if (found) {
-		cout << "Contact Found !\n Name : " << username << "\t Id : " << it.getid() << '\n';
-	}
-	else {
-		cout << "Contact not Found ! , check if the entered username is correct \n";
-	}
-
-}
+//The next fucntion goes against the requirements
+// 
+//void User::searchContactbyname(string username) {
+//	bool found = false;
+//	User it;
+//	for (auto i : contacts) {
+//		if (i.first.username == username) {
+//			found = true;
+//			it = i.first;
+//			break;
+//		}
+//	}
+//	if (found) {
+//		cout << "Contact Found !\n Name : " << username << "\t Id : " << it.getid() << '\n';
+//	}
+//	else {
+//		cout << "Contact not Found ! , check if the entered username is correct \n";
+//	}
+//
+//}

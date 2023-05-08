@@ -1,6 +1,16 @@
-1:  wessal salah	1111	
-2:  sama saad	2222	
-1:  :  wessal salah	1111		2:  sama saad	2222		
-1:  Rana	r	1	hbhvkcv	1	hbhjvjvj	
--1:  		
-2:  Amna	a	hbhjvjvj	hbhvkcv	4	
+1,Amna,a
+
+4,Habiba,f
+
+0,,
+
+2,Khira,k
+
+3,Rana,r
+
+5,Habeba,h
+
+6,Fatma,f
+
+7,Wessal,w
+

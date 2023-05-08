@@ -359,45 +359,82 @@ void Program::undolastmessage(User &liveUser) {
 		return;
 }
 
-void Program::savefile() {
-	ofstream ourfile("ourdata.txt", ios::app);
-	if (ourfile.is_open()) {
-		for (auto it : users)
-		{
-			ourfile << it.first << " " << it.second.username << " " << it.second.password << "\n";
-			for (auto msg : it.second.sent) {
-				ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
-			}
-			for (auto msg : it.second.inbox) {
-				ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
-				/*	}
-					for (auto elem : it.second.contacts) {
-						ourfile << elem.second << endl;
-					}*/
-				for (auto elem : it.second.FavouriteMessages) {
-					ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
-				}
-				ourfile << endl;
-			}
-		}
-		ourfile.close();
+//void Program::savefile() {
+//	ofstream ourfile("ourdata.txt", ios::app);
+//	if (ourfile.is_open()) {
+//		for (auto it : users)
+//		{
+//			ourfile << it.second.getid() << ',' << it.second.getUsername() << ',' << it.second.password << "\n";
+//			//for (auto msg : it.second.sent) {
+//			//	ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
+//			//}
+//			//for (auto msg : it.second.inbox) {
+//			//	ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
+//			//	/*	}
+//			//		for (auto elem : it.second.contacts) {
+//			//			ourfile << elem.second << endl;
+//			//		}*/
+//			//	for (auto elem : it.second.FavouriteMessages) {
+//			//		ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
+//			//	}
+//				ourfile << endl;
+//			}
+//		}
+//		ourfile.close();
+//}
+
+//void Program::loadfile()
+//{
+//	ifstream ourfile("ourdata.txt");
+//	string line;
+//	int id;
+//	string username;
+//	string password;
+//	stack<string> splitted;
+//	while (ourfile) {
+//		getline(ourfile, line);
+//		splitted = split(line, ',');
+//		while (!splitted.empty())
+//		{
+//			id = stoi(splitted.top());
+//			splitted.pop();
+//			username = splitted.top();
+//			splitted.pop();
+//			password = splitted.top();
+//			splitted.pop();
+//			//users.insert(make_pair(id, obj));
+//			users[id] = User(username, password, id);
+//			/*for (auto it : users) {
+//				cout << it.first << it.second.username << " " << it.second.password;
+//			}*/
+//		}
+//	}
+//	ourfile.close();
+//}
+void Program::savefile()
+{
+	ofstream file("data.txt");
+	for (auto it : users)
+	{
+		file << it.second.getid() << " " << it.second.getUsername() << " " << it.second.password << endl;
+		file << endl;
+
 	}
 }
 void Program::loadfile()
 {
-	ifstream ourfile("ourdata.txt");
+	ifstream file("data.txt");
 	int id;
-	User obj;
-	while (ourfile >> id) {
-		getline(ourfile, obj.username);
-		getline(ourfile, obj.password);
-		//users.insert(make_pair(id, obj));
-		users[id] = User(obj.username, obj.password, id);
-		/*for (auto it : users) {
-			cout << it.first << it.second.username << " " << it.second.password;
-		}*/
+	string username;
+	string password;
+
+	int senderID, receiverID;
+	string receiverUsername, content;
+
+	while (file >> id >> username >> password)
+	{
+		users[id] = User(username, password, id);
 	}
-	ourfile.close();
 }
 Program::~Program()
 {
@@ -425,11 +462,11 @@ void Program::contactsMenu() {
 	}
 }
 
-void Program::viewMsgs(User & liveUser, User & currentContact) { //khira -- not sure if it works because i cant test it ):
+void Program::viewMsgs(User& liveUser, User& currentContact) { //khira -- not sure if it works because i cant test it ):
 	int j = 0;
-	if (liveUser.inbox.size() == 0) 
+	if (liveUser.inbox.size() == 0)
 		cout << "No messeges found\n";
-	
+
 	else {
 		for (int i = 0; i < liveUser.inbox.size(); i++) {
 			if (liveUser.inbox[i].getSenderID() == currentContact.getid()) {
@@ -438,3 +475,18 @@ void Program::viewMsgs(User & liveUser, User & currentContact) { //khira -- not 
 		}
 	}
 }
+stack<string> Program::split(string s, char delim) 
+{
+	stack<string> result;
+	stringstream ss(s);
+	string item;
+
+	while (getline(ss, item, delim)) {
+		result.push(item);
+	}
+
+	return result;
+}
+//usage
+//vector<string> v = split(str, delimiter);
+//for (auto i : v) cout << i << endl;
