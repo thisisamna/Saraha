@@ -100,6 +100,15 @@ void Program::userMenu(User &liveUser)
 		case 5:
 			//contacts
 			liveUser.viewcontacts();
+			cout << "Enter a contact ID for more options \n"
+				<< "0 to go back to the previous menu. \n";
+			cin >> choice;
+			if (choice == 0)
+				break;
+			else
+			{
+				contactMenu(liveUser, *idToUser(choice));
+			}
 			break;
 		case 6:
 			//logout
@@ -445,23 +454,42 @@ Program::~Program()
 	savefile();
 }
 
-void Program::contactsMenu() {
+void Program::contactMenu(User &liveUser, User &contact) {
 
 	cout << "1. View sent messages\n"
 		<< "2. Report\n"
-		<< "3. Block\n";
+		<< "3. Remove\n"
+		//<< "4. Block\n"
+		<< "0. Back to previous menu \n";
 
-	int choice; cin >> choice;
+	int choice; 
+	cin >> choice;
+
 	switch (choice) {
 	case 1:
-		// view sent function
+		// view messages from contact
+		liveUser.viewContactMessages(contact);
 		break;
 	case 2:
-		// report function
+		// report 
+		cout << endl << "Report this contact? (y/n) ";
+		cin >> check;
+		if (check == 'y')
+		{
+			contact.beReported();
+			cout << "Contact reported.\n";
+		}
 		break;
 	case 3:
+		liveUser.removecontact(contact);
+		break;
+	case 4:
 		// block function
 		break;
+	case 0:
+		break;
+	default:
+		cout << "Invalid entry! Please try again.";
 	}
 }
 

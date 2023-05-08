@@ -27,7 +27,7 @@ public:
 	void signup();
 	void sendmessage(User &liveUser);
 	void undolastmessage(User &liveUser);
-	void contactsMenu();
+	void contactMenu(User &liveUser, User &contact);
 	int login();
 	User* idToUser(int id);
 	int usernameToID(string username);

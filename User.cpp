@@ -186,6 +186,7 @@ void User::removecontact(User contact)
 		if (it->first.id == contact.id)
 		{
 			it = contacts.erase(it);
+			cout << "Contact removed. \n";
 			break;
 		}
 	}
