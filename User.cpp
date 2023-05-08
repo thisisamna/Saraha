@@ -35,12 +35,13 @@ string User::getUsername()
 	return username;
 }
 
-void User::addcontact(User &liveUser ,User &Added)
+
+void User::addcontact(User contact)
 {
 	bool userExists = false; // ترو لو اليوزر موجود بالفعل عندي
 	// to check if user already exists
-	for (auto i : liveUser.contacts) {
-		if (i.first.id == Added.getid()) {
+	for (auto i : contacts) {
+		if (i.first.id == contact.getid()) {
 			userExists = true;
 			cout << "This user is already in your contacts.\n";
 			break;
@@ -48,7 +49,7 @@ void User::addcontact(User &liveUser ,User &Added)
 	}
 	
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
-		liveUser.contacts[Added]=msgcounter(Added,liveUser);
+		contacts[contact]=msgcounter(contact);
 		//cout << liveUser.contacts.size() << '\n';
 		//cout << Added.getUsername() << ' ' << Added.getid() << '\n';
 		cout << "Sender added to contacts.\n";
@@ -59,24 +60,24 @@ void User::addcontact(User &liveUser ,User &Added)
 
 
 
-int User::msgcounter(User &AddedContact, User &liveUser) 
+int User::msgcounter(User contact)
 {
 	int numOfmsgs = 0;
 			//count number of sent messages for this contact 
 	
-	if (!liveUser.sent.empty()) {
-		for (int i = 0; i < liveUser.sent.size(); i++) {
-			if (liveUser.sent.front().getReceiverID() == AddedContact.getid()) {
+	if (!sent.empty()) {
+		for (int i = 0; i < sent.size(); i++) {
+			if (sent.front().getReceiverID() == contact.getid()) {
 				numOfmsgs++;
 			}
-			liveUser.sent.push_back(liveUser.sent.front());
-			liveUser.sent.pop_front();
+			sent.push_back(sent.front());
+			sent.pop_front();
 		}
 	}
 
-	if (!liveUser.inbox.empty()) {
-		for (int i = 0; i < liveUser.inbox.size(); i++) {
-			if (liveUser.inbox[i].getSenderID() == AddedContact.getid()) 
+	if (!inbox.empty()) {
+		for (int i = 0; i < inbox.size(); i++) {
+			if (inbox[i].getSenderID() == contact.getid()) 
 				numOfmsgs++;
 		}
 	}
@@ -104,16 +105,22 @@ bool User::comparePassword(string pass)
 	}
 }
 
-void User::addToSent(Message msg,User &liveUser,User &received)
+void User::addToSent(Message msg,User &receiver)
 {
 	sent.push_front(msg);
-	liveUser.contacts[received]++;
+	if (contacts.find(receiver) != contacts.end())
+	{
+		contacts[receiver]++;
+	}
 }
 
-void User::addToInbox(Message msg, User &liveUser, User &sender) 
+void User::addToInbox(Message msg, User &sender) 
 {
 	inbox.push_back(msg);
-	liveUser.contacts[sender]++;
+	if (contacts.find(sender) != contacts.end())
+	{
+		contacts[sender]++;
+	}
 }
 
 Message User::popSent()
@@ -197,14 +204,14 @@ void User::viewReceived()
 
 
 
-void User::viewcontacts(User &liveuser) {
-	if (liveuser.contacts.size() == 0) {
+void User::viewcontacts() {
+	if (contacts.size() == 0) {
 		cout << "You don't have any contacts yet!\n";
 	}
 	else {
 		cout << "Contacts: " << endl;
 		vector<pair<User, int>>sorted_contacts;
-		for (auto i : liveuser.contacts) {
+		for (auto i : contacts) {
 			sorted_contacts.push_back(i);
 		}
 		sort(sorted_contacts.begin(), sorted_contacts.end(), [](const pair<User, int>& a, const pair<User, int>& b) {

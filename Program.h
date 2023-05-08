@@ -31,7 +31,7 @@ public:
 	int login();
 	User* idToUser(int id);
 	int usernameToID(string username);
-	void addSendertoContacts(Message msg);
+	void addSendertoContacts(User& liveUser, Message msg);
 	void printCentered(string str);
 	stack<string> split(string s, char delim);
 	void loadfile();

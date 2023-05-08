@@ -103,7 +103,7 @@ void Program::userMenu(User &liveUser)
 			break;
 		case 5:
 			//contacts
-			liveUser.viewcontacts(liveUser);
+			liveUser.viewcontacts();
 			break;
 		case 6:
 			//logout
@@ -142,7 +142,7 @@ void Program::Inbox(User &liveUser)
 			UpdateLiveUserData();
 			break;
 		case 2:
-			addSendertoContacts(msg);
+			addSendertoContacts(liveUser, msg);
 			UpdateLiveUserData();
 			break;
 		case 3:
@@ -193,16 +193,10 @@ int Program::usernameToID(string username)
 	return -1; //not found
 }
 
-void Program::addSendertoContacts(Message msg)
+void Program::addSendertoContacts(User& liveUser, Message msg)
 {
-	if (idToUser(msg.getSenderID()) != nullptr && idToUser(msg.getReceiverID()) !=nullptr) {
-		User sender = *idToUser(msg.getSenderID());
-		User receiver = *idToUser(msg.getReceiverID()); // liveuser
-	    receiver.addcontact(receiver, sender);
-	}
-	else {
-		cout << "Error During Adding Contact\n";
-	}
+	User sender = *idToUser(msg.getSenderID());
+	liveUser.addcontact(sender);
 	UpdateLiveUserData();
 }
 
@@ -319,10 +313,10 @@ void Program::sendmessage(User &liveUser) {
 
 			receiver->newMsgs++;
 			// Push in Sender messages
-			liveUser.addToSent(msgg_object, liveUser,*receiver);
+			liveUser.addToSent(msgg_object, *receiver);
 
 			// push in reciver inbox
-			receiver->addToInbox(msgg_object,liveUser,*receiver);
+			receiver->addToInbox(msgg_object, *receiver);
 			cout << "Message sent successfully." << " " << endl;
 		}
 		else
