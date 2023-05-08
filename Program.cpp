@@ -48,7 +48,9 @@ void Program::loginMenu()
 			return;
 		default:
 			cout << "Invalid entry, try again!\n";
+				break;
 		}
+		UpdateLiveUserData();
 	}
 	
 }
@@ -57,6 +59,10 @@ void Program::userMenu(User &liveUser)
 {
 	while (true)
 	{
+		if (liveUser.newMsgs != 0) 
+			cout << "you have " << liveUser.newMsgs << " unread messages\n";
+			
+		
 		cout << "1. Send a message\n"
 			<< "2. Inbox\n"
 			<< "3. Favorites\n"
@@ -69,11 +75,13 @@ void Program::userMenu(User &liveUser)
 		case 1:
 			//send a message
 			sendmessage(liveUser);
+			UpdateLiveUserData();
 			break;
 		case 2:
 		{
 			//inbox
 			Inbox(liveUser);
+			liveUser.newMsgs = 0;
 			break;
 		}
 		case 3:
@@ -91,10 +99,11 @@ void Program::userMenu(User &liveUser)
 			{
 				undolastmessage(liveUser);
 			}
+			UpdateLiveUserData();
 			break;
 		case 5:
 			//contacts
-			liveUser.viewcontacts();
+			liveUser.viewcontacts(liveUser);
 			break;
 		case 6:
 			//logout
@@ -102,6 +111,7 @@ void Program::userMenu(User &liveUser)
 		default:
 			cout << "Invalid entry, try again!\n";
 		}
+		UpdateLiveUserData();
 	}
 }
 
@@ -128,10 +138,12 @@ void Program::Inbox(User &liveUser)
 		{
 		case 1:
 			liveUser.favourite(msg);
+			UpdateLiveUserData();
 			break;
 		case 2:
 		{
 			addSendertoContacts(msg);
+			UpdateLiveUserData();
 			break;
 
 		case 0:
@@ -143,6 +155,7 @@ void Program::Inbox(User &liveUser)
 		}
 		break;
 		}
+		UpdateLiveUserData();
 	}
 }
 
@@ -178,9 +191,12 @@ void Program::addSendertoContacts(Message msg)
 	if (idToUser(msg.getSenderID()) != nullptr && idToUser(msg.getReceiverID()) !=nullptr) {
 		User sender = *idToUser(msg.getSenderID());
 		User receiver = *idToUser(msg.getReceiverID()); // liveuser
-		int count = liveUser.msgcounter(sender, receiver);
-	    liveUser.addcontact(receiver, sender);
+	    receiver.addcontact(receiver, sender);
 	}
+	else {
+		cout << "Error During Adding Contact\n";
+	}
+	UpdateLiveUserData();
 }
 
 void Program::printCentered(string str)
@@ -286,6 +302,8 @@ void Program::sendmessage(User &liveUser) {
 		// Send Message
 		if (check == 'y')
 		{
+
+			receiver->newMsgs++;
 			// Push in Sender messages
 			liveUser.addToSent(msgg_object, liveUser,*receiver);
 
@@ -297,9 +315,13 @@ void Program::sendmessage(User &liveUser) {
 		{
 			cout << endl << "Message canceled." << " " << endl;
 		}
-
 	}
+	UpdateLiveUserData();
 
+}
+
+void Program::UpdateLiveUserData() {
+	users[liveUserID] = liveUser;
 }
 
 void Program::undolastmessage(User &liveUser) {
@@ -325,14 +347,13 @@ void Program::undolastmessage(User &liveUser) {
 			if (idToUser(lastMsg.getReceiverID()) != nullptr) {
 				User* receiver = idToUser(lastMsg.getReceiverID());
 				receiver->removeFromInbox(lastMsg);
-				cout << "Message removed for everyone" << endl;
-
 				break;
 			}
 		}
 		default:
 			cout << "Invalid choice, please try again!";
 		}
+		UpdateLiveUserData();
 	}
 	else
 		return;
@@ -340,15 +361,23 @@ void Program::undolastmessage(User &liveUser) {
 
 void Program::savefile() {
 	ofstream ourfile("ourdata.txt", ios::app);
-	Message m;
 	if (ourfile.is_open()) {
 		for (auto data : users)
 		{
 			ourfile << data.first << ":  " << data.second.username << "\t" << data.second.password << "\t";
 			for (auto& elem : data.second.sent) {
-				ourfile << elem.getContent();
+				ourfile << elem.getContent()<<"\t";
 			}
-			
+			for (auto& elem : data.second.inbox) {
+				ourfile << elem.getReceiverID()<<"\t"<<elem.getContent()<<"\t";
+			}
+			for (auto& elem : data.second.contacts) { // I don't know what should it return!
+				ourfile << elem.second << "\t";
+			}
+			for (auto& elem : data.second.FavouriteMessages) {
+				ourfile << elem.getReceiverID() << "\t" << elem.getContent();
+			}
+			ourfile << endl;
 			/*for (int i = 0; i < data.second.sent.size(); i++) {
 				ourfile << data.second.sent.front() << endl;
 				data.second.sent.push_back(data.second.sent.front());
@@ -362,9 +391,56 @@ void Program::savefile() {
 }
 void Program::loadfile()
 {
+	ifstream ourfile("ourdata.txt");
+	int id;
+	User obj;
+	while (ourfile >> id) {
+		getline(ourfile, obj.username);
+		getline(ourfile, obj.password);
+		//users.insert(make_pair(id, obj));
+		users[id] = User(obj.username, obj.password, id);
+		/*for (auto it : users) {
+			cout << it.first << it.second.username << " " << it.second.password;
+		}*/
+	}
+	ourfile.close();
 }
 Program::~Program()
 {
+	users[liveUserID] = liveUser;
 	savefile();
 }
 
+void Program::contactsMenu() {
+
+	cout << "1. View sent messages\n"
+		<< "2. Report\n"
+		<< "3. Block\n";
+
+	int choice; cin >> choice;
+	switch (choice) {
+	case 1:
+		// view sent function
+		break;
+	case 2:
+		// report function
+		break;
+	case 3:
+		// block function
+		break;
+	}
+}
+
+void Program::viewMsgs(User & liveUser, User & currentContact) { //khira -- not sure if it works because i cant test it ):
+	int j = 0;
+	if (liveUser.inbox.size() == 0) 
+		cout << "No messeges found\n";
+	
+	else {
+		for (int i = 0; i < liveUser.inbox.size(); i++) {
+			if (liveUser.inbox[i].getSenderID() == currentContact.getid()) {
+				cout << ++j << "." << liveUser.inbox[i].getContent() << endl;
+			}
+		}
+	}
+}

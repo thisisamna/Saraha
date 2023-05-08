@@ -26,6 +26,7 @@ public:
 	void signup();
 	void sendmessage(User &liveUser);
 	void undolastmessage(User &liveUser);
+	void contactsMenu();
 	int login();
 	User* idToUser(int id);
 	int usernameToID(string username);
@@ -33,6 +34,8 @@ public:
 	void printCentered(string str);
 	void loadfile();
 	void savefile();
+	void UpdateLiveUserData();
+	void viewMsgs(User& liveUser, User& currentContact); // khira -- view msges sent by a specific user
 	~Program();
 };
 
