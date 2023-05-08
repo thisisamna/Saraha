@@ -78,6 +78,7 @@ void Program::userMenu(User &liveUser)
 		}
 		case 3:
 			//favorites
+			liveUser.viewFavorites();
 			break;
 		case 4:
 			//sent messages

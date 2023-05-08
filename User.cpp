@@ -48,7 +48,6 @@ void User::addcontact(User  &liveUser ,User &Added)
 
 	}
 
-
 }
 
 
@@ -205,15 +204,11 @@ void User::favourite(Message msg) {
 		
 		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
 			MessageIsFavourite = true;
-
 			cout << "Message is already favourite press 'Y' if you want to remove it \n";
 			cout << "Or 'N' to remain it\n";
 			cin >> answer;
-
-
 			if(answer==('y' )||answer=='Y')
 			FavouriteMessages.erase(FavouriteMessages.begin()+i);
-
 			else if (answer == ('N')||answer== 'n')
 				break;
 		}
@@ -227,6 +222,7 @@ void User::favourite(Message msg) {
 			RemoveOldestFavorite();
 			FavouriteMessages.push_back(msg);
 		}
+		cout << "Message added to favorites." << endl;
 	}
 	
 }
@@ -237,7 +233,6 @@ void User::RemoveOldestFavorite(){
 
 void User::viewFavorites(){
 	for(int i = 0; i < FavouriteMessages.size(); i++){
-		cout << FavouriteMessages[i].getContent();
-		cout << endl;
+		FavouriteMessages[i].viewAsReceived();
 	}
 }

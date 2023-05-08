@@ -33,8 +33,6 @@ public:
 	string getUsername();
 	void addcontact(User &liveUser, User &Added); //return boolean?
 	void removecontact(User &u);
-	void sendmessage();
-	void unsend();
 	//void searchcontact(); //boolean?
 	void viewcontacts();
 	void viewSent();
