@@ -1,6 +1,8 @@
 ﻿#include "Program.h"
 #include <iostream>
 #include<fstream>
+#include<string>
+
 Program::Program()
 {
 	loadfile();
@@ -24,6 +26,14 @@ void Program::loginMenu()
 			<< "3. Exit\n";
 
 		cin >> choice;
+		//handling exception 
+        // if we get wrong datatype
+        stringstream answer(choice);
+        if (!(answer >> choice)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
+
 
 		switch (choice) {
 		case 1:
@@ -48,7 +58,9 @@ void Program::loginMenu()
 			return;
 		default:
 			cout << "Invalid entry, try again!\n";
+				break;
 		}
+		UpdateLiveUserData();
 	}
 	
 }
@@ -57,6 +69,7 @@ void Program::userMenu(User &liveUser)
 {
 	while (true)
 	{
+		liveUser.notify();
 		cout << "1. Send a message\n"
 			<< "2. Inbox\n"
 			<< "3. Favorites\n"
@@ -64,11 +77,20 @@ void Program::userMenu(User &liveUser)
 			<< "5. My contacts\n"
 			<< "6. Logout\n";
 		cin >> choice;
+		//handling exception 
+        // if we get wrong datatype
+        stringstream answer(choice);
+        if (!(answer >> choice)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
+
 		switch (choice)
 		{
 		case 1:
 			//send a message
 			sendmessage(liveUser);
+			UpdateLiveUserData();
 			break;
 		case 2:
 		{
@@ -78,6 +100,7 @@ void Program::userMenu(User &liveUser)
 		}
 		case 3:
 			//favorites
+			liveUser.viewFavorites();
 			break;
 		case 4:
 			//sent messages
@@ -90,10 +113,20 @@ void Program::userMenu(User &liveUser)
 			{
 				undolastmessage(liveUser);
 			}
+			UpdateLiveUserData();
 			break;
 		case 5:
 			//contacts
 			liveUser.viewcontacts();
+			cout << "Enter a contact ID for more options \n"
+				<< "0 to go back to the previous menu. \n";
+			cin >> choice;
+			if (choice == 0)
+				break;
+			else
+			{
+				contactMenu(liveUser, *idToUser(choice));
+			}
 			break;
 		case 6:
 			//logout
@@ -101,6 +134,7 @@ void Program::userMenu(User &liveUser)
 		default:
 			cout << "Invalid entry, try again!\n";
 		}
+		UpdateLiveUserData();
 	}
 }
 
@@ -121,18 +155,37 @@ void Program::Inbox(User &liveUser)
 		msg.viewAsReceived();
 		cout << "1. Add/remove from favorites.\n"
 			<< "2. Add sender to contacts\n"
+			<< "3. Report sender\n"
 			<< "0. Back to previous menu.\n";
 		cin >> choice;
+		//handling exception 
+        // if we get wrong datatype
+        stringstream answer(choice);
+        if (!(answer >> choice)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
+
 		switch (choice)
 		{
 		case 1:
 			liveUser.favourite(msg);
+			UpdateLiveUserData();
 			break;
 		case 2:
-		{
-			addSendertoContacts(msg);
+			addSendertoContacts(liveUser, msg);
+			UpdateLiveUserData();
 			break;
-
+		case 3:
+			cout << endl << "Report the sender of this message? (y/n) ";
+			cin >> check;
+			// Send Message
+			if (check == 'y')
+			{
+				idToUser(msg.getSenderID())->beReported();
+				cout << "Sender reported.\n";
+			}
+			break;
 		case 0:
 			break;
 		default:
@@ -140,8 +193,7 @@ void Program::Inbox(User &liveUser)
 			break;
 
 		}
-		break;
-		}
+		UpdateLiveUserData();
 	}
 }
 
@@ -172,14 +224,11 @@ int Program::usernameToID(string username)
 	return -1; //not found
 }
 
-void Program::addSendertoContacts(Message msg)
+void Program::addSendertoContacts(User& liveUser, Message msg)
 {
-	if (idToUser(msg.getSenderID()) != nullptr && idToUser(msg.getReceiverID()) !=nullptr) {
-		User sender = *idToUser(msg.getSenderID());
-		User receiver = *idToUser(msg.getReceiverID()); // liveuser
-		int count = liveUser.msgcounter(sender, receiver);
-	    liveUser.addcontact(receiver, sender);
-	}
+	User sender = *idToUser(msg.getSenderID());
+	liveUser.addcontact(sender);
+	UpdateLiveUserData();
 }
 
 void Program::printCentered(string str)
@@ -235,26 +284,34 @@ int Program::login() { //wessal
 	}
 	else
 	{
-		auto it = users.find(liveUserID);
+		/*auto it = users.find(liveUserID);
 		User u = it->second;
-		if (u.comparePassword(pass))
-		{
-			cout << "Welcome back!\n";
-			return liveUserID;
-		}
-		else
+		if (!u.comparePassword(pass))
 		{
 			cout << "The password is incorrect!\nplease try again\n";
 			return -1;
 		}
+		else
+		{
+			if (u.isBanned())
+			{
+				cout << "Uh oh! Your account is banned :( \n"
+					<< "Looks like you have been reported too many times.\n";
+				return -1;
+			}*/
+
+		cout << "Welcome back!\n";
+		return liveUserID;
+
 	}
 }
+	
+
 	
 void Program::sendmessage(User &liveUser) {
 	// Data
 	int receiverID;
 	string username_receiver, msg; 
-	char check;
 	// Create Message
 
 	cout << endl << "Enter your message:" << " ";
@@ -278,27 +335,31 @@ void Program::sendmessage(User &liveUser) {
 		Message msgg_object(liveUser.getid(), receiverID, username_receiver, msg);
 
 		// Check
-		cout << endl << "Send message? (y/n)" << " ";
+		cout << "Send message? (y/n)" << " ";
 		cin >> check;
-
 
 		// Send Message
 		if (check == 'y')
 		{
+
 			// Push in Sender messages
-			liveUser.addToSent(msgg_object, liveUser,*receiver);
+			liveUser.addToSent(msgg_object, *receiver);
 
 			// push in reciver inbox
-			receiver->addToInbox(msgg_object,liveUser,*receiver);
-			cout << endl << "Message sent successfully." << " " << endl;
+			receiver->addToInbox(msgg_object, *receiver);
+			cout << "Message sent successfully." << " " << endl;
 		}
 		else
 		{
-			cout << endl << "Message canceled." << " " << endl;
+			cout << "Message canceled." << " " << endl;
 		}
-
 	}
+	UpdateLiveUserData();
 
+}
+
+void Program::UpdateLiveUserData() {
+	users[liveUserID] = liveUser;
 }
 
 void Program::undolastmessage(User &liveUser) {
@@ -313,6 +374,14 @@ void Program::undolastmessage(User &liveUser) {
 		cout << "1. Delete for me\n"
 			<< "2. Delete for everyone\n";
 		cin >> cc;
+		//handling exception 
+        // if we get wrong datatype
+        stringstream answer(cc);
+        if (!(answer >> cc)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
+
 		switch (cc)
 		{
 		case 1:
@@ -324,14 +393,13 @@ void Program::undolastmessage(User &liveUser) {
 			if (idToUser(lastMsg.getReceiverID()) != nullptr) {
 				User* receiver = idToUser(lastMsg.getReceiverID());
 				receiver->removeFromInbox(lastMsg);
-				cout << "Message removed for everyone" << endl;
-
 				break;
 			}
 		}
 		default:
 			cout << "Invalid choice, please try again!";
 		}
+		UpdateLiveUserData();
 	}
 	else
 		return;
@@ -339,31 +407,161 @@ void Program::undolastmessage(User &liveUser) {
 
 void Program::savefile() {
 	ofstream ourfile("ourdata.txt", ios::app);
-	Message m;
+	
 	if (ourfile.is_open()) {
-		for (auto data : users)
-		{
-			ourfile << data.first << ":  " << data.second.username << "\t" << data.second.password << "\t";
-			for (auto& elem : data.second.sent) {
-				ourfile << elem.getContent();
+		for (auto it : users) {
+			ourfile << it.first << '|' << it.second.getUsername() << '|' << it.second.getPassword() << '|';
+			for (int i = 0; i < liveUser.sent.size(); i++) {
+				ourfile << it.second.sent[i].getSenderID() << '|' << it.second.sent[i].getReceiverID() << '|' << it.second.sent[i].getReceiverUsername() << '|' << it.second.sent[i].getContent() << "\n";
 			}
-			
-			/*for (int i = 0; i < data.second.sent.size(); i++) {
-				ourfile << data.second.sent.front() << endl;
-				data.second.sent.push_back(data.second.sent.front());
-				data.second.sent.pop_front();
-
-			}*/
+			for (int i = 0; i < liveUser.inbox.size(); i++) {
+				ourfile << it.second.inbox[i].getSenderID() << '|' << it.second.inbox[i].getReceiverID() << '|' << it.second.inbox[i].getReceiverUsername() << '|' << it.second.inbox[i].getContent() << "\n";
+			}
+		}
+					/*for (auto elem : it.second.contacts) {
+					ourfile << elem.second << endl	}*/
+					//	for (auto elem : it.second.FavouriteMessages) {
+					//		ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
+					//	}
 			
 		}
-	}
 		ourfile.close();
-}
+	}
+
 void Program::loadfile()
 {
+	ifstream ourfile("ourdata.txt");
+	string name,pass,n;
+	int id;
+	char delimiter = '|';
+	while (ourfile >> id) {
+		getline(ourfile, name, delimiter);
+		getline(ourfile,name, delimiter);
+		getline(ourfile, pass, delimiter);
+		users[id] = User(name, pass, id);
+	}
+	for (auto e : users) {
+		cout << e.first << e.second.getUsername() << e.second.getPassword() << endl;
+	}
 }
+/**void Program::loadfile()
+{
+	ifstream ourfile("ourdata.txt");
+	string line;
+	int id;
+	string username;
+	string password;
+	stack<string> splitted;
+//	while (ourfile) {*/
+//		getline(ourfile, line);
+//		splitted = split(line, ',');
+//		while (!splitted.empty())
+//		{
+//			id = stoi(splitted.top());
+//			splitted.pop();
+//			username = splitted.top();
+//			splitted.pop();
+//			password = splitted.top();
+//			splitted.pop();
+//			//users.insert(make_pair(id, obj));
+//			users[id] = User(username, password, id);
+//			/*for (auto it : users) {
+//				cout << it.first << it.second.username << " " << it.second.password;
+//			}*/
+//		}
+//	}
+//	ourfile.close();
+//}
+/**void Program::savefile()
+{
+	ofstream file("data.txt");
+	for (auto it : users)
+	{
+		file << it.second.getid() << " " << it.second.getUsername() << " " << it.second.getPassword() << endl;
+		file << endl;
+
+	}
+}*/
+/*void Program::loadfile()
+{
+	ifstream file("data.txt");
+	int id;
+	string username;
+	string password;
+
+	int senderID, receiverID;
+	string receiverUsername, content;
+
+	while (file >> id >> username >> password)
+	{
+		users[id] = User(username, password, id);
+	}
+}*/
 Program::~Program()
 {
+	users[liveUserID] = liveUser;
 	savefile();
 }
 
+void Program::contactMenu(User &liveUser, User &contact) {
+
+	cout << "1. View sent messages\n"
+		<< "2. Report\n"
+		<< "3. Remove\n"
+		//<< "4. Block\n"
+		<< "0. Back to previous menu \n";
+
+	int choice; 
+	cin >> choice;
+	//handling exception 
+        // if we get wrong datatype
+        stringstream answer(choice);
+        if (!(answer >> choice)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
+
+	switch (choice) {
+	case 1:
+		// view messages from contact
+		liveUser.viewContactMessages(contact);
+		break;
+	case 2:
+		// report 
+		cout << endl << "Report this contact? (y/n) ";
+		cin >> check;
+		if (check == 'y')
+		{
+			contact.beReported();
+			cout << "Contact reported.\n";
+		}
+		break;
+	case 3:
+		liveUser.removecontact(contact);
+		break;
+	case 4:
+		// block function
+		break;
+	case 0:
+		break;
+	default:
+		cout << "Invalid entry! Please try again.";
+	}
+}
+
+
+//stack<string> Program::split(string s, char delim) 
+//{
+//	stack<string> result;
+//	stringstream ss(s);
+//	string item;
+//
+//	while (getline(ss, item, delim)) {
+//		result.push(item);
+//	}
+//
+//	return result;
+//}
+//usage
+//vector<string> v = split(str, delimiter);
+//for (auto i : v) cout << i << endl;

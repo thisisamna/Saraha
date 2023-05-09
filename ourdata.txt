@@ -1,8 +1,2 @@
-1:  Amna	a
-2:  Khira	k
-3:  Rana	r
-4:  Habiba	f
-5:  Habeba	h
-6:  Fatma	f
-7:  Wessal	w
-1:  wesso samy	9997
+1|somaia ali|3333
+2|wessal salah|1234
