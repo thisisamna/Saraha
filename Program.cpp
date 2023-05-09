@@ -375,10 +375,16 @@ void Program::undolastmessage(User &liveUser) {
 
 void Program::savefile() {
 	ofstream ourfile("ourdata.txt", ios::app);
+	
 	if (ourfile.is_open()) {
 		for (auto it : users) {
-			ourfile << it.first << '|' << it.second.getUsername() << '|' << it.second.getPassword() << "\n";
-			
+			ourfile << it.first << '|' << it.second.getUsername() << '|' << it.second.getPassword() << '|';
+			for (int i = 0; i < liveUser.sent.size(); i++) {
+				ourfile << it.second.sent[i].getSenderID() << '|' << it.second.sent[i].getReceiverID() << '|' << it.second.sent[i].getReceiverUsername() << '|' << it.second.sent[i].getContent() << "\n";
+			}
+			for (int i = 0; i < liveUser.inbox.size(); i++) {
+				ourfile << it.second.inbox[i].getSenderID() << '|' << it.second.inbox[i].getReceiverID() << '|' << it.second.inbox[i].getReceiverUsername() << '|' << it.second.inbox[i].getContent() << "\n";
+			}
 		}
 					/*for (auto elem : it.second.contacts) {
 					ourfile << elem.second << endl	}*/
@@ -393,7 +399,7 @@ void Program::savefile() {
 void Program::loadfile()
 {
 	ifstream ourfile("ourdata.txt");
-	string name,pass;
+	string name,pass,n;
 	int id;
 	char delimiter = '|';
 	while (ourfile >> id) {

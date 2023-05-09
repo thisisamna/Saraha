@@ -11,6 +11,7 @@ using namespace std;
 
 class User
 {
+public:
 	int id; //change
 	string username; //change
 	string password; //change

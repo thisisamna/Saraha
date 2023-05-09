@@ -16,7 +16,6 @@ class Program
 	int choice;
 	char check;
 	unordered_map<int, User> users;
-
 public:
 	//menu functions
 	Program();

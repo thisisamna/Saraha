@@ -10,10 +10,10 @@ using namespace std;
 
 User::User()
 {
-	id++;
-	/*id = 0;
+	
+	id = 0;
 	username = "please";
-	password = "work";*/
+	password = "work";
 
 }
 User::User(string name, string pass, int ID)
