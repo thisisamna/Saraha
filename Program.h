@@ -14,8 +14,11 @@ class Program
 	User liveUser;
 	bool exit;
 	string choice;
-	int NumChosen;
+
+	
 	int TestName;
+
+	int numberChosen;
 	char check;
 	unordered_map<int, User> users;
 public:
