@@ -1,16 +1,13 @@
-1,Amna,a
+1|somaia ali|3333
 
-4,Habiba,f
+1|somaia ali|3333
 
-0,,
 
-2,Khira,k
+-1||
+1|somaia ali|3333
 
-3,Rana,r
-
-5,Habeba,h
-
-6,Fatma,f
-
-7,Wessal,w
-
+1
+-1||
+1|soso a|1111
+-1||
+2|weee|333

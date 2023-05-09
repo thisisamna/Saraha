@@ -8,11 +8,12 @@
 #include <queue>
 using namespace std;
 
-User::User() 
+User::User()
 {
-	id = 0;
+	id++;
+	/*id = 0;
 	username = "please";
-	password = "work";
+	password = "work";*/
 
 }
 User::User(string name, string pass, int ID)

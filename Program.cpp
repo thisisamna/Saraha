@@ -1,6 +1,8 @@
 ﻿#include "Program.h"
 #include <iostream>
 #include<fstream>
+#include<string>
+
 Program::Program()
 {
 	loadfile();
@@ -258,7 +260,7 @@ int Program::login() { //wessal
 	}
 	else
 	{
-		auto it = users.find(liveUserID);
+		/*auto it = users.find(liveUserID);
 		User u = it->second;
 		if (!u.comparePassword(pass))
 		{
@@ -272,15 +274,15 @@ int Program::login() { //wessal
 				cout << "Uh oh! Your account is banned :( \n"
 					<< "Looks like you have been reported too many times.\n";
 				return -1;
-			}
-			else
-			{
-				cout << "Welcome back!\n";
-				return liveUserID;
-			}
-		}
+			}*/
+
+		cout << "Welcome back!\n";
+		return liveUserID;
+
 	}
 }
+	
+
 	
 void Program::sendmessage(User &liveUser) {
 	// Data
@@ -371,39 +373,48 @@ void Program::undolastmessage(User &liveUser) {
 		return;
 }
 
-//void Program::savefile() {
-//	ofstream ourfile("ourdata.txt", ios::app);
-//	if (ourfile.is_open()) {
-//		for (auto it : users)
-//		{
-//			ourfile << it.second.getid() << ',' << it.second.getUsername() << ',' << it.second.password << "\n";
-//			//for (auto msg : it.second.sent) {
-//			//	ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
-//			//}
-//			//for (auto msg : it.second.inbox) {
-//			//	ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
-//			//	/*	}
-//			//		for (auto elem : it.second.contacts) {
-//			//			ourfile << elem.second << endl;
-//			//		}*/
-//			//	for (auto elem : it.second.FavouriteMessages) {
-//			//		ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
-//			//	}
-//				ourfile << endl;
-//			}
-//		}
-//		ourfile.close();
-//}
+void Program::savefile() {
+	ofstream ourfile("ourdata.txt", ios::app);
+	if (ourfile.is_open()) {
+		for (auto it : users) {
+			ourfile << it.first << '|' << it.second.getUsername() << '|' << it.second.getPassword() << "\n";
+			
+		}
+					/*for (auto elem : it.second.contacts) {
+					ourfile << elem.second << endl	}*/
+					//	for (auto elem : it.second.FavouriteMessages) {
+					//		ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
+					//	}
+			
+		}
+		ourfile.close();
+	}
 
-//void Program::loadfile()
-//{
-//	ifstream ourfile("ourdata.txt");
-//	string line;
-//	int id;
-//	string username;
-//	string password;
-//	stack<string> splitted;
-//	while (ourfile) {
+void Program::loadfile()
+{
+	ifstream ourfile("ourdata.txt");
+	string name,pass;
+	int id;
+	char delimiter = '|';
+	while (ourfile >> id) {
+		getline(ourfile, name, delimiter);
+		getline(ourfile,name, delimiter);
+		getline(ourfile, pass, delimiter);
+		users[id] = User(name, pass, id);
+	}
+	for (auto e : users) {
+		cout << e.first << e.second.getUsername() << e.second.getPassword() << endl;
+	}
+}
+/**void Program::loadfile()
+{
+	ifstream ourfile("ourdata.txt");
+	string line;
+	int id;
+	string username;
+	string password;
+	stack<string> splitted;
+//	while (ourfile) {*/
 //		getline(ourfile, line);
 //		splitted = split(line, ',');
 //		while (!splitted.empty())
@@ -423,7 +434,7 @@ void Program::undolastmessage(User &liveUser) {
 //	}
 //	ourfile.close();
 //}
-void Program::savefile()
+/**void Program::savefile()
 {
 	ofstream file("data.txt");
 	for (auto it : users)
@@ -432,8 +443,8 @@ void Program::savefile()
 		file << endl;
 
 	}
-}
-void Program::loadfile()
+}*/
+/*void Program::loadfile()
 {
 	ifstream file("data.txt");
 	int id;
@@ -447,7 +458,7 @@ void Program::loadfile()
 	{
 		users[id] = User(username, password, id);
 	}
-}
+}*/
 Program::~Program()
 {
 	users[liveUserID] = liveUser;
