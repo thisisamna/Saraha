@@ -28,18 +28,14 @@ void Program::loginMenu()
 		cin >> choice;
 		//handling exception 
         // if we get wrong datatype
-		try {
-			NumChosen = stoi(choice);
-			// Conversion failed, input is not an integer
-            // Exit loop if input is valid
-		}
-	
-		catch (invalid_argument& e) {
-			cout << "Invalid input! Please enter an integer." << endl;
+        stringstream answer(choice);
+        if (!(answer >> choice)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
 
-		}
 
-		switch (NumChosen) {
+		switch (choice) {
 		case 1:
 		{
 			//login
@@ -83,20 +79,13 @@ void Program::userMenu(User &liveUser)
 		cin >> choice;
 		//handling exception 
         // if we get wrong datatype
-		try {
-			NumChosen = stoi(choice);
-			// Conversion failed, input is not an integer
-			
-		}
+        stringstream answer(choice);
+        if (!(answer >> choice)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
 
-		catch (invalid_argument& e) {
-			cout << "Invalid input! Please enter an integer." << endl;
-			// Conversion failed, input is not an integer
-		}
-        
-        
-
-		switch (NumChosen)
+		switch (choice)
 		{
 		case 1:
 			//send a message
@@ -120,7 +109,7 @@ void Program::userMenu(User &liveUser)
 			cout << "1. Undo the latest message\n"
 				<< "0. Back to previous menu\n";
 			cin >> choice;
-			if (NumChosen == 1)
+			if (choice == 1)
 			{
 				undolastmessage(liveUser);
 			}
@@ -132,11 +121,11 @@ void Program::userMenu(User &liveUser)
 			cout << "Enter a contact ID for more options \n"
 				<< "0 to go back to the previous menu. \n";
 			cin >> choice;
-			if (NumChosen == 0)
+			if (choice == 0)
 				break;
 			else
 			{
-				contactMenu(liveUser, *idToUser(NumChosen));
+				contactMenu(liveUser, *idToUser(choice));
 			}
 			break;
 		case 6:
@@ -171,19 +160,13 @@ void Program::Inbox(User &liveUser)
 		cin >> choice;
 		//handling exception 
         // if we get wrong datatype
-		try {
-			NumChosen = stoi(choice);
-			// Conversion failed, input is not an integer
-		 
-		}
+        stringstream answer(choice);
+        if (!(answer >> choice)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
 
-		catch (invalid_argument& e) {
-			cout << "Invalid input! Please enter an integer." << endl;
-			// Conversion failed, input is not an integer
-		}
-
-
-		switch (NumChosen)
+		switch (choice)
 		{
 		case 1:
 			liveUser.favourite(msg);
