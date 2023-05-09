@@ -14,8 +14,8 @@ class Program
 	User liveUser;
 	bool exit;
 	int choice;
+	char check;
 	unordered_map<int, User> users;
-
 public:
 	//menu functions
 	Program();
@@ -26,16 +26,16 @@ public:
 	void signup();
 	void sendmessage(User &liveUser);
 	void undolastmessage(User &liveUser);
-	void contactsMenu();
+	void contactMenu(User &liveUser, User &contact);
 	int login();
 	User* idToUser(int id);
 	int usernameToID(string username);
-	void addSendertoContacts(Message msg);
+	void addSendertoContacts(User& liveUser, Message msg);
 	void printCentered(string str);
+	stack<string> split(string s, char delim);
 	void loadfile();
 	void savefile();
 	void UpdateLiveUserData();
-	void viewMsgs(User& liveUser, User& currentContact); // khira -- view msges sent by a specific user
 	~Program();
 };
 

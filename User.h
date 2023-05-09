@@ -21,38 +21,37 @@ public:
 	map<User , int>contacts;
 	vector <Message> FavouriteMessages;
 	int newMsgs = 0; // khira -- incremencts every time a msge is sent to a user and once the user opens their inbox the variable is set to 0 again
-	
+	int reported;
 	
 public:
 	User();
 	User(string username, string password, int id);
 	bool operator<(const User& other) const;
 	int getid();
-
 	string getUsername();
-	void addcontact(User &liveUser, User &Added); //return boolean?
-	void removecontact(User &u);
-	void sendmessage();
-	void unsend();
-	//void searchcontact(); //boolean?
-	void viewcontacts(User& liveuser);
+	string getPassword();
+	void addcontact(User contact);
+	void removecontact(User contact);
+	void viewcontacts();
 	void viewSent();
 	void viewReceived();
-	void viewMessageOptions(int i);
 	//bool cmp(const pair<int, int>& a, const pair<int, int>& b);
-	int msgcounter(User &u, User &liveUser);
+	int msgcounter(User contact);
 	void favourite(Message msg);
 	void RemoveOldestFavorite();
 	void viewFavorites();
-	void searchContactbyid(int id);
-	void searchContactbyname(string username);
+	void searchContact(int id);
+	void viewContactMessages(User &contact); // khira -- view msges sent by a specific user
 	//helper functions
     Message getInboxMessage(int msgID);
 	bool comparePassword(string pass);
-	void addToSent(Message msg,User &liveUser,User &recevier);
-	void addToInbox(Message msg,User &liveUser, User &Sender);
+	void addToSent(Message msg,User &recevier);
+	void addToInbox(Message msg, User &Sender);
 	Message popSent();
 	void removeFromInbox(Message msg);
+	void beReported();
+	bool isBanned();
+	void notify();
 	
 };
 

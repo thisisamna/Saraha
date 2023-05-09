@@ -1,6 +1,2 @@
-1:  wessal salah	1111	
-2:  sama saad	2222	
-1:  :  wessal salah	1111		2:  sama saad	2222		
-1:  Rana	r	1	hbhvkcv	1	hbhjvjvj	
--1:  		
-2:  Amna	a	hbhjvjvj	hbhvkcv	4	
+1|somaia ali|3333
+2|wessal salah|1234
