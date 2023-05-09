@@ -26,6 +26,14 @@ void Program::loginMenu()
 			<< "3. Exit\n";
 
 		cin >> choice;
+		//handling exception 
+        // if we get wrong datatype
+        stringstream answer(choice);
+        if (!(answer >> choice)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
+
 
 		switch (choice) {
 		case 1:
@@ -69,6 +77,14 @@ void Program::userMenu(User &liveUser)
 			<< "5. My contacts\n"
 			<< "6. Logout\n";
 		cin >> choice;
+		//handling exception 
+        // if we get wrong datatype
+        stringstream answer(choice);
+        if (!(answer >> choice)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
+
 		switch (choice)
 		{
 		case 1:
@@ -142,6 +158,14 @@ void Program::Inbox(User &liveUser)
 			<< "3. Report sender\n"
 			<< "0. Back to previous menu.\n";
 		cin >> choice;
+		//handling exception 
+        // if we get wrong datatype
+        stringstream answer(choice);
+        if (!(answer >> choice)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
+
 		switch (choice)
 		{
 		case 1:
@@ -350,6 +374,14 @@ void Program::undolastmessage(User &liveUser) {
 		cout << "1. Delete for me\n"
 			<< "2. Delete for everyone\n";
 		cin >> cc;
+		//handling exception 
+        // if we get wrong datatype
+        stringstream answer(cc);
+        if (!(answer >> cc)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
+
 		switch (cc)
 		{
 		case 1:
@@ -481,6 +513,13 @@ void Program::contactMenu(User &liveUser, User &contact) {
 
 	int choice; 
 	cin >> choice;
+	//handling exception 
+        // if we get wrong datatype
+        stringstream answer(choice);
+        if (!(answer >> choice)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
 
 	switch (choice) {
 	case 1:
