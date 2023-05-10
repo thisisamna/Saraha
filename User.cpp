@@ -8,8 +8,9 @@
 #include <queue>
 using namespace std;
 
-User::User() 
+User::User()
 {
+	
 	id = 0;
 	username = "please";
 	password = "work";
@@ -40,7 +41,7 @@ string User::getPassword()
 	return password;
 }
 
-void User::viewContactMessages(User contact) { //khira -- not sure if it works because i cant test it ):
+void User::viewContactMessages(User &contact) { //khira -- not sure if it works because i cant test it ):
 	int j = 0;
 	for (int i = 0; i < inbox.size(); i++) {
 		if (inbox[i].getSenderID() == contact.getid()) 

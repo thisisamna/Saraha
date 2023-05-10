@@ -1,16 +1,5 @@
-1,Amna,a
-
-4,Habiba,f
-
-0,,
-
-2,Khira,k
-
-3,Rana,r
-
-5,Habeba,h
-
-6,Fatma,f
-
-7,Wessal,w
-
+1|somaia ali|3333
+2|wessal salah|12341|somaia ali|3333
+2|-1|please|work|1|somaia ali|3333
+2|-1|please|work|1|somaia ali|3333
+2|-1|please|work|

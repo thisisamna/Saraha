@@ -1,6 +1,8 @@
 ﻿#include "Program.h"
 #include <iostream>
 #include<fstream>
+#include<string>
+
 Program::Program()
 {
 	loadfile();
@@ -24,8 +26,19 @@ void Program::loginMenu()
 			<< "3. Exit\n";
 
 		cin >> choice;
+		//handling exception 
+        // if we get wrong datatype
+		while (true) {
+			try {
+				numberChosen = stoi(choice); // Attempt to convert input to integer
+				
+			}
+			catch (invalid_argument& e) {
+				cout << "Invalid input! Please enter an integer." << endl;
+			}
+		}
 
-		switch (choice) {
+		switch (numberChosen) {
 		case 1:
 		{
 			//login
@@ -67,7 +80,21 @@ void Program::userMenu(User &liveUser)
 			<< "5. My contacts\n"
 			<< "6. Logout\n";
 		cin >> choice;
-		switch (choice)
+		//handling exception 
+        // if we get wrong datatype
+		//handling exception 
+		// if we get wrong datatype
+		while (true) {
+			try {
+				numberChosen = stoi(choice); // Attempt to convert input to integer
+
+			}
+			catch (invalid_argument& e) {
+				cout << "Invalid input! Please enter an integer." << endl;
+			}
+		}
+
+		switch (numberChosen)
 		{
 		case 1:
 			//send a message
@@ -91,7 +118,7 @@ void Program::userMenu(User &liveUser)
 			cout << "1. Undo the latest message\n"
 				<< "0. Back to previous menu\n";
 			cin >> choice;
-			if (choice == 1)
+			if (numberChosen == 1)
 			{
 				undolastmessage(liveUser);
 			}
@@ -103,11 +130,11 @@ void Program::userMenu(User &liveUser)
 			cout << "Enter a contact ID for more options \n"
 				<< "0 to go back to the previous menu. \n";
 			cin >> choice;
-			if (choice == 0)
+			if (numberChosen == 0)
 				break;
 			else
 			{
-				contactMenu(liveUser, *idToUser(choice));
+				contactMenu(liveUser, *idToUser(numberChosen));
 			}
 			break;
 		case 6:
@@ -140,7 +167,21 @@ void Program::Inbox(User &liveUser)
 			<< "3. Report sender\n"
 			<< "0. Back to previous menu.\n";
 		cin >> choice;
-		switch (choice)
+		//handling exception 
+        // if we get wrong datatype
+		//handling exception 
+		// if we get wrong datatype
+		while (true) {
+			try {
+				numberChosen = stoi(choice); // Attempt to convert input to integer
+
+			}
+			catch (invalid_argument& e) {
+				cout << "Invalid input! Please enter an integer." << endl;
+			}
+		}
+
+		switch (numberChosen)
 		{
 		case 1:
 			liveUser.favourite(msg);
@@ -246,8 +287,19 @@ int Program::login() { //wessal
 
 	string name, pass;
 	cout << "Enter your user name: \n";
+
 	cin.ignore();
 	getline(cin, name);
+	try {
+		TestName = stoi(name);
+		// Conversion failed, input is not an integer
+		// Exit loop if input is valid
+	}
+
+	catch (invalid_argument& e) {
+		cout << "Invalid input! Please enter an integer." << endl;
+
+	}
 	cout << "Enter your password: \n";
 	cin >> pass;
 	liveUserID = usernameToID(name);
@@ -258,7 +310,7 @@ int Program::login() { //wessal
 	}
 	else
 	{
-		auto it = users.find(liveUserID);
+		/*auto it = users.find(liveUserID);
 		User u = it->second;
 		if (!u.comparePassword(pass))
 		{
@@ -272,15 +324,15 @@ int Program::login() { //wessal
 				cout << "Uh oh! Your account is banned :( \n"
 					<< "Looks like you have been reported too many times.\n";
 				return -1;
-			}
-			else
-			{
-				cout << "Welcome back!\n";
-				return liveUserID;
-			}
-		}
+			}*/
+
+		cout << "Welcome back!\n";
+		return liveUserID;
+
 	}
 }
+	
+
 	
 void Program::sendmessage(User &liveUser) {
 	// Data
@@ -346,6 +398,14 @@ void Program::undolastmessage(User &liveUser) {
 		cout << "1. Delete for me\n"
 			<< "2. Delete for everyone\n";
 		cin >> cc;
+		//handling exception 
+        // if we get wrong datatype
+        stringstream answer(cc);
+        if (!(answer >> cc)) {
+        // Conversion failed, input is not an integer
+        throw invalid_argument("Invalid input: expected an integer");
+        }
+
 		switch (cc)
 		{
 		case 1:
@@ -369,39 +429,54 @@ void Program::undolastmessage(User &liveUser) {
 		return;
 }
 
-//void Program::savefile() {
-//	ofstream ourfile("ourdata.txt", ios::app);
-//	if (ourfile.is_open()) {
-//		for (auto it : users)
-//		{
-//			ourfile << it.second.getid() << ',' << it.second.getUsername() << ',' << it.second.password << "\n";
-//			//for (auto msg : it.second.sent) {
-//			//	ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
-//			//}
-//			//for (auto msg : it.second.inbox) {
-//			//	ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
-//			//	/*	}
-//			//		for (auto elem : it.second.contacts) {
-//			//			ourfile << elem.second << endl;
-//			//		}*/
-//			//	for (auto elem : it.second.FavouriteMessages) {
-//			//		ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
-//			//	}
-//				ourfile << endl;
-//			}
-//		}
-//		ourfile.close();
-//}
+void Program::savefile() {
+	ofstream ourfile("ourdata.txt", ios::app);
+	
+	if (ourfile.is_open()) {
+		for (auto it : users) {
+			ourfile << it.first << '|' << it.second.getUsername() << '|' << it.second.getPassword() << '|';
+			for (int i = 0; i < liveUser.sent.size(); i++) {
+				ourfile << it.second.sent[i].getSenderID() << '|' << it.second.sent[i].getReceiverID() << '|' << it.second.sent[i].getReceiverUsername() << '|' << it.second.sent[i].getContent() << "\n";
+			}
+			for (int i = 0; i < liveUser.inbox.size(); i++) {
+				ourfile << it.second.inbox[i].getSenderID() << '|' << it.second.inbox[i].getReceiverID() << '|' << it.second.inbox[i].getReceiverUsername() << '|' << it.second.inbox[i].getContent() << "\n";
+			}
+		}
+					/*for (auto elem : it.second.contacts) {
+					ourfile << elem.second << endl	}*/
+					//	for (auto elem : it.second.FavouriteMessages) {
+					//		ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
+					//	}
+			
+		}
+		ourfile.close();
+	}
 
-//void Program::loadfile()
-//{
-//	ifstream ourfile("ourdata.txt");
-//	string line;
-//	int id;
-//	string username;
-//	string password;
-//	stack<string> splitted;
-//	while (ourfile) {
+void Program::loadfile()
+{
+	ifstream ourfile("ourdata.txt");
+	string name,pass,n;
+	int id;
+	char delimiter = '|';
+	while (ourfile >> id) {
+		getline(ourfile, name, delimiter);
+		getline(ourfile,name, delimiter);
+		getline(ourfile, pass, delimiter);
+		users[id] = User(name, pass, id);
+	}
+	for (auto e : users) {
+		cout << e.first << e.second.getUsername() << e.second.getPassword() << endl;
+	}
+}
+/**void Program::loadfile()
+{
+	ifstream ourfile("ourdata.txt");
+	string line;
+	int id;
+	string username;
+	string password;
+	stack<string> splitted;
+//	while (ourfile) {*/
 //		getline(ourfile, line);
 //		splitted = split(line, ',');
 //		while (!splitted.empty())
@@ -421,7 +496,7 @@ void Program::undolastmessage(User &liveUser) {
 //	}
 //	ourfile.close();
 //}
-void Program::savefile()
+/**void Program::savefile()
 {
 	ofstream file("data.txt");
 	for (auto it : users)
@@ -430,8 +505,8 @@ void Program::savefile()
 		file << endl;
 
 	}
-}
-void Program::loadfile()
+}*/
+/*void Program::loadfile()
 {
 	ifstream file("data.txt");
 	int id;
@@ -445,7 +520,7 @@ void Program::loadfile()
 	{
 		users[id] = User(username, password, id);
 	}
-}
+}*/
 Program::~Program()
 {
 	savefile();
@@ -459,10 +534,22 @@ void Program::contactMenu(User &liveUser, User &contact) {
 		//<< "4. Block\n"
 		<< "0. Back to previous menu \n";
 
-	int choice; 
+	
 	cin >> choice;
+	//handling exception 
+		//handling exception 
+		// if we get wrong datatype
+	while (true) {
+		try {
+			numberChosen = stoi(choice); // Attempt to convert input to integer
 
-	switch (choice) {
+		}
+		catch (invalid_argument& e) {
+			cout << "Invalid input! Please enter an integer." << endl;
+		}
+	}
+
+	switch (numberChosen) {
 	case 1:
 		// view messages from contact
 		liveUser.viewContactMessages(contact);
