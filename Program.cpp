@@ -313,7 +313,7 @@ void Program::sendmessage(User &liveUser) {
 	cout << "Enter receiver username:" << " ";
 	cin >> username_receiver;
 
-	receiverID = usernameToID(username_receiver);
+	receiverID = usernameToID(username_receiver);     //check that receiver exist
 
 	
 	if (receiverID == -1) 
@@ -360,7 +360,7 @@ void Program::undolastmessage(User &liveUser) {
 	if (c == 'y') {
 		// Pop in Sender messages and store popped message
 		lastMsg = liveUser.popSent();
-		cout << "1. Delete for me\n"
+		cout << "1. Delete for you\n"
 			<< "2. Delete for everyone\n";
 		intChoice = getInt();
 		switch (intChoice)
