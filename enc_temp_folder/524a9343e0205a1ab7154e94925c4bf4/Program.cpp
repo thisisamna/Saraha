@@ -275,7 +275,7 @@ int Program::login() { //wessal
 			}
 			else
 			{
-				cout << "Welcome back, " << u.getUsername() << "!\n";
+				cout << "Welcome back," << u.getUsername() << "!\n";
 				return liveUserID;
 			}
 		}
