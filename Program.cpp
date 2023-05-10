@@ -141,7 +141,7 @@ void Program::Inbox(User &liveUser)
 		{
 			try
 			{
-				Message msg = liveUser.getInboxMessage(msgIndex);
+				msg = liveUser.getInboxMessage(msgIndex);
 				break;
 			}
 			catch(exception e)
