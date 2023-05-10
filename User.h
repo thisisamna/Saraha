@@ -19,7 +19,7 @@ public:
 	deque<Message> sent;
 	vector<Message> inbox;
 	map<User , int>contacts;
-	vector <Message> FavouriteMessages;
+	deque<Message> FavouriteMessages;
 	int newMsgs = 0; // khira -- incremencts every time a msge is sent to a user and once the user opens their inbox the variable is set to 0 again
 	int reported;
 	
