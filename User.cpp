@@ -244,7 +244,7 @@ void User::viewcontacts() {
 			return a.second > b.second;
 			});
 		for (auto i : sorted_contacts) {
-			cout << "- ID: " << i.first.getid() << "\tNumber of messages: " << i.second << '\n';
+			cout << "- ID: " << i.first.getid() << "\t\tNumber of messages: " << i.second << '\n';
 		}
 	}
 }
