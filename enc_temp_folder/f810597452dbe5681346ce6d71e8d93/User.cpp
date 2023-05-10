@@ -254,26 +254,32 @@ void User::favourite(Message msg) {
 	bool MessageIsFavourite = false;
 	char answer;
 	for (int i = 0; i < FavouriteMessages.size(); i++) {
-
+		
 		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
 			MessageIsFavourite = true;
 			cout << "Message is already favourite press 'Y' if you want to remove it \n";
 			cout << "Or 'N' to remain it\n";
 			cin >> answer;
-			if (answer == ('y') || answer == 'Y')
-				FavouriteMessages.erase(FavouriteMessages.begin() + i);
-			else if (answer == ('N') || answer == 'n')
+			if(answer==('y' )||answer=='Y')
+			FavouriteMessages.erase(FavouriteMessages.begin()+i);
+			else if (answer == ('N')||answer== 'n')
 				break;
 		}
 
 	}
-	if (!MessageIsFavourite) {
-		FavouriteMessages.push_back(msg);
-
+	if(!MessageIsFavourite){
+		if(FavouriteMessages.size()<=10){
+			FavouriteMessages.push_back(msg);
+		}
+		else{
+			RemoveOldestFavorite();
+			FavouriteMessages.push_back(msg);
+		}
 		cout << "Message added to favorites." << endl;
 	}
-
+	
 }
+//Favourites have 10 only if more we remove the oldest favourite
 void User::RemoveOldestFavorite(){
    FavouriteMessages.erase(FavouriteMessages.begin()+0);
 }
