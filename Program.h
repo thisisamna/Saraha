@@ -13,6 +13,8 @@ class Program
 	int userCount = 0;
 	User *liveUser;
 	bool exit;
+	int intChoice;
+
 	string choice;
 
 	
@@ -40,6 +42,7 @@ public:
 	stack<string> split(string s, char delim);
 	void loadfile();
 	void savefile();
+	int getInt();
 	~Program();
 };
 
