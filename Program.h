@@ -13,10 +13,16 @@ class Program
 	int userCount = 0;
 	User *liveUser;
 	bool exit;
-	int choice;
+	int intChoice;
+
+	string choice;
+
+	
+	int TestName;
+
+	int numberChosen;
 	char check;
 	unordered_map<int, User> users;
-
 public:
 	//menu functions
 	Program();
@@ -36,6 +42,7 @@ public:
 	stack<string> split(string s, char delim);
 	void loadfile();
 	void savefile();
+	int getInt();
 	~Program();
 };
 

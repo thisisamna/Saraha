@@ -11,6 +11,7 @@ using namespace std;
 
 class User
 {
+public:
 	int id; //change
 	string username; //change
 	string password; //change
@@ -40,7 +41,7 @@ public:
 	void RemoveOldestFavorite();
 	void viewFavorites();
 	void searchContact(int id);
-	void viewContactMessages(User contact); // khira -- view msges sent by a specific user
+	void viewContactMessages(User &contact); // khira -- view msges sent by a specific user
 	//helper functions
     Message getInboxMessage(int msgID);
 	bool comparePassword(string pass);
