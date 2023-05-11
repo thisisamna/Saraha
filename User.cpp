@@ -288,6 +288,8 @@ void User::viewFavorites(){
 	for(int i = 0; i < FavouriteMessages.size(); i++){
 		FavouriteMessages[i].viewAsReceived();
 	}
+	cout << "0. Back to previous menu\n";
+	int zero; cin >> zero;
 }
 
 

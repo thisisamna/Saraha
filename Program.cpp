@@ -59,12 +59,13 @@ void Program::loginMenu()
 
 void Program::userMenu(User &liveUser)
 {
+	
 	cout << "Welcome, " << liveUser.getUsername() << "!\n";
 	while (true)
 	{
-		liveUser.notify();
-		cout << "\n"; //line
-		cout << "1. Send a message\n"
+	   liveUser.notify();
+	   cout << "\n"
+		    << "1. Send a message\n"
 			<< "2. Inbox\n"
 			<< "3. Favorites\n"
 			<< "4. Sent messages\n"
@@ -108,7 +109,7 @@ void Program::userMenu(User &liveUser)
 
 			if (liveUser.contacts.size() != 0) //changed
 				cout << "Enter a contact ID for more options \n";
-			cout << "0. to go back to the previous menu. \n";
+			cout << "0. Back to previous menu\n";
 
 			intChoice = getInt();
 			if (intChoice == 0)
@@ -135,7 +136,8 @@ void Program::Inbox(User &liveUser)
 	liveUser.viewReceived();
 	if (liveUser.inbox.size() != 0) //changed, كانت تطبع هذا اللاين حتى لو ما فيه مسج في الانبوكس
 		cout << "Enter message index to view details and options. \n"; 
-	cout << "0. Back to home. \n";
+
+	cout << "0. Back to previous menu\n";
 
 	msgIndex = getInt();
 	msgIndex--;
@@ -264,7 +266,7 @@ void Program::signup() { //wessal salah
 		++userCount;
 		users[userCount] = User(username, pass, userCount);
 		cout << "Congratulation!!\nYou now have an account \n";
-		cout << "Press 0 to go back to login page\n";
+		cout << "Enter 0 to go back to login page\n";
 		int zero; cin >> zero; //لاين مالو أي داعي غير الترتيب line
 	}
 }
@@ -362,6 +364,8 @@ void Program::sendmessage(User &liveUser) {
 		{
 			cout << "Message canceled." << " " << endl;
 		}
+		cout << "0. Back to previous menu\n";
+		int zero; cin >> zero;
 		cout << "\n"; //line
 	}
 
