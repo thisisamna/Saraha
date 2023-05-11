@@ -20,7 +20,7 @@ public:
 	vector<Message> inbox;
 	map<User , int>contacts;
 	vector <Message> FavouriteMessages;
-	int newMsgs = 0; // khira -- incremencts every time a msge is sent to a user and once the user opens their inbox the variable is set to 0 again
+	int newMsgs = 0; 
 	int reported;
 	
 public:
@@ -41,7 +41,7 @@ public:
 	void RemoveOldestFavorite();
 	void viewFavorites();
 	void searchContact(int id);
-	void viewContactMessages(User &contact); // khira -- view msges sent by a specific user
+	void viewContactMessages(User &contact); 
 	//helper functions
     Message getInboxMessage(int msgID);
 	bool comparePassword(string pass);

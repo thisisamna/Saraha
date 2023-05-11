@@ -195,12 +195,14 @@ void User::removecontact(User contact)
 
 void User::viewSent()
 {
+	cout << "\n"; //line
 	if (sent.empty())
 	{
 		cout << "You haven't sent any messages yet.\n";
 	}
 	else
 	{
+		cout << "Sent messages from latest to oldest: " << endl;
 		for (int i = 0; i < sent.size(); i++) 
 		{
 			sent.front().viewAsSent();
@@ -231,6 +233,7 @@ void User::viewReceived()
 
 
 void User::viewcontacts() {
+	cout << "\n"; //line
 	if (contacts.size() == 0) {
 		cout << "You don't have any contacts yet!\n";
 	}
@@ -279,6 +282,9 @@ void User::RemoveOldestFavorite(){
 }
 
 void User::viewFavorites(){
+	cout << "\n"; //line
+	if (FavouriteMessages.size() == 0) 
+		cout << "Empty \n"; 
 	for(int i = 0; i < FavouriteMessages.size(); i++){
 		FavouriteMessages[i].viewAsReceived();
 	}

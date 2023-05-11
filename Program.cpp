@@ -63,6 +63,7 @@ void Program::userMenu(User &liveUser)
 	while (true)
 	{
 		liveUser.notify();
+		cout << "\n"; //line
 		cout << "1. Send a message\n"
 			<< "2. Inbox\n"
 			<< "3. Favorites\n"
@@ -76,7 +77,6 @@ void Program::userMenu(User &liveUser)
 		case 1:
 			//send a message
 			sendmessage(liveUser);
-	
 			break;
 		case 2:
 		{
@@ -90,10 +90,12 @@ void Program::userMenu(User &liveUser)
 			break;
 		case 4:
 			//sent messages
-			cout << "Sent messages from latest to oldest: " << endl;
 			liveUser.viewSent();
-			cout << "1. Undo the latest message\n"
-				<< "0. Back to previous menu\n";
+			if (liveUser.sent.size() != 0)
+				cout << "1. Undo the latest message\n";
+
+			cout << "0. Back to previous menu\n";
+
 			intChoice = getInt();
 			if (intChoice == 1)
 			{
@@ -103,8 +105,11 @@ void Program::userMenu(User &liveUser)
 		case 5:
 			//contacts
 			liveUser.viewcontacts();
-			cout << "Enter a contact ID for more options \n"
-				<< "0 to go back to the previous menu. \n";
+
+			if (liveUser.contacts.size() != 0) //changed
+				cout << "Enter a contact ID for more options \n";
+			cout << "0. to go back to the previous menu. \n";
+
 			intChoice = getInt();
 			if (intChoice == 0)
 				break;
@@ -126,8 +131,12 @@ void Program::userMenu(User &liveUser)
 void Program::Inbox(User &liveUser)
 {
 	int msgIndex;
+	cout << "\n"; //line
 	liveUser.viewReceived();
-	cout << "Enter message index to view details and options. \n" << "0. Back to home. \n";
+	if (liveUser.inbox.size() != 0) //changed, كانت تطبع هذا اللاين حتى لو ما فيه مسج في الانبوكس
+		cout << "Enter message index to view details and options. \n"; 
+	cout << "0. Back to home. \n";
+
 	msgIndex = getInt();
 	msgIndex--;
 	if (msgIndex == -1) // was 0 but 0 is an index in msg vector
@@ -244,14 +253,19 @@ void Program::signup() { //wessal salah
 	getline(cin, username);
 	cout << "Enter your password: \n";
 	cin >> pass;
+
+	cout << "\n\n"; // line
+
 	if (usernameToID(username) != -1) {
-		cout << "You already have an acount. please log in!";
+		cout << "You already have an acount. please log in! \n";
 	}
 	else 
 	{
 		++userCount;
 		users[userCount] = User(username, pass, userCount);
-		cout << "Congratulation!!\nYou now have an account";
+		cout << "Congratulation!!\nYou now have an account \n";
+		cout << "Press 0 to go back to login page\n";
+		int zero; cin >> zero; //لاين مالو أي داعي غير الترتيب line
 	}
 }
 	
@@ -266,6 +280,8 @@ int Program::login() { //wessal
 	getline(cin, username);
 	cout << "Enter your password: \n";
 	cin >> pass;
+
+	cout << "\n\n"; //line
 	liveUserID = usernameToID(username);
 	if (liveUserID == -1)
 	{
@@ -291,7 +307,7 @@ int Program::login() { //wessal
 			}
 			else
 			{
-				cout << "Welcome back, " << u.getUsername() << "!\n";
+				//cout << "Welcome back, " << u.getUsername() << "!\n"; -- فيه welcome in the main menu
 				return liveUserID;
 			}
 		}
@@ -329,6 +345,7 @@ void Program::sendmessage(User &liveUser) {
 		// Check
 		cout << "Send message? (y/n)" << " ";
 		cin >> check;
+		cout << "\n\n"; //line
 
 		// Send Message
 		if (check == 'y')
@@ -345,6 +362,7 @@ void Program::sendmessage(User &liveUser) {
 		{
 			cout << "Message canceled." << " " << endl;
 		}
+		cout << "\n"; //line
 	}
 
 
