@@ -59,11 +59,11 @@ void Program::loginMenu()
 
 void Program::userMenu(User &liveUser)
 {
-	
+
 	cout << "Welcome, " << liveUser.getUsername() << "!\n";
 	while (true)
 	{
-	   liveUser.notify();
+		liveUser.notify();
 	   cout << "\n"
 		    << "1. Send a message\n"
 			<< "2. Inbox\n"
@@ -108,7 +108,7 @@ void Program::userMenu(User &liveUser)
 			liveUser.viewcontacts();
 
 			if (liveUser.contacts.size() != 0) //changed
-				cout << "Enter a contact ID for more options \n";
+				cout << "\nEnter a contact ID for more options \n";
 			cout << "0. Back to previous menu\n";
 
 			intChoice = getInt();
@@ -133,9 +133,11 @@ void Program::Inbox(User &liveUser)
 {
 	int msgIndex;
 	cout << "\n"; //line
-	liveUser.viewReceived();
+
 	if (liveUser.inbox.size() != 0) //changed, كانت تطبع هذا اللاين حتى لو ما فيه مسج في الانبوكس
-		cout << "Enter message index to view details and options. \n"; 
+		cout << "Enter message index to view details and options. \n";
+	liveUser.viewReceived();
+
 
 	cout << "0. Back to previous menu\n";
 
@@ -161,7 +163,7 @@ void Program::Inbox(User &liveUser)
 			}
 		}
 		msg.viewAsReceived();
-		cout << "1. Add/remove from favorites.\n"
+		cout << "\n1. Add/remove from favorites.\n"
 			<< "2. Add sender to contacts\n"
 			<< "3. Report sender\n"
 			<< "0. Back to previous menu.\n";
@@ -206,6 +208,7 @@ void Program::Inbox(User &liveUser)
 	}
 	return user;
 }*/
+
 User* Program::idToUser(int id) {//returns pointer to user in hashmap, or nullptr if not found
 	auto it = users.find(id);
 	if (it != users.end()) {
@@ -382,7 +385,8 @@ void Program::undolastmessage(User &liveUser) {
 	if (c == 'y') {
 		// Pop in Sender messages and store popped message
 		lastMsg = liveUser.popSent();
-		cout << "1. Delete for me\n"
+		
+		cout << "\n1. Delete for me\n"
 			<< "2. Delete for everyone\n";
 		intChoice = getInt();
 		switch (intChoice)
@@ -504,7 +508,7 @@ Program::~Program()
 
 void Program::contactMenu(User &liveUser, User &contact) {
 
-	cout << "1. View sent messages\n"
+	cout << "\n1. View sent messages\n"
 		<< "2. Report\n"
 		<< "3. Remove\n"
 		//<< "4. Block\n"
@@ -516,6 +520,7 @@ void Program::contactMenu(User &liveUser, User &contact) {
 	{
 	case 1:
 		// view messages from contact
+		cout << "\n";
 		liveUser.viewContactMessages(contact);
 		break;
 	case 2:

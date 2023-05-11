@@ -8,6 +8,7 @@ void Message::viewAsSent()
 }
 void Message::viewAsReceived()
 {
+	cout << "\n"; //line
 	cout << "From: " << senderID << "\n";
 	cout << content << "\n\n";
 }

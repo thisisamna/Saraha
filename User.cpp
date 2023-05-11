@@ -59,7 +59,7 @@ void User::addcontact(User contact)
 	for (auto i : contacts) {
 		if (i.first.id == contact.getid()) {
 			userExists = true;
-			cout << "This user is already in your contacts.\n";
+			cout << "\nThis user is already in your contacts.\n";
 			break;
 		}
 	}
@@ -68,7 +68,7 @@ void User::addcontact(User contact)
 		contacts[contact]=msgcounter(contact);
 		//cout << liveUser.contacts.size() << '\n';
 		//cout << Added.getUsername() << ' ' << Added.getid() << '\n';
-		cout << "Sender added to contacts.\n";
+		cout << "\nSender added to contacts.\n";
 
 	}
 
@@ -260,7 +260,7 @@ void User::favourite(Message msg) {
 
 		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
 			MessageIsFavourite = true;
-			cout << "Message is already favourite press 'Y' if you want to remove it \n";
+			cout << "\nMessage is already favourite press 'Y' if you want to remove it \n";
 			cout << "Or 'N' to remain it\n";
 			cin >> answer;
 			if (answer == ('y') || answer == 'Y')
@@ -273,7 +273,7 @@ void User::favourite(Message msg) {
 	if (!MessageIsFavourite) {
 		FavouriteMessages.push_back(msg);
 
-		cout << "Message added to favorites." << endl;
+		cout << "\nMessage added to favorites." << endl;
 	}
 
 }
