@@ -49,3 +49,13 @@ Message::Message()
 {
 
 }
+
+void Message::setIsRead(bool is_read)
+{
+	isRead = is_read;
+}
+
+bool Message::getIsRead()
+{
+	return isRead;
+}

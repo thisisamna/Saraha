@@ -400,8 +400,11 @@ void Program::undolastmessage(User &liveUser) {
 			if (idToUser(lastMsg.getReceiverID()) != nullptr) {
 				User* receiver = idToUser(lastMsg.getReceiverID());
 				receiver->removeFromInbox(lastMsg);
+				if (!lastMsg.getIsRead())
+					receiver->newMsgs--;
 				break;
 			}
+			
 		}
 		default:
 			cout << "Invalid choice, please try again!";

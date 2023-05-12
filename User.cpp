@@ -224,6 +224,7 @@ void User::viewReceived()
 		for (int i = 0; i < inbox.size(); i++) 
 		{
 			cout << i+1 << ". " << inbox[i].getContent() << endl;
+			inbox[i].setIsRead(true);
 		}
 	}
 	newMsgs = 0; //all messages are read
