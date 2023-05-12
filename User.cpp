@@ -310,7 +310,7 @@ void User::viewFavorites(){
 		FavouriteMessages[i].viewAsReceived();
 	}
 	cout << "0. Back to previous menu\n";
-	int zero; cin >> zero;
+	cin >> key;
 }
 
 

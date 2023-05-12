@@ -267,15 +267,17 @@ void Program::signup() { //wessal salah
 	cout << "\n\n"; // line
 
 	if (usernameToID(username) != -1) {
-		cout << "You already have an acount. please log in! \n";
+		cout << "You already have an acount. please log in! \n"
+			 << "Enter 0 to go back to login page\n";
+		cin >> key;
 	}
 	else 
 	{
 		++userCount;
 		users[userCount] = User(username, pass, userCount);
-		cout << "Congratulation!!\nYou now have an account \n";
-		cout << "Enter 0 to go back to login page\n";
-		int zero; cin >> zero; //لاين مالو أي داعي غير الترتيب line
+		cout << "Congratulation!!\nYou now have an account \n"
+		     << "Enter 0 to go back to login page\n";
+		cin >> key; //لاين مالو أي داعي غير الترتيب line
 	}
 }
 	
@@ -295,7 +297,9 @@ int Program::login() { //wessal
 	liveUserID = usernameToID(username);
 	if (liveUserID == -1)
 	{
-		cout << "The username is incorrect!\nplease try again\n";
+		cout << "The username is incorrect!\nplease try again\n"
+			<< "press any key to go back to login page\n";
+		cin >> key;
 		return -1;
 	}
 	else
@@ -304,7 +308,9 @@ int Program::login() { //wessal
 		User u = it->second;
 		if (!u.comparePassword(pass))
 		{
-			cout << "The password is incorrect!\nplease try again\n";
+			cout << "The password is incorrect!\nplease try again\n"
+				<< "press any key to go back to login page\n";
+			cin >> key;
 			return -1;
 		}
 		else
@@ -385,7 +391,7 @@ void Program::sendmessage(User& liveUser) {
 			}
 		}
 		cout << "0. Back to previous menu\n";
-		int zero; cin >> zero;
+		cin >> key;
 		cout << "\n"; //line
 	}
 

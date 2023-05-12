@@ -22,6 +22,7 @@ public:
 	vector <User> blockedContacts;
 	int newMsgs = 0; 
 	int reported;
+	int key;
 	
 public:
 	User();
