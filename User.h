@@ -15,11 +15,11 @@ public:
 	int id; //change
 	string username; //change
 	string password; //change
-	//vector<User> contacts; //working but waste of memory because we have sorted contacts, let's deal with it at the end
 	deque<Message> sent;
 	vector<Message> inbox;
-	map<User , int>contacts;
+	map<User , int> contacts;
 	vector <Message> FavouriteMessages;
+	vector <User> blockedContacts;
 	int newMsgs = 0; 
 	int reported;
 	
@@ -52,6 +52,8 @@ public:
 	void beReported();
 	bool isBanned();
 	void notify();
+	void blockContact(User& contact);
+	bool Blocked(int ID);
 	
 };
 

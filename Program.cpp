@@ -176,8 +176,8 @@ void Program::Inbox(User &liveUser)
 			break;
 		case 2:
 			addSendertoContacts(liveUser, msg);
-	
 			break;
+
 		case 3:
 			cout << endl << "Report the sender of this message? (y/n) ";
 			cin >> check;
@@ -230,6 +230,11 @@ int Program::usernameToID(string username)
 void Program::addSendertoContacts(User& liveUser, Message msg)
 {
 	User sender = *idToUser(msg.getSenderID());
+
+
+	if (sender.Blocked(liveUser.getid())) //check if blocked
+		cout << "\nyou have been blocked by this user\n";
+	else
 	liveUser.addcontact(sender);
 
 }
@@ -321,10 +326,10 @@ int Program::login() { //wessal
 	
 
 	
-void Program::sendmessage(User &liveUser) {
+void Program::sendmessage(User& liveUser) {
 	// Data
 	int receiverID;
-	string username_receiver, msg; 
+	string username_receiver, msg;
 	// Create Message
 
 	cout << endl << "Enter your message:" << " ";
@@ -333,45 +338,56 @@ void Program::sendmessage(User &liveUser) {
 
 	cout << "Enter receiver username:" << " ";
 	cin >> username_receiver;
-
 	receiverID = usernameToID(username_receiver);
 
-	
-	if (receiverID == -1) 
+
+
+
+	if (receiverID == -1)
 	{
 		cout << endl << "User does not exist, please try again." << endl;
 	}
 	else
 	{
-		User *receiver = &users[receiverID];
+		User* receiver = &users[receiverID];
 
-		Message msgg_object(liveUser.getid(), receiverID, username_receiver, msg);
+		// check if blocked
+		if (receiver->Blocked(liveUser.getid()))
+			cout << "\nyou have been blocked by this user\n";
+		
 
-		// Check
-		cout << "Send message? (y/n)" << " ";
-		cin >> check;
-		cout << "\n\n"; //line
 
-		// Send Message
-		if (check == 'y')
-		{
-
-			// Push in Sender messages
-			liveUser.addToSent(msgg_object, *receiver);
-
-			// push in reciver inbox
-			receiver->addToInbox(msgg_object, *receiver);
-			cout << "Message sent successfully." << " " << endl;
-		}
+		//if (liveUser.Blocked(receiver))
 		else
 		{
-			cout << "Message canceled." << " " << endl;
+
+
+			Message msgg_object(liveUser.getid(), receiverID, username_receiver, msg);
+			// Check
+			cout << "Send message? (y/n)" << " ";
+			cin >> check;
+			cout << "\n\n"; //line
+
+			// Send Message
+			if (check == 'y')
+			{
+
+				// Push in Sender messages
+				liveUser.addToSent(msgg_object, *receiver);
+
+				// push in reciver inbox
+				receiver->addToInbox(msgg_object, *receiver);
+				cout << "Message sent successfully." << " " << endl;
+			}
+			else
+			{
+				cout << "Message canceled." << " " << endl;
+			}
 		}
 		cout << "0. Back to previous menu\n";
 		int zero; cin >> zero;
 		cout << "\n"; //line
 	}
-
 
 }
 
@@ -514,7 +530,7 @@ void Program::contactMenu(User &liveUser, User &contact) {
 	cout << "\n1. View sent messages\n"
 		<< "2. Report\n"
 		<< "3. Remove\n"
-		//<< "4. Block\n"
+		<< "4. Block\n"
 		<< "0. Back to previous menu \n";
 
 	
@@ -541,6 +557,9 @@ void Program::contactMenu(User &liveUser, User &contact) {
 		break;
 	case 4:
 		// block function
+		liveUser.blockContact(contact);
+		liveUser.removecontact(contact);
+		cout << "Contact blocked. \n";
 		break;
 	case 0:
 		break;

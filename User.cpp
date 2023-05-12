@@ -174,12 +174,32 @@ bool User::isBanned()
 		return false;
 }
 
+void User::blockContact(User & contact)
+{
+	blockedContacts.push_back(contact);
+}
+
+bool User::Blocked(int ID)
+{
+	for (int i = 0; i < blockedContacts.size(); i++)
+	{
+		
+		if (blockedContacts.at(i).getid() == ID)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void User::notify()
 {
 	if (newMsgs != 0)
 		cout << "you have " << newMsgs << " unread messages. \n";
 
 }
+
+
 
 void User::removecontact(User contact)
 {
@@ -310,6 +330,8 @@ void User::searchContact(int id) {
 		cout << "Contact not Found ! \n";
 	}
 }
+
+
 //The next fucntion goes against the requirements
 // 
 //void User::searchContactbyname(string username) {
