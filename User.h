@@ -18,7 +18,7 @@ public:
 	deque<Message> sent;
 	vector<Message> inbox;
 	map<User , int> contacts;
-	vector <Message> FavouriteMessages;
+	deque <Message> FavouriteMessages;
 	vector <User> blockedContacts;
 	int newMsgs = 0; 
 	int reported;

@@ -275,39 +275,48 @@ void User::viewcontacts() {
 
 
 void User::favourite(Message msg) {
-	bool MessageIsFavourite = false;
-	char answer;
-	for (int i = 0; i < FavouriteMessages.size(); i++) {
+	//bool MessageIsFavourite = false;
+	//char answer;
+	//for (int i = 0; i < FavouriteMessages.size(); i++) {
 
-		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
-			MessageIsFavourite = true;
-			cout << "\nMessage is already favourite press 'Y' if you want to remove it \n";
-			cout << "Or 'N' to remain it\n";
-			cin >> answer;
-			if (answer == ('y') || answer == 'Y')
-				FavouriteMessages.erase(FavouriteMessages.begin() + i);
-			else if (answer == ('N') || answer == 'n')
-				break;
-		}
+	//	if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
+	//		MessageIsFavourite = true;
+	//		cout << "Message is already favourite press 'Y' if you want to remove it \n";
+	//		cout << "Or 'N' to remain it\n";
+	//		cin >> answer;
+	//		if (answer == ('y') || answer == 'Y')
+	//			FavouriteMessages.erase(FavouriteMessages.begin() + i);
+	//		else if (answer == ('N') || answer == 'n')
+	//			break;
+	//	}
 
-	}
-	if (!MessageIsFavourite) {
+	//}
+	//if (!MessageIsFavourite) {
 		FavouriteMessages.push_back(msg);
 
-		cout << "\nMessage added to favorites." << endl;
-	}
+		cout << "Message added to favorites." << endl;
+	/*}*/
 
 }
 void User::RemoveOldestFavorite(){
-   FavouriteMessages.erase(FavouriteMessages.begin()+0);
+   FavouriteMessages.pop_front();
+   cout << "Oldest favorite removed.\n";
 }
 
-void User::viewFavorites(){
-	cout << "\n"; //line
-	if (FavouriteMessages.size() == 0) 
-		cout << "Empty \n"; 
-	for(int i = 0; i < FavouriteMessages.size(); i++){
-		FavouriteMessages[i].viewAsReceived();
+void User::viewFavorites()
+{
+	if (FavouriteMessages.empty())
+	{
+		cout << "You haven't sent any messages yet.\n";
+	}
+	else
+	{
+		for (int i = 0; i < FavouriteMessages.size(); i++)
+		{
+			FavouriteMessages.front().viewAsReceived();
+			FavouriteMessages.push_back(FavouriteMessages.front());
+			FavouriteMessages.pop_front();
+		}
 	}
 	cout << "0. Back to previous menu\n";
 	cin >> key;
