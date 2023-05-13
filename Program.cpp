@@ -26,7 +26,7 @@ void Program::loginMenu()
 			<< "3. Exit\n";
 
 		intChoice = getInt();
-
+		printDivider();
 		switch (intChoice) {
 		case 1:
 		{
@@ -35,6 +35,7 @@ void Program::loginMenu()
 			liveUserID = login();
 			if (liveUserID !=-1)
 			{
+				printDivider();
 				liveUser = &users[liveUserID];
 				userMenu(*liveUser);
 			}
@@ -52,9 +53,9 @@ void Program::loginMenu()
 			cout << "Invalid entry, try again!\n";
 				break;
 		}
+		printDivider();
 
 	}
-	
 }
 
 void Program::userMenu(User &liveUser)
@@ -72,25 +73,30 @@ void Program::userMenu(User &liveUser)
 			<< "5. My contacts\n"
 			<< "6. Logout\n";
 		intChoice = getInt();
-
+		printDivider();
 		switch (intChoice)
 		{
 		case 1:
 			//send a message
+			printCentered("S e n d   a   m e s s a g e");
+
 			sendmessage(liveUser);
 			break;
 		case 2:
 		{
 			//inbox
+			printCentered("I n b o x");
 			Inbox(liveUser);
 			break;
 		}
 		case 3:
 			//favorites
+			printCentered("F a v o r i t e s");
 			liveUser.viewFavorites();
 			break;
 		case 4:
 			//sent messages
+			printCentered("S e n t   m e s s a g e s");
 			liveUser.viewSent();
 			if (liveUser.sent.size() != 0)
 				cout << "1. Undo the latest message\n";
@@ -105,6 +111,7 @@ void Program::userMenu(User &liveUser)
 			break;
 		case 5:
 			//contacts
+			printCentered("C o n t a c t s");
 			liveUser.viewcontacts();
 
 			if (liveUser.contacts.size() != 0) //changed
@@ -116,6 +123,7 @@ void Program::userMenu(User &liveUser)
 				break;
 			else
 			{
+				printDivider();
 				contactMenu(liveUser, *idToUser(intChoice));
 			}
 			break;
@@ -125,8 +133,9 @@ void Program::userMenu(User &liveUser)
 		default:
 			cout << "Invalid entry, try again!\n";
 		}
-
+		printDivider();
 	}
+
 }
 
 void Program::Inbox(User &liveUser)
@@ -137,8 +146,7 @@ void Program::Inbox(User &liveUser)
 	if (liveUser.inbox.size() != 0) //changed, كانت تطبع هذا اللاين حتى لو ما فيه مسج في الانبوكس
 		cout << "Enter message index to view details and options. \n";
 	liveUser.viewReceived();
-
-
+	cout << "_______________\n";
 	cout << "0. Back to previous menu\n";
 
 	msgIndex = getInt();
@@ -162,8 +170,9 @@ void Program::Inbox(User &liveUser)
 				cout << "Message does not exist, please choose an index from the list.\n";
 			}
 		}
+		printDivider();
 		msg.viewAsReceived();
-		cout << "\n1. Add/remove from favorites.\n"
+		cout << "\n1. Add to favorites.\n"
 			<< "2. Add sender to contacts\n"
 			<< "3. Report sender\n"
 			<< "0. Back to previous menu.\n";
@@ -267,18 +276,16 @@ void Program::signup() { //wessal salah
 	cout << "\n\n"; // line
 
 	if (usernameToID(username) != -1) {
-		cout << "You already have an acount. please log in! \n"
-			 << "Enter 0 to go back to login page\n";
-		cin >> key;
+		cout << "You already have an acount. please log in! \n";
 	}
 	else 
 	{
 		++userCount;
 		users[userCount] = User(username, pass, userCount);
-		cout << "Congratulation!!\nYou now have an account \n"
-		     << "Enter 0 to go back to login page\n";
-		cin >> key; //لاين مالو أي داعي غير الترتيب line
+		cout << "Congratulation!!\nYou now have an account \n";
 	}
+	printDivider();
+
 }
 	
 	
@@ -297,9 +304,7 @@ int Program::login() { //wessal
 	liveUserID = usernameToID(username);
 	if (liveUserID == -1)
 	{
-		cout << "The username is incorrect!\nplease try again\n"
-			<< "press any key to go back to login page\n";
-		cin >> key;
+		cout << "The username is incorrect!\nplease try again\n";
 		return -1;
 	}
 	else
@@ -308,9 +313,7 @@ int Program::login() { //wessal
 		User u = it->second;
 		if (!u.comparePassword(pass))
 		{
-			cout << "The password is incorrect!\nplease try again\n"
-				<< "press any key to go back to login page\n";
-			cin >> key;
+			cout << "The password is incorrect!\nplease try again\n";
 			return -1;
 		}
 		else
@@ -367,7 +370,6 @@ void Program::sendmessage(User& liveUser) {
 		else
 		{
 
-
 			Message msgg_object(liveUser.getid(), receiverID, username_receiver, msg);
 			// Check
 			cout << "Send message? (y/n)" << " ";
@@ -390,8 +392,6 @@ void Program::sendmessage(User& liveUser) {
 				cout << "Message canceled." << " " << endl;
 			}
 		}
-		cout << "0. Back to previous menu\n";
-		cin >> key;
 		cout << "\n"; //line
 	}
 
@@ -529,6 +529,11 @@ void Program::loadfile()
 Program::~Program()
 {
 	savefile();
+}
+
+void Program::printDivider()
+{
+	printCentered("___________________________________________________");
 }
 
 void Program::contactMenu(User &liveUser, User &contact) {

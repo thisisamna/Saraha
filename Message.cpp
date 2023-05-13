@@ -4,13 +4,14 @@
 void Message::viewAsSent()
 {
 	cout << "To: " << receiverUsername << "\n";
-	cout << content << "\n\n";
+	cout << "Message: " << content << "\n";
+	cout << "___________\n";
 }
 void Message::viewAsReceived()
 {
-	cout << "\n"; //line
 	cout << "From: " << senderID << "\n";
-	cout << content << "\n\n";
+	cout << "Message: " << content << "\n";
+	cout <<"___________\n";
 }
 
 string Message::getContent()

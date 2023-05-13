@@ -14,12 +14,8 @@ class Program
 	User *liveUser;
 	bool exit;
 	int intChoice;
-	int key;
 	string choice;
-
-	
 	int TestName;
-
 	int numberChosen;
 	char check;
 	unordered_map<int, User> users;
@@ -43,6 +39,8 @@ public:
 	void loadfile();
 	void savefile();
 	int getInt();
+	void printDivider();
+
 	~Program();
 };
 
