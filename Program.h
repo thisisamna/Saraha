@@ -14,7 +14,7 @@ class Program
 	User *liveUser;
 	bool exit;
 	int intChoice;
-
+	int key;
 	string choice;
 
 	

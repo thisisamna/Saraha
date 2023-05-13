@@ -8,6 +8,7 @@ void Message::viewAsSent()
 }
 void Message::viewAsReceived()
 {
+	cout << "\n"; //line
 	cout << "From: " << senderID << "\n";
 	cout << content << "\n\n";
 }
@@ -47,4 +48,14 @@ Message::Message(int sender_ID, int receiver_ID, string receiver_username ,strin
 Message::Message()
 {
 
+}
+
+void Message::setIsRead(bool is_read)
+{
+	isRead = is_read;
+}
+
+bool Message::getIsRead()
+{
+	return isRead;
 }

@@ -59,11 +59,13 @@ void Program::loginMenu()
 
 void Program::userMenu(User &liveUser)
 {
+
 	cout << "Welcome, " << liveUser.getUsername() << "!\n";
 	while (true)
 	{
 		liveUser.notify();
-		cout << "1. Send a message\n"
+	   cout << "\n"
+		    << "1. Send a message\n"
 			<< "2. Inbox\n"
 			<< "3. Favorites\n"
 			<< "4. Sent messages\n"
@@ -76,7 +78,6 @@ void Program::userMenu(User &liveUser)
 		case 1:
 			//send a message
 			sendmessage(liveUser);
-	
 			break;
 		case 2:
 		{
@@ -90,10 +91,12 @@ void Program::userMenu(User &liveUser)
 			break;
 		case 4:
 			//sent messages
-			cout << "Sent messages from latest to oldest: " << endl;
 			liveUser.viewSent();
-			cout << "1. Undo the latest message\n"
-				<< "0. Back to previous menu\n";
+			if (liveUser.sent.size() != 0)
+				cout << "1. Undo the latest message\n";
+
+			cout << "0. Back to previous menu\n";
+
 			intChoice = getInt();
 			if (intChoice == 1)
 			{
@@ -103,8 +106,11 @@ void Program::userMenu(User &liveUser)
 		case 5:
 			//contacts
 			liveUser.viewcontacts();
-			cout << "Enter a contact ID for more options \n"
-				<< "0 to go back to the previous menu. \n";
+
+			if (liveUser.contacts.size() != 0) //changed
+				cout << "\nEnter a contact ID for more options \n";
+			cout << "0. Back to previous menu\n";
+
 			intChoice = getInt();
 			if (intChoice == 0)
 				break;
@@ -126,8 +132,15 @@ void Program::userMenu(User &liveUser)
 void Program::Inbox(User &liveUser)
 {
 	int msgIndex;
+	cout << "\n"; //line
+
+	if (liveUser.inbox.size() != 0) //changed, كانت تطبع هذا اللاين حتى لو ما فيه مسج في الانبوكس
+		cout << "Enter message index to view details and options. \n";
 	liveUser.viewReceived();
-	cout << "Enter message index to view details and options. \n" << "0. Back to home. \n";
+
+
+	cout << "0. Back to previous menu\n";
+
 	msgIndex = getInt();
 	msgIndex--;
 	if (msgIndex == -1) // was 0 but 0 is an index in msg vector
@@ -150,7 +163,7 @@ void Program::Inbox(User &liveUser)
 			}
 		}
 		msg.viewAsReceived();
-		cout << "1. Add/remove from favorites.\n"
+		cout << "\n1. Add/remove from favorites.\n"
 			<< "2. Add sender to contacts\n"
 			<< "3. Report sender\n"
 			<< "0. Back to previous menu.\n";
@@ -163,8 +176,8 @@ void Program::Inbox(User &liveUser)
 			break;
 		case 2:
 			addSendertoContacts(liveUser, msg);
-	
 			break;
+
 		case 3:
 			cout << endl << "Report the sender of this message? (y/n) ";
 			cin >> check;
@@ -195,6 +208,7 @@ void Program::Inbox(User &liveUser)
 	}
 	return user;
 }*/
+
 User* Program::idToUser(int id) {//returns pointer to user in hashmap, or nullptr if not found
 	auto it = users.find(id);
 	if (it != users.end()) {
@@ -216,6 +230,11 @@ int Program::usernameToID(string username)
 void Program::addSendertoContacts(User& liveUser, Message msg)
 {
 	User sender = *idToUser(msg.getSenderID());
+
+
+	if (sender.Blocked(liveUser.getid())) //check if blocked
+		cout << "\nyou have been blocked by this user\n";
+	else
 	liveUser.addcontact(sender);
 
 }
@@ -244,14 +263,21 @@ void Program::signup() { //wessal salah
 	getline(cin, username);
 	cout << "Enter your password: \n";
 	cin >> pass;
+
+	cout << "\n\n"; // line
+
 	if (usernameToID(username) != -1) {
-		cout << "You already have an acount. please log in!";
+		cout << "You already have an acount. please log in! \n"
+			 << "Enter 0 to go back to login page\n";
+		cin >> key;
 	}
 	else 
 	{
 		++userCount;
 		users[userCount] = User(username, pass, userCount);
-		cout << "Congratulation!!\nYou now have an account";
+		cout << "Congratulation!!\nYou now have an account \n"
+		     << "Enter 0 to go back to login page\n";
+		cin >> key; //لاين مالو أي داعي غير الترتيب line
 	}
 }
 	
@@ -266,10 +292,14 @@ int Program::login() { //wessal
 	getline(cin, username);
 	cout << "Enter your password: \n";
 	cin >> pass;
+
+	cout << "\n\n"; //line
 	liveUserID = usernameToID(username);
 	if (liveUserID == -1)
 	{
-		cout << "The username is incorrect!\nplease try again\n";
+		cout << "The username is incorrect!\nplease try again\n"
+			<< "press any key to go back to login page\n";
+		cin >> key;
 		return -1;
 	}
 	else
@@ -278,7 +308,9 @@ int Program::login() { //wessal
 		User u = it->second;
 		if (!u.comparePassword(pass))
 		{
-			cout << "The password is incorrect!\nplease try again\n";
+			cout << "The password is incorrect!\nplease try again\n"
+				<< "press any key to go back to login page\n";
+			cin >> key;
 			return -1;
 		}
 		else
@@ -291,7 +323,7 @@ int Program::login() { //wessal
 			}
 			else
 			{
-				cout << "Welcome back, " << u.getUsername() << "!\n";
+				//cout << "Welcome back, " << u.getUsername() << "!\n"; -- فيه welcome in the main menu
 				return liveUserID;
 			}
 		}
@@ -300,10 +332,10 @@ int Program::login() { //wessal
 	
 
 	
-void Program::sendmessage(User &liveUser) {
+void Program::sendmessage(User& liveUser) {
 	// Data
 	int receiverID;
-	string username_receiver, msg; 
+	string username_receiver, msg;
 	// Create Message
 
 	cout << endl << "Enter your message:" << " ";
@@ -312,41 +344,56 @@ void Program::sendmessage(User &liveUser) {
 
 	cout << "Enter receiver username:" << " ";
 	cin >> username_receiver;
+	receiverID = usernameToID(username_receiver);
 
-	receiverID = usernameToID(username_receiver);     //check that receiver exist
 
-	
-	if (receiverID == -1) 
+
+
+	if (receiverID == -1)
 	{
 		cout << endl << "User does not exist, please try again." << endl;
 	}
 	else
 	{
-		User *receiver = &users[receiverID];
+		User* receiver = &users[receiverID];
 
-		Message msgg_object(liveUser.getid(), receiverID, username_receiver, msg);
+		// check if blocked
+		if (receiver->Blocked(liveUser.getid()))
+			cout << "\nyou have been blocked by this user\n";
+		
 
-		// Check
-		cout << "Send message? (y/n)" << " ";
-		cin >> check;
 
-		// Send Message
-		if (check == 'y')
-		{
-
-			// Push in Sender messages
-			liveUser.addToSent(msgg_object, *receiver);
-
-			// push in reciver inbox
-			receiver->addToInbox(msgg_object, *receiver);
-			cout << "Message sent successfully." << " " << endl;
-		}
+		//if (liveUser.Blocked(receiver))
 		else
 		{
-			cout << "Message canceled." << " " << endl;
-		}
-	}
 
+
+			Message msgg_object(liveUser.getid(), receiverID, username_receiver, msg);
+			// Check
+			cout << "Send message? (y/n)" << " ";
+			cin >> check;
+			cout << "\n\n"; //line
+
+			// Send Message
+			if (check == 'y')
+			{
+
+				// Push in Sender messages
+				liveUser.addToSent(msgg_object, *receiver);
+
+				// push in reciver inbox
+				receiver->addToInbox(msgg_object, *receiver);
+				cout << "Message sent successfully." << " " << endl;
+			}
+			else
+			{
+				cout << "Message canceled." << " " << endl;
+			}
+		}
+		cout << "0. Back to previous menu\n";
+		cin >> key;
+		cout << "\n"; //line
+	}
 
 }
 
@@ -361,6 +408,8 @@ void Program::undolastmessage(User &liveUser) {
 		// Pop in Sender messages and store popped message
 		lastMsg = liveUser.popSent();
 		cout << "1. Delete for you\n"
+		
+		cout << "\n1. Delete for me\n"
 			<< "2. Delete for everyone\n";
 		intChoice = getInt();
 		switch (intChoice)
@@ -374,8 +423,11 @@ void Program::undolastmessage(User &liveUser) {
 			if (idToUser(lastMsg.getReceiverID()) != nullptr) {
 				User* receiver = idToUser(lastMsg.getReceiverID());
 				receiver->removeFromInbox(lastMsg);
+				if (!lastMsg.getIsRead())
+					receiver->newMsgs--;
 				break;
 			}
+			
 		}
 		default:
 			cout << "Invalid choice, please try again!";
@@ -482,10 +534,10 @@ Program::~Program()
 
 void Program::contactMenu(User &liveUser, User &contact) {
 
-	cout << "1. View sent messages\n"
+	cout << "\n1. View sent messages\n"
 		<< "2. Report\n"
 		<< "3. Remove\n"
-		//<< "4. Block\n"
+		<< "4. Block\n"
 		<< "0. Back to previous menu \n";
 
 	
@@ -494,6 +546,7 @@ void Program::contactMenu(User &liveUser, User &contact) {
 	{
 	case 1:
 		// view messages from contact
+		cout << "\n";
 		liveUser.viewContactMessages(contact);
 		break;
 	case 2:
@@ -511,6 +564,9 @@ void Program::contactMenu(User &liveUser, User &contact) {
 		break;
 	case 4:
 		// block function
+		liveUser.blockContact(contact);
+		liveUser.removecontact(contact);
+		cout << "Contact blocked. \n";
 		break;
 	case 0:
 		break;

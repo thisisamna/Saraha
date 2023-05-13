@@ -15,13 +15,14 @@ public:
 	int id; //change
 	string username; //change
 	string password; //change
-	//vector<User> contacts; //working but waste of memory because we have sorted contacts, let's deal with it at the end
 	deque<Message> sent;
 	vector<Message> inbox;
-	map<User , int>contacts;
+	map<User , int> contacts;
 	vector <Message> FavouriteMessages;
-	int newMsgs = 0; // khira -- incremencts every time a msge is sent to a user and once the user opens their inbox the variable is set to 0 again
+	vector <User> blockedContacts;
+	int newMsgs = 0; 
 	int reported;
+	int key;
 	
 public:
 	User();
@@ -41,7 +42,7 @@ public:
 	void RemoveOldestFavorite();
 	void viewFavorites();
 	void searchContact(int id);
-	void viewContactMessages(User &contact); // khira -- view msges sent by a specific user
+	void viewContactMessages(User &contact); 
 	//helper functions
     Message getInboxMessage(int msgID);
 	bool comparePassword(string pass);
@@ -52,6 +53,8 @@ public:
 	void beReported();
 	bool isBanned();
 	void notify();
+	void blockContact(User& contact);
+	bool Blocked(int ID);
 	
 };
 

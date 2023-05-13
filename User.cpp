@@ -59,7 +59,7 @@ void User::addcontact(User contact)
 	for (auto i : contacts) {
 		if (i.first.id == contact.getid()) {
 			userExists = true;
-			cout << "This user is already in your contacts.\n";
+			cout << "\nThis user is already in your contacts.\n";
 			break;
 		}
 	}
@@ -68,7 +68,7 @@ void User::addcontact(User contact)
 		contacts[contact]=msgcounter(contact);
 		//cout << liveUser.contacts.size() << '\n';
 		//cout << Added.getUsername() << ' ' << Added.getid() << '\n';
-		cout << "Sender added to contacts.\n";
+		cout << "\nSender added to contacts.\n";
 
 	}
 
@@ -174,12 +174,32 @@ bool User::isBanned()
 		return false;
 }
 
+void User::blockContact(User & contact)
+{
+	blockedContacts.push_back(contact);
+}
+
+bool User::Blocked(int ID)
+{
+	for (int i = 0; i < blockedContacts.size(); i++)
+	{
+		
+		if (blockedContacts.at(i).getid() == ID)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void User::notify()
 {
 	if (newMsgs != 0)
 		cout << "you have " << newMsgs << " unread messages. \n";
 
 }
+
+
 
 void User::removecontact(User contact)
 {
@@ -195,12 +215,14 @@ void User::removecontact(User contact)
 
 void User::viewSent()
 {
+	cout << "\n"; //line
 	if (sent.empty())
 	{
 		cout << "You haven't sent any messages yet.\n";
 	}
 	else
 	{
+		cout << "Sent messages from latest to oldest: " << endl;
 		for (int i = 0; i < sent.size(); i++) 
 		{
 			sent.front().viewAsSent();
@@ -222,6 +244,7 @@ void User::viewReceived()
 		for (int i = 0; i < inbox.size(); i++) 
 		{
 			cout << i+1 << ". " << inbox[i].getContent() << endl;
+			inbox[i].setIsRead(true);
 		}
 	}
 	newMsgs = 0; //all messages are read
@@ -231,6 +254,7 @@ void User::viewReceived()
 
 
 void User::viewcontacts() {
+	cout << "\n"; //line
 	if (contacts.size() == 0) {
 		cout << "You don't have any contacts yet!\n";
 	}
@@ -257,7 +281,7 @@ void User::favourite(Message msg) {
 
 		if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
 			MessageIsFavourite = true;
-			cout << "Message is already favourite press 'Y' if you want to remove it \n";
+			cout << "\nMessage is already favourite press 'Y' if you want to remove it \n";
 			cout << "Or 'N' to remain it\n";
 			cin >> answer;
 			if (answer == ('y') || answer == 'Y')
@@ -270,7 +294,7 @@ void User::favourite(Message msg) {
 	if (!MessageIsFavourite) {
 		FavouriteMessages.push_back(msg);
 
-		cout << "Message added to favorites." << endl;
+		cout << "\nMessage added to favorites." << endl;
 	}
 
 }
@@ -279,9 +303,14 @@ void User::RemoveOldestFavorite(){
 }
 
 void User::viewFavorites(){
+	cout << "\n"; //line
+	if (FavouriteMessages.size() == 0) 
+		cout << "Empty \n"; 
 	for(int i = 0; i < FavouriteMessages.size(); i++){
 		FavouriteMessages[i].viewAsReceived();
 	}
+	cout << "0. Back to previous menu\n";
+	cin >> key;
 }
 
 
@@ -301,6 +330,8 @@ void User::searchContact(int id) {
 		cout << "Contact not Found ! \n";
 	}
 }
+
+
 //The next fucntion goes against the requirements
 // 
 //void User::searchContactbyname(string username) {
