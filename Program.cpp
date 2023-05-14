@@ -407,9 +407,9 @@ void Program::undolastmessage(User &liveUser) {
 	if (c == 'y') {
 		// Pop in Sender messages and store popped message
 		lastMsg = liveUser.popSent();
-		cout << "1. Delete for you\n"
-		
-		cout << "\n1. Delete for me\n"
+		cout << "1. Delete for you\n";
+
+			cout << "\n1. Delete for me\n"
 			<< "2. Delete for everyone\n";
 		intChoice = getInt();
 		switch (intChoice)
