@@ -38,7 +38,6 @@ public:
 	int usernameToID(string username);
 	User* idToUser(int id);
 	void printCentered(string str);
-
 	//file handling
 	void loadfile();
 	void loadContacts();
