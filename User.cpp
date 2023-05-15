@@ -345,7 +345,7 @@ void User::viewFavorites()
 
 
 //search contact by his id
-void User::searchContact(int id) {
+bool User::searchContact(int id) {
 	bool found = false;
 	for (auto i : contacts) {
 		if (i.first.getid() == id) 
@@ -354,10 +354,5 @@ void User::searchContact(int id) {
 			break;
 		} 
 	}
-	if (found) {
-		cout << "Contact Found !\n";
-	}
-	else {
-		cout << "Contact not Found ! \n";
-	}
+	return found;
 }

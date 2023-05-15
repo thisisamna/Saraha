@@ -145,7 +145,12 @@ void Program::userMenu(User &liveUser)
 			printCentered("S e a r c h   C o n t a c t s");
 			cout << "\nEnter an ID to search for: ";
 			intChoice = getInt();
-			liveUser.searchContact(intChoice);
+			if (liveUser.searchContact(intChoice)) {
+				cout << "Contact Found !\n";
+			}
+			else {
+				cout << "Contact not Found ! \n";
+			}
 			break;
 		case 7:
 			//logout
@@ -431,9 +436,7 @@ void Program::undolastmessage(User &liveUser) {
 	if (c == 'y') {
 		// Pop in Sender messages and store popped message
 		lastMsg = liveUser.popSent();
-		cout << "1. Delete for you\n";
-
-			cout << "\n1. Delete for me\n"
+		cout << "1. Delete for you\n"
 			<< "2. Delete for everyone\n";
 		intChoice = getInt();
 		switch (intChoice)
@@ -667,4 +670,5 @@ int Program::getInt()
 		}
 	}
 }
+
 

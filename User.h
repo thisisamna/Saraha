@@ -56,10 +56,10 @@ public:
 	void viewSent();
 	void viewReceived();
 	void viewFavorites();
-	void searchContact(int id);
 	void viewContactMessages(User &contact); 
 
 	//helper functions
+	bool searchContact(int id);
 	int msgcounter(User contact);
 	bool operator<(const User& other) const;
 	bool comparePassword(string pass);
