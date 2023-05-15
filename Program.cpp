@@ -16,7 +16,8 @@ void Program::loop()
 void Program::loginMenu()
 {
 	
-	while (true) {
+	while (true) 
+	{
 		printCentered("S a r a h a");
 		printCentered("Annonymously send and receive messages.");
 		cout << "Welcome!" << endl;
@@ -137,8 +138,16 @@ void Program::userMenu(User &liveUser)
 				break;
 			else
 			{
-				printDivider();
-				contactMenu(liveUser, *idToUser(intChoice));
+				if (liveUser.searchContact(intChoice))
+				{
+					cout << "_______________\n";
+					cout << "Contact ID: " << intChoice << endl;
+					contactMenu(liveUser, *idToUser(intChoice));
+				}
+				else
+				{
+					cout << "\nThis contact does not exist!" << endl;
+				}
 			}
 			break;
 		case 6:
