@@ -10,11 +10,6 @@ using namespace std;
 
 User::User()
 {
-	
-	id = 0;
-	username = "please";
-	password = "work";
-
 }
 User::User(string name, string pass, int ID)
 {
@@ -22,12 +17,23 @@ User::User(string name, string pass, int ID)
 	password = pass;
 	id = ID;
 	reported = 0;
-	
-} // added the id to constructor to set the id for every user
+	newMsgs = 0;
+
+}
+User::User(string name, string pass, int ID, int _reported, int _newMsgs)
+{
+	username = name;
+	password = pass;
+	id = ID;
+	reported = _reported ;
+	newMsgs = _newMsgs;
+
+
+}
 bool User:: operator<(const User& other) const {
 	return id < other.id;
 }
-int User::getid() 
+int User::getid() const
 {
 	return id;
 }
@@ -66,9 +72,6 @@ void User::addcontact(User contact)
 	
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
 		contacts[contact]=msgcounter(contact);
-		//cout << liveUser.contacts.size() << '\n';
-		//cout << Added.getUsername() << ' ' << Added.getid() << '\n';
-		cout << "\nSender added to contacts.\n";
 
 	}
 
@@ -121,6 +124,11 @@ bool User::comparePassword(string pass)
 	}
 }
 
+void User::addToSent(Message msg) // only used in load
+{
+	sent.push_front(msg);
+}
+
 void User::addToSent(Message msg,User &receiver)
 {
 	sent.push_front(msg);
@@ -129,8 +137,11 @@ void User::addToSent(Message msg,User &receiver)
 		contacts[receiver]++;
 	}
 }
-
-void User::addToInbox(Message msg, User &sender) 
+void User::addToInbox(Message msg) // only used in load
+{
+	inbox.push_back(msg);
+}
+void User::addToInbox(Message msg, User &sender)  //used in program
 {
 	inbox.push_back(msg);
 	if (contacts.find(sender) != contacts.end())
@@ -191,6 +202,37 @@ bool User::Blocked(int ID)
 	}
 	return false;
 }
+
+map<User, int> User::getContacts()
+{
+	return contacts;
+}
+vector<User> User::getBlockedContacts()
+{
+	return blockedContacts;
+}
+
+deque<Message> User::getFavouriteMessages()
+{
+	return FavouriteMessages;
+}
+
+vector<Message> User::getInbox()
+{
+	return inbox;
+}
+
+deque<Message> User::getSent()
+{
+	return sent;
+}
+
+int User::getReported()
+{
+	return reported;
+}
+
+
 
 void User::notify()
 {
@@ -275,29 +317,9 @@ void User::viewcontacts() {
 
 
 void User::favourite(Message msg) {
-	//bool MessageIsFavourite = false;
-	//char answer;
-	//for (int i = 0; i < FavouriteMessages.size(); i++) {
-
-	//	if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
-	//		MessageIsFavourite = true;
-	//		cout << "Message is already favourite press 'Y' if you want to remove it \n";
-	//		cout << "Or 'N' to remain it\n";
-	//		cin >> answer;
-	//		if (answer == ('y') || answer == 'Y')
-	//			FavouriteMessages.erase(FavouriteMessages.begin() + i);
-	//		else if (answer == ('N') || answer == 'n')
-	//			break;
-	//	}
-
-	//}
-	//if (!MessageIsFavourite) {
-		FavouriteMessages.push_back(msg);
-
-		cout << "Message added to favorites." << endl;
-	/*}*/
-
+	FavouriteMessages.push_back(msg);
 }
+
 void User::RemoveOldestFavorite(){
    FavouriteMessages.pop_front();
    cout << "Oldest favorite removed.\n";
@@ -307,10 +329,11 @@ void User::viewFavorites()
 {
 	if (FavouriteMessages.empty())
 	{
-		cout << "You haven't sent any messages yet.\n";
+		cout << "You don't have any favorite messages yet.\n";
 	}
 	else
 	{
+		cout << "Favorite messages from oldest to latest: " << endl; //3ashan ne3raf ha pop mnen
 		for (int i = 0; i < FavouriteMessages.size(); i++)
 		{
 			FavouriteMessages.front().viewAsReceived();
@@ -318,8 +341,6 @@ void User::viewFavorites()
 			FavouriteMessages.pop_front();
 		}
 	}
-	cout << "0. Back to previous menu\n";
-	cin >> key;
 }
 
 
@@ -327,10 +348,11 @@ void User::viewFavorites()
 void User::searchContact(int id) {
 	bool found = false;
 	for (auto i : contacts) {
-		if (i.first.id == id) {
+		if (i.first.getid() == id) 
+		{
 			found = true;
 			break;
-		}
+		} 
 	}
 	if (found) {
 		cout << "Contact Found !\n";
@@ -339,25 +361,3 @@ void User::searchContact(int id) {
 		cout << "Contact not Found ! \n";
 	}
 }
-
-
-//The next fucntion goes against the requirements
-// 
-//void User::searchContactbyname(string username) {
-//	bool found = false;
-//	User it;
-//	for (auto i : contacts) {
-//		if (i.first.username == username) {
-//			found = true;
-//			it = i.first;
-//			break;
-//		}
-//	}
-//	if (found) {
-//		cout << "Contact Found !\n Name : " << username << "\t Id : " << it.getid() << '\n';
-//	}
-//	else {
-//		cout << "Contact not Found ! , check if the entered username is correct \n";
-//	}
-//
-//}

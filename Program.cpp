@@ -65,13 +65,15 @@ void Program::userMenu(User &liveUser)
 	while (true)
 	{
 		liveUser.notify();
-	   cout << "\n"
-		    << "1. Send a message\n"
+		printCentered("M a i n   M e n u");
+		cout << "\n"
+			<< "1. Send a message\n"
 			<< "2. Inbox\n"
 			<< "3. Favorites\n"
 			<< "4. Sent messages\n"
 			<< "5. My contacts\n"
-			<< "6. Logout\n";
+			<< "6. Search for contact\n"
+			<< "7. Logout\n";
 		intChoice = getInt();
 		printDivider();
 		switch (intChoice)
@@ -93,14 +95,25 @@ void Program::userMenu(User &liveUser)
 			//favorites
 			printCentered("F a v o r i t e s");
 			liveUser.viewFavorites();
+
+			if (liveUser.getFavouriteMessages().size()!=0)
+				cout << "1. Remove the oldest message\n";
+			cout << "_______________\n";
+			cout << "0. Back to previous menu\n";
+
+			intChoice = getInt();
+			if (intChoice == 1)
+			{
+				liveUser.RemoveOldestFavorite();
+			}
 			break;
 		case 4:
 			//sent messages
 			printCentered("S e n t   m e s s a g e s");
 			liveUser.viewSent();
-			if (liveUser.sent.size() != 0)
+			if (liveUser.getSent().size() != 0)
 				cout << "1. Undo the latest message\n";
-
+			cout << "_______________\n";
 			cout << "0. Back to previous menu\n";
 
 			intChoice = getInt();
@@ -114,8 +127,9 @@ void Program::userMenu(User &liveUser)
 			printCentered("C o n t a c t s");
 			liveUser.viewcontacts();
 
-			if (liveUser.contacts.size() != 0) //changed
+			if (liveUser.getContacts().size() != 0) //changed
 				cout << "\nEnter a contact ID for more options \n";
+			cout << "_______________\n";
 			cout << "0. Back to previous menu\n";
 
 			intChoice = getInt();
@@ -128,6 +142,12 @@ void Program::userMenu(User &liveUser)
 			}
 			break;
 		case 6:
+			printCentered("S e a r c h   C o n t a c t s");
+			cout << "\nEnter an ID to search for: ";
+			intChoice = getInt();
+			liveUser.searchContact(intChoice);
+			break;
+		case 7:
 			//logout
 			return; //هيخرج برا اللوب وبرا الفنكشن
 		default:
@@ -143,10 +163,10 @@ void Program::Inbox(User &liveUser)
 	int msgIndex;
 	cout << "\n"; //line
 
-	if (liveUser.inbox.size() != 0) //changed, كانت تطبع هذا اللاين حتى لو ما فيه مسج في الانبوكس
+	if (liveUser.getInbox().size() != 0) //changed, كانت تطبع هذا اللاين حتى لو ما فيه مسج في الانبوكس
 		cout << "Enter message index to view details and options. \n";
 	liveUser.viewReceived();
-	cout << "_______________\n";
+	printDivider();
 	cout << "0. Back to previous menu\n";
 
 	msgIndex = getInt();
@@ -181,7 +201,7 @@ void Program::Inbox(User &liveUser)
 		{
 		case 1:
 			liveUser.favourite(msg);
-	
+			cout << "Message added to favorites." << endl;
 			break;
 		case 2:
 			addSendertoContacts(liveUser, msg);
@@ -244,7 +264,11 @@ void Program::addSendertoContacts(User& liveUser, Message msg)
 	if (sender.Blocked(liveUser.getid())) //check if blocked
 		cout << "\nyou have been blocked by this user\n";
 	else
-	liveUser.addcontact(sender);
+	{
+		liveUser.addcontact(sender);
+		cout << "\nSender added to contacts.\n";
+	}
+
 
 }
 
@@ -265,7 +289,7 @@ void Program::printCentered(string str)
 	cout << ss.str() << endl;
 }
 
-void Program::signup() { //wessal salah
+void Program::signup() { 
 	string username, pass;
 	cout << "Please, enter your user name: \n";
 	cin.ignore();
@@ -290,7 +314,7 @@ void Program::signup() { //wessal salah
 	
 	
 
-int Program::login() { //wessal
+int Program::login() { 
 
 	string username, pass;
 	cout << "Enter your user name: \n";
@@ -407,9 +431,9 @@ void Program::undolastmessage(User &liveUser) {
 	if (c == 'y') {
 		// Pop in Sender messages and store popped message
 		lastMsg = liveUser.popSent();
-		cout << "1. Delete for you\n"
-		
-		cout << "\n1. Delete for me\n"
+		cout << "1. Delete for you\n";
+
+			cout << "\n1. Delete for me\n"
 			<< "2. Delete for everyone\n";
 		intChoice = getInt();
 		switch (intChoice)
@@ -438,92 +462,141 @@ void Program::undolastmessage(User &liveUser) {
 		return;
 }
 
-//void Program::savefile() {
-//	ofstream ourfile("ourdata.txt", ios::app);
-//
-//	if (ourfile.is_open()) {
-//		for (auto it : users) {
-//			ourfile << it.first << '|' << it.second.getUsername() << '|' << it.second.getPassword() << '|';
-//			for (int i = 0; i < liveUser->sent.size(); i++) {
-//				ourfile << it.second.sent[i].getSenderID() << '|' << it.second.sent[i].getReceiverID() << '|' << it.second.sent[i].getReceiverUsername() << '|' << it.second.sent[i].getContent() << "\n";
-//			}
-//			for (int i = 0; i < liveUser->inbox.size(); i++) {
-//				ourfile << it.second.inbox[i].getSenderID() << '|' << it.second.inbox[i].getReceiverID() << '|' << it.second.inbox[i].getReceiverUsername() << '|' << it.second.inbox[i].getContent() << "\n";
-//			}
-//		}
-//		/*for (auto elem : it.second.contacts) {
-//		ourfile << elem.second << endl	}*/
-//		//	for (auto elem : it.second.FavouriteMessages) {
-//		//		ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
-//		//	}
-//
-//	}
-//	ourfile.close();
-//}
-
-//void Program::loadfile()
-//{
-//	ifstream ourfile("ourdata.txt");
-//	string name,pass,n;
-//	int id;
-//	char delimiter = '|';
-//	while (ourfile >> id) {
-//		getline(ourfile, name, delimiter);
-//		getline(ourfile, pass, delimiter);
-//		users[id] = User(name, pass, id);
-//	}
-//}
-/**void Program::loadfile()
-{
-	ifstream ourfile("ourdata.txt");
-	string line;
-	int id;
-	string username;
-	string password;
-	stack<string> splitted;
-//	while (ourfile) {*/
-//		getline(ourfile, line);
-//		splitted = split(line, ',');
-//		while (!splitted.empty())
-//		{
-//			id = stoi(splitted.top());
-//			splitted.pop();
-//			username = splitted.top();
-//			splitted.pop();
-//			password = splitted.top();
-//			splitted.pop();
-//			//users.insert(make_pair(id, obj));
-//			users[id] = User(username, password, id);
-//			/*for (auto it : users) {
-//				cout << it.first << it.second.username << " " << it.second.password;
-//			}*/
-//		}
-//	}
-//	ourfile.close();
-//}
 void Program::savefile()
 {
+	remove("data.txt");
 	ofstream file("data.txt");
+	file << userCount << endl;
 	for (auto it : users)
 	{
-		file << it.second.getid() << " " << it.second.getUsername() << " " << it.second.getPassword() << endl;
-		file << endl;
-
+		file << it.second.getid() << " " << it.second.getUsername() << " " << it.second.getPassword() << " " << it.second.getReported() << " " << it.second.newMsgs << endl;
+		//inbox
+		file << it.second.getInbox().size() << endl;
+		for (auto msg : it.second.getInbox())
+		{
+			file << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << endl;
+			file << msg.getContent() << endl;
+		}
+		//sent
+		file << it.second.getSent().size() << endl;
+		for (auto msg : it.second.getSent())
+		{
+			file << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << endl;
+			file << msg.getContent() << endl;
+		}
+		//favourites
+		file << it.second.getFavouriteMessages().size() << endl;
+		for (auto msg : it.second.getFavouriteMessages())
+		{
+			file << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << endl;
+			file << msg.getContent() << endl;
+		}
 	}
+	file.close();
+	saveContacts();
+}
+
+void Program::saveContacts()
+{
+	remove("contacts.txt");
+	ofstream file("contacts.txt");
+	for (auto it : users) {
+		file << it.first << endl;
+		//contacts
+		file << it.second.getContacts().size() << endl;
+		for (auto c : it.second.getContacts())
+		{
+			file << c.first.getid() <<  " " << c.second << endl;
+		}
+		//blocked users
+		file << it.second.getBlockedContacts().size() << endl;
+		for (auto b : it.second.getBlockedContacts())
+		{
+			file << b.getid() << endl;
+		}
+	}
+	file.close();
 }
 void Program::loadfile()
 {
 	ifstream file("data.txt");
-	int id;
+	//user details
+	int id, reported, newMsgs;
 	string username;
 	string password;
-
-	int senderID, receiverID;
+	//msg details
+	Message msg;
+	int containerSize, senderID, receiverID;
 	string receiverUsername, content;
 
-	while (file >> id >> username >> password)
+	file >> userCount;
+	for (int i = 0; i < userCount; i++)
 	{
-		users[id] = User(username, password, id);
+		file >> id >> username >> password >> reported >> newMsgs;
+		users[id] = User(username, password, id, reported, newMsgs);
+		liveUser = &users[id];
+		//inbox
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> senderID >> receiverID >> receiverUsername;
+			file.ignore();
+			getline(file, content);
+			msg = Message(senderID, receiverID, receiverUsername, content),
+			liveUser->addToInbox(msg);
+		}
+		//sent
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> senderID >> receiverID >> receiverUsername;
+			file.ignore();
+			getline(file, content);
+			msg = Message(senderID, receiverID, receiverUsername, content),
+				liveUser->addToSent(msg);
+		}
+		//favourites
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> senderID >> receiverID >> receiverUsername;
+			file.ignore();
+			getline(file, content);
+			msg = Message(senderID, receiverID, receiverUsername, content),
+				liveUser->favourite(msg);
+		}
+		
+	}
+	loadContacts();
+	liveUser = nullptr;
+	liveUserID = -1;
+}
+
+void Program::loadContacts()
+{
+	int liveUserID, containerSize, contactID, numOfMsgs;
+	User contact;
+	ifstream file("contacts.txt");
+	for (int i = 0; i < userCount; i++)
+	{
+		file >> liveUserID;
+		liveUser = idToUser(liveUserID);
+		//contacts
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> contactID >> numOfMsgs;
+			contact = *idToUser(contactID);
+			liveUser->addcontact(contact);
+		}
+		//blocked contacts
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> contactID;
+			contact = *idToUser(contactID);
+			liveUser->blockContact(contact);
+		}
 	}
 }
 
@@ -539,7 +612,7 @@ void Program::printDivider()
 
 void Program::contactMenu(User &liveUser, User &contact) {
 
-	cout << "\n1. View sent messages\n"
+	cout << "\n1. View messages from contact\n"
 		<< "2. Report\n"
 		<< "3. Remove\n"
 		<< "4. Block\n"
@@ -595,19 +668,3 @@ int Program::getInt()
 	}
 }
 
-
-//stack<string> Program::split(string s, char delim) 
-//{
-//	stack<string> result;
-//	stringstream ss(s);
-//	string item;
-//
-//	while (getline(ss, item, delim)) {
-//		result.push(item);
-//	}
-//
-//	return result;
-//}
-//usage
-//vector<string> v = split(str, delimiter);
-//for (auto i : v) cout << i << endl;

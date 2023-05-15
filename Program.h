@@ -14,9 +14,6 @@ class Program
 	User *liveUser;
 	bool exit;
 	int intChoice;
-	string choice;
-	int TestName;
-	int numberChosen;
 	char check;
 	unordered_map<int, User> users;
 public:
@@ -26,20 +23,27 @@ public:
 	void loginMenu();
 	void userMenu(User &liveUser);
 	void Inbox(User &liveUser);
+	void contactMenu(User& liveUser, User& contact);
+
+	//functionality
+	int login();
 	void signup();
 	void sendmessage(User &liveUser);
 	void undolastmessage(User &liveUser);
-	void contactMenu(User &liveUser, User &contact);
-	int login();
-	User* idToUser(int id);
-	int usernameToID(string username);
 	void addSendertoContacts(User& liveUser, Message msg);
-	void printCentered(string str);
-	stack<string> split(string s, char delim);
-	void loadfile();
-	void savefile();
+
+	//helper functions
 	int getInt();
 	void printDivider();
+	int usernameToID(string username);
+	User* idToUser(int id);
+	void printCentered(string str);
+
+	//file handling
+	void loadfile();
+	void loadContacts();
+	void savefile();
+	void saveContacts();
 
 	~Program();
 };

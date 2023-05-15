@@ -21,7 +21,6 @@
   <ItemGroup>
     <ClInclude Include="Message.h" />
     <ClInclude Include="Program.h" />
-    <ClInclude Include="ProgramException.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
