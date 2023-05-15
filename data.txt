@@ -1,41 +1,13 @@
-7
-1 Amna a 0 0
+2
+1 wessal 1 0 0
 0
 1
-1 2 Khira
-Hello from Amna
+1 2 amne
+hi
 0
-2 Khira k 0 0
-2
-1 2 Khira
-Hello from Amna
-3 2 Khira
-Hello from Rana
-0
-2
-1 2 Khira
-Hello from Amna
-3 2 Khira
-Hello from Rana
-3 Rana r 0 0
-0
+2 amne 2 0 1
 1
-3 2 Khira
-Hello from Rana
-0
-4 Habiba f 0 0
-0
-0
-0
-5 Habeba h 0 0
-0
-0
-0
-6 Fatma f 0 0
-0
-0
-0
-7 Wessal w 0 0
-0
+1 2 amne
+hi
 0
 0
