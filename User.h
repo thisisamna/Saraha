@@ -47,7 +47,9 @@ public:
 	//helper functions
     Message getInboxMessage(int msgID);
 	bool comparePassword(string pass);
+	void addToSent(Message msg);// only used in load
 	void addToSent(Message msg,User &recevier);
+	void addToInbox(Message msg); //only used in load
 	void addToInbox(Message msg, User &Sender);
 	Message popSent();
 	void removeFromInbox(Message msg);

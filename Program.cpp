@@ -193,7 +193,7 @@ void Program::Inbox(User &liveUser)
 		{
 		case 1:
 			liveUser.favourite(msg);
-	
+			cout << "Message added to favorites." << endl;
 			break;
 		case 2:
 			addSendertoContacts(liveUser, msg);
@@ -515,27 +515,85 @@ void Program::undolastmessage(User &liveUser) {
 //}
 void Program::savefile()
 {
-	//fstream file("data.txt");
-	//file << userCount << endl;
-	//for (auto it : users)
-	//{
-	//	file << it.second.getid() << " " << it.second.getUsername() << " " << it.second.getPassword() << endl;
-	//	it.second.;
-	//}
+	remove("data.txt");
+	ofstream file("data.txt");
+	file << userCount << endl;
+	for (auto it : users)
+	{
+		file << it.second.getid() << " " << it.second.getUsername() << " " << it.second.getPassword() << " " <<it.second.getReported() << " " << it.second.newMsgs << endl;
+		//inbox
+		file << it.second.getInbox().size() << endl;
+		for (auto msg : it.second.getInbox())
+		{
+			file << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << endl;
+			file << msg.getContent() << endl;
+		}
+		//sent
+		file << it.second.getSent().size() << endl;
+		for (auto msg : it.second.getSent())
+		{
+			file << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << endl;
+			file << msg.getContent() << endl;
+		}
+		//favourites
+		file << it.second.getFavouriteMessages().size() << endl;
+		for (auto msg : it.second.getFavouriteMessages())
+		{
+			file << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << endl;
+			file << msg.getContent() << endl;
+		}
+
+	}
 }
 void Program::loadfile()
 {
 	ifstream file("data.txt");
-	int id;
+	//user details
+	int id, reported, newMsgs;
 	string username;
 	string password;
-
-	int senderID, receiverID;
+	//msg details
+	Message msg;
+	int containerSize, senderID, receiverID;
 	string receiverUsername, content;
 
-	while (file >> id >> username >> password)
+	file >> userCount;
+	for (int i = 0; i < userCount; i++)
 	{
-		users[id] = User(username, password, id);
+		file >> id >> username >> password >> reported >> newMsgs;
+		users[id] = User(username, password, id, reported, newMsgs);
+		liveUser = &users[id];
+		//inbox
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> senderID >> receiverID >> receiverUsername;
+			file.ignore();
+			getline(file, content);
+			msg = Message(senderID, receiverID, receiverUsername, content),
+			liveUser->addToInbox(msg);
+		}
+		//sent
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> senderID >> receiverID >> receiverUsername;
+			file.ignore();
+			getline(file, content);
+			msg = Message(senderID, receiverID, receiverUsername, content),
+				liveUser->addToSent(msg);
+		}
+		//favourites
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> senderID >> receiverID >> receiverUsername;
+			file.ignore();
+			getline(file, content);
+			msg = Message(senderID, receiverID, receiverUsername, content),
+				liveUser->favourite(msg);
+		}
+		
 	}
 }
 

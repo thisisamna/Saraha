@@ -127,6 +127,11 @@ bool User::comparePassword(string pass)
 	}
 }
 
+void User::addToSent(Message msg) // only used in load
+{
+	sent.push_front(msg);
+}
+
 void User::addToSent(Message msg,User &receiver)
 {
 	sent.push_front(msg);
@@ -135,8 +140,11 @@ void User::addToSent(Message msg,User &receiver)
 		contacts[receiver]++;
 	}
 }
-
-void User::addToInbox(Message msg, User &sender) 
+void User::addToInbox(Message msg) // only used in load
+{
+	inbox.push_back(msg);
+}
+void User::addToInbox(Message msg, User &sender)  //used in program
 {
 	inbox.push_back(msg);
 	if (contacts.find(sender) != contacts.end())
@@ -326,10 +334,7 @@ void User::favourite(Message msg) {
 	//}
 	//if (!MessageIsFavourite) {
 		FavouriteMessages.push_back(msg);
-
-		cout << "Message added to favorites." << endl;
 	/*}*/
-
 }
 void User::RemoveOldestFavorite(){
    FavouriteMessages.pop_front();
