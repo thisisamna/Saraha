@@ -568,6 +568,8 @@ void Program::loadfile()
 		
 	}
 	loadContacts();
+	liveUser = nullptr;
+	liveUserID = -1;
 }
 
 void Program::loadContacts()
@@ -610,7 +612,7 @@ void Program::printDivider()
 
 void Program::contactMenu(User &liveUser, User &contact) {
 
-	cout << "\n1. View sent messages\n"
+	cout << "\n1. View messages from contact\n"
 		<< "2. Report\n"
 		<< "3. Remove\n"
 		<< "4. Block\n"

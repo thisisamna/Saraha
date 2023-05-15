@@ -24,27 +24,44 @@ private:
 	
 public:
 	int newMsgs = 0;
+	//constructors
 	User();
 	User(string username, string password, int id);
-	User(string name, string pass, int ID, int _reported, int _newMsgs);
-	bool operator<(const User& other) const;
+	User(string name, string pass, int ID, int _reported, int _newMsgs); //for file
+	//getters
 	int getid() const;
 	string getUsername();
 	string getPassword();
+	map<User, int> getContacts();
+	deque <Message> getFavouriteMessages();
+	vector <Message> getInbox();
+	deque <Message> getSent();
+	int getReported();
+	vector<User> getBlockedContacts();
+	Message getInboxMessage(int msgID);
+
+	//functionality
 	void addcontact(User contact);
 	void removecontact(User contact);
+	void blockContact(User& contact);
+	void favourite(Message msg);
+	void RemoveOldestFavorite();
+	void notify();
+	void beReported();
+	bool isBanned();
+	bool Blocked(int ID);
+
+	//display
 	void viewcontacts();
 	void viewSent();
 	void viewReceived();
-	//bool cmp(const pair<int, int>& a, const pair<int, int>& b);
-	int msgcounter(User contact);
-	void favourite(Message msg);
-	void RemoveOldestFavorite();
 	void viewFavorites();
 	void searchContact(int id);
 	void viewContactMessages(User &contact); 
+
 	//helper functions
-    Message getInboxMessage(int msgID);
+	int msgcounter(User contact);
+	bool operator<(const User& other) const;
 	bool comparePassword(string pass);
 	void addToSent(Message msg);// only used in load
 	void addToSent(Message msg,User &recevier);
@@ -52,17 +69,6 @@ public:
 	void addToInbox(Message msg, User &Sender);
 	Message popSent();
 	void removeFromInbox(Message msg);
-	void beReported();
-	bool isBanned();
-	void notify();
-	void blockContact(User& contact);
-	bool Blocked(int ID);
-	map<User, int> getContacts();
-	deque <Message> getFavouriteMessages();
-	vector <Message> getInbox();
-	deque <Message> getSent();
-	int getReported();
-	vector<User> getBlockedContacts();
 
 };
 
