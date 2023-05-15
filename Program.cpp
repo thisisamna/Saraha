@@ -65,13 +65,15 @@ void Program::userMenu(User &liveUser)
 	while (true)
 	{
 		liveUser.notify();
-	   cout << "\n"
-		    << "1. Send a message\n"
+		printCentered("M a i n   M e n u");
+		cout << "\n"
+			<< "1. Send a message\n"
 			<< "2. Inbox\n"
 			<< "3. Favorites\n"
 			<< "4. Sent messages\n"
 			<< "5. My contacts\n"
-			<< "6. Logout\n";
+			<< "6. Search for contact\n"
+			<< "7. Logout\n";
 		intChoice = getInt();
 		printDivider();
 		switch (intChoice)
@@ -140,6 +142,12 @@ void Program::userMenu(User &liveUser)
 			}
 			break;
 		case 6:
+			printCentered("S e a r c h   C o n t a c t s");
+			cout << "\nEnter an ID to search for: ";
+			intChoice = getInt();
+			liveUser.searchContact(intChoice);
+			break;
+		case 7:
 			//logout
 			return; //هيخرج برا اللوب وبرا الفنكشن
 		default:

@@ -348,10 +348,11 @@ void User::viewFavorites()
 void User::searchContact(int id) {
 	bool found = false;
 	for (auto i : contacts) {
-		if (i.first.id == id) {
+		if (i.first.getid() == id) 
+		{
 			found = true;
 			break;
-		}
+		} 
 	}
 	if (found) {
 		cout << "Contact Found !\n";

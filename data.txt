@@ -8,10 +8,10 @@ Hi amoon
 2 1 Amna
 Hi
 2
-1 3 Rana
-hi Eana
 1 2 Khira
 Hello from Amna
+1 3 Rana
+hi Eana
 0
 2 Khira k 0 0
 2
@@ -21,11 +21,11 @@ Hello from Amna
 Hello from Rana
 3
 2 1 Amna
-Hi amoon
+Hi
 2 1 Amna
 Amna hello
 2 1 Amna
-Hi
+Hi amoon
 2
 1 2 Khira
 Hello from Amna
