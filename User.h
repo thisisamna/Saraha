@@ -17,11 +17,10 @@ private:
 	string password; 
 	deque<Message> sent;
 	vector<Message> inbox;
-	map<User , int> contacts;
 	deque <Message> FavouriteMessages;
+	map<User, int> contacts;
 	vector <User> blockedContacts;
 	int reported;
-	int key;
 	
 public:
 	int newMsgs = 0;
