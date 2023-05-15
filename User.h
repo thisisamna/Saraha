@@ -11,7 +11,7 @@ using namespace std;
 
 class User
 {
-public:
+private:
 	int id; //change
 	string username; //change
 	string password; //change
@@ -20,11 +20,11 @@ public:
 	map<User , int> contacts;
 	deque <Message> FavouriteMessages;
 	vector <User> blockedContacts;
-	int newMsgs = 0; 
 	int reported;
 	int key;
 	
 public:
+	int newMsgs = 0;
 	User();
 	User(string username, string password, int id);
 	bool operator<(const User& other) const;
@@ -55,6 +55,11 @@ public:
 	void notify();
 	void blockContact(User& contact);
 	bool Blocked(int ID);
+	void saveUserData(fstream &file);
+	int getContactsSize();
+	int getFavoritesSize();
+	int getInboxSize();
+	int getSentSize();
 	
 };
 
