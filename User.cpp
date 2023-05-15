@@ -10,11 +10,6 @@ using namespace std;
 
 User::User()
 {
-	
-	id = 0;
-	username = "please";
-	password = "work";
-
 }
 User::User(string name, string pass, int ID)
 {
