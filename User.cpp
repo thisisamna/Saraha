@@ -318,9 +318,6 @@ void User::viewFavorites()
 			FavouriteMessages.pop_front();
 		}
 	}
-	cout << "_______________\n";
-	cout << "0. Back to previous menu\n";
-	cin >> key;
 }
 
 

@@ -92,11 +92,24 @@ void Program::userMenu(User &liveUser)
 		case 3:
 			//favorites
 			printCentered("F a v o r i t e s");
+			cout << "Favorite messages from oldest to latest: " << endl; //3ashan ne3raf ha pop mnen
 			liveUser.viewFavorites();
+
+			if (!liveUser.FavouriteMessages.empty())
+				cout << "1. Remove the oldest message\n";
+			cout << "_______________\n";
+			cout << "0. Back to previous menu\n";
+
+			intChoice = getInt();
+			if (intChoice == 1)
+			{
+				liveUser.RemoveOldestFavorite();
+			}
 			break;
 		case 4:
 			//sent messages
 			printCentered("S e n t   m e s s a g e s");
+			cout << "Sent messages from latest to oldest: " << endl; //عشان يعرف هيشيل انهي مسج بالاندو
 			liveUser.viewSent();
 			if (liveUser.sent.size() != 0)
 				cout << "1. Undo the latest message\n";
@@ -147,7 +160,7 @@ void Program::Inbox(User &liveUser)
 	if (liveUser.inbox.size() != 0) //changed, كانت تطبع هذا اللاين حتى لو ما فيه مسج في الانبوكس
 		cout << "Enter message index to view details and options. \n";
 	liveUser.viewReceived();
-	cout << "_______________\n";
+	printDivider();
 	cout << "0. Back to previous menu\n";
 
 	msgIndex = getInt();
