@@ -94,7 +94,7 @@ void Program::userMenu(User &liveUser)
 			printCentered("F a v o r i t e s");
 			liveUser.viewFavorites();
 
-			if (liveUser.getFavoritesSize()!=0)
+			if (liveUser.getFavouriteMessages().size()!=0)
 				cout << "1. Remove the oldest message\n";
 			cout << "_______________\n";
 			cout << "0. Back to previous menu\n";
@@ -109,7 +109,7 @@ void Program::userMenu(User &liveUser)
 			//sent messages
 			printCentered("S e n t   m e s s a g e s");
 			liveUser.viewSent();
-			if (liveUser.getSentSize() != 0)
+			if (liveUser.getSent().size() != 0)
 				cout << "1. Undo the latest message\n";
 			cout << "_______________\n";
 			cout << "0. Back to previous menu\n";
@@ -125,7 +125,7 @@ void Program::userMenu(User &liveUser)
 			printCentered("C o n t a c t s");
 			liveUser.viewcontacts();
 
-			if (liveUser.getContactsSize() != 0) //changed
+			if (liveUser.getContacts().size() != 0) //changed
 				cout << "\nEnter a contact ID for more options \n";
 			cout << "_______________\n";
 			cout << "0. Back to previous menu\n";
@@ -155,7 +155,7 @@ void Program::Inbox(User &liveUser)
 	int msgIndex;
 	cout << "\n"; //line
 
-	if (liveUser.getInboxSize() != 0) //changed, كانت تطبع هذا اللاين حتى لو ما فيه مسج في الانبوكس
+	if (liveUser.getInbox().size() != 0) //changed, كانت تطبع هذا اللاين حتى لو ما فيه مسج في الانبوكس
 		cout << "Enter message index to view details and options. \n";
 	liveUser.viewReceived();
 	printDivider();
@@ -193,7 +193,7 @@ void Program::Inbox(User &liveUser)
 		{
 		case 1:
 			liveUser.favourite(msg);
-	
+			cout << "Message added to favorites." << endl;
 			break;
 		case 2:
 			addSendertoContacts(liveUser, msg);
@@ -515,27 +515,85 @@ void Program::undolastmessage(User &liveUser) {
 //}
 void Program::savefile()
 {
+	remove("data.txt");
 	ofstream file("data.txt");
+	file << userCount << endl;
 	for (auto it : users)
 	{
-		file << it.second.getid() << " " << it.second.getUsername() << " " << it.second.getPassword() << endl;
-		file << endl;
+		file << it.second.getid() << " " << it.second.getUsername() << " " << it.second.getPassword() << " " <<it.second.getReported() << " " << it.second.newMsgs << endl;
+		//inbox
+		file << it.second.getInbox().size() << endl;
+		for (auto msg : it.second.getInbox())
+		{
+			file << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << endl;
+			file << msg.getContent() << endl;
+		}
+		//sent
+		file << it.second.getSent().size() << endl;
+		for (auto msg : it.second.getSent())
+		{
+			file << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << endl;
+			file << msg.getContent() << endl;
+		}
+		//favourites
+		file << it.second.getFavouriteMessages().size() << endl;
+		for (auto msg : it.second.getFavouriteMessages())
+		{
+			file << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << endl;
+			file << msg.getContent() << endl;
+		}
 
 	}
 }
 void Program::loadfile()
 {
 	ifstream file("data.txt");
-	int id;
+	//user details
+	int id, reported, newMsgs;
 	string username;
 	string password;
-
-	int senderID, receiverID;
+	//msg details
+	Message msg;
+	int containerSize, senderID, receiverID;
 	string receiverUsername, content;
 
-	while (file >> id >> username >> password)
+	file >> userCount;
+	for (int i = 0; i < userCount; i++)
 	{
-		users[id] = User(username, password, id);
+		file >> id >> username >> password >> reported >> newMsgs;
+		users[id] = User(username, password, id, reported, newMsgs);
+		liveUser = &users[id];
+		//inbox
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> senderID >> receiverID >> receiverUsername;
+			file.ignore();
+			getline(file, content);
+			msg = Message(senderID, receiverID, receiverUsername, content),
+			liveUser->addToInbox(msg);
+		}
+		//sent
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> senderID >> receiverID >> receiverUsername;
+			file.ignore();
+			getline(file, content);
+			msg = Message(senderID, receiverID, receiverUsername, content),
+				liveUser->addToSent(msg);
+		}
+		//favourites
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> senderID >> receiverID >> receiverUsername;
+			file.ignore();
+			getline(file, content);
+			msg = Message(senderID, receiverID, receiverUsername, content),
+				liveUser->favourite(msg);
+		}
+		
 	}
 }
 
