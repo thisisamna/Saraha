@@ -454,69 +454,6 @@ void Program::undolastmessage(User &liveUser) {
 		return;
 }
 
-//void Program::savefile() {
-//	ofstream ourfile("ourdata.txt", ios::app);
-//
-//	if (ourfile.is_open()) {
-//		for (auto it : users) {
-//			ourfile << it.first << '|' << it.second.getUsername() << '|' << it.second.getPassword() << '|';
-//			for (int i = 0; i < liveUser->sent.size(); i++) {
-//				ourfile << it.second.sent[i].getSenderID() << '|' << it.second.sent[i].getReceiverID() << '|' << it.second.sent[i].getReceiverUsername() << '|' << it.second.sent[i].getContent() << "\n";
-//			}
-//			for (int i = 0; i < liveUser->inbox.size(); i++) {
-//				ourfile << it.second.inbox[i].getSenderID() << '|' << it.second.inbox[i].getReceiverID() << '|' << it.second.inbox[i].getReceiverUsername() << '|' << it.second.inbox[i].getContent() << "\n";
-//			}
-//		}
-//		/*for (auto elem : it.second.contacts) {
-//		ourfile << elem.second << endl	}*/
-//		//	for (auto elem : it.second.FavouriteMessages) {
-//		//		ourfile << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << " " << msg.getContent() << "\n";
-//		//	}
-//
-//	}
-//	ourfile.close();
-//}
-
-//void Program::loadfile()
-//{
-//	ifstream ourfile("ourdata.txt");
-//	string name,pass,n;
-//	int id;
-//	char delimiter = '|';
-//	while (ourfile >> id) {
-//		getline(ourfile, name, delimiter);
-//		getline(ourfile, pass, delimiter);
-//		users[id] = User(name, pass, id);
-//	}
-//}
-/**void Program::loadfile()
-{
-	ifstream ourfile("ourdata.txt");
-	string line;
-	int id;
-	string username;
-	string password;
-	stack<string> splitted;
-//	while (ourfile) {*/
-//		getline(ourfile, line);
-//		splitted = split(line, ',');
-//		while (!splitted.empty())
-//		{
-//			id = stoi(splitted.top());
-//			splitted.pop();
-//			username = splitted.top();
-//			splitted.pop();
-//			password = splitted.top();
-//			splitted.pop();
-//			//users.insert(make_pair(id, obj));
-//			users[id] = User(username, password, id);
-//			/*for (auto it : users) {
-//				cout << it.first << it.second.username << " " << it.second.password;
-//			}*/
-//		}
-//	}
-//	ourfile.close();
-//}
 void Program::savefile()
 {
 	remove("data.txt");
@@ -721,19 +658,3 @@ int Program::getInt()
 	}
 }
 
-
-//stack<string> Program::split(string s, char delim) 
-//{
-//	stack<string> result;
-//	stringstream ss(s);
-//	string item;
-//
-//	while (getline(ss, item, delim)) {
-//		result.push(item);
-//	}
-//
-//	return result;
-//}
-//usage
-//vector<string> v = split(str, delimiter);
-//for (auto i : v) cout << i << endl;

@@ -35,7 +35,6 @@ public:
 	int usernameToID(string username);
 	void addSendertoContacts(User& liveUser, Message msg);
 	void printCentered(string str);
-	stack<string> split(string s, char delim);
 	void loadfile();
 	void loadContacts();
 	void savefile();

@@ -72,8 +72,6 @@ void User::addcontact(User contact)
 	
 	if(!userExists) {// لو اليوزر مش عندي ضيفه
 		contacts[contact]=msgcounter(contact);
-		//cout << liveUser.contacts.size() << '\n';
-		//cout << Added.getUsername() << ' ' << Added.getid() << '\n';
 
 	}
 
@@ -319,26 +317,9 @@ void User::viewcontacts() {
 
 
 void User::favourite(Message msg) {
-	//bool MessageIsFavourite = false;
-	//char answer;
-	//for (int i = 0; i < FavouriteMessages.size(); i++) {
-
-	//	if (msg.getContent() == FavouriteMessages.at(i).getContent()) {
-	//		MessageIsFavourite = true;
-	//		cout << "Message is already favourite press 'Y' if you want to remove it \n";
-	//		cout << "Or 'N' to remain it\n";
-	//		cin >> answer;
-	//		if (answer == ('y') || answer == 'Y')
-	//			FavouriteMessages.erase(FavouriteMessages.begin() + i);
-	//		else if (answer == ('N') || answer == 'n')
-	//			break;
-	//	}
-
-	//}
-	//if (!MessageIsFavourite) {
-		FavouriteMessages.push_back(msg);
-	/*}*/
+	FavouriteMessages.push_back(msg);
 }
+
 void User::RemoveOldestFavorite(){
    FavouriteMessages.pop_front();
    cout << "Oldest favorite removed.\n";
@@ -379,25 +360,3 @@ void User::searchContact(int id) {
 		cout << "Contact not Found ! \n";
 	}
 }
-
-
-//The next fucntion goes against the requirements
-// 
-//void User::searchContactbyname(string username) {
-//	bool found = false;
-//	User it;
-//	for (auto i : contacts) {
-//		if (i.first.username == username) {
-//			found = true;
-//			it = i.first;
-//			break;
-//		}
-//	}
-//	if (found) {
-//		cout << "Contact Found !\n Name : " << username << "\t Id : " << it.getid() << '\n';
-//	}
-//	else {
-//		cout << "Contact not Found ! , check if the entered username is correct \n";
-//	}
-//
-//}
