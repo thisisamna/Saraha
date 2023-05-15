@@ -10,11 +10,6 @@ using namespace std;
 
 User::User()
 {
-	
-	id = 0;
-	username = "please";
-	password = "work";
-
 }
 User::User(string name, string pass, int ID)
 {
@@ -192,6 +187,35 @@ bool User::Blocked(int ID)
 	return false;
 }
 
+void User::saveUserData(fstream& file)
+{
+	//file << contacts.size() << endl; //contacts 
+	//for (auto c : contacts)
+	//{
+	//	file << c.first.id << " " << c.second << endl;
+	//}
+}
+
+int User::getContactsSize()
+{
+	return contacts.size();
+}
+
+int User::getFavoritesSize()
+{
+	return FavouriteMessages.size();
+}
+
+int User::getInboxSize()
+{
+	return inbox.size();
+}
+
+int User::getSentSize()
+{
+	return sent.size();
+}
+
 void User::notify()
 {
 	if (newMsgs != 0)
@@ -311,6 +335,7 @@ void User::viewFavorites()
 	}
 	else
 	{
+		cout << "Favorite messages from oldest to latest: " << endl; //3ashan ne3raf ha pop mnen
 		for (int i = 0; i < FavouriteMessages.size(); i++)
 		{
 			FavouriteMessages.front().viewAsReceived();
