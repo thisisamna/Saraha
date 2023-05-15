@@ -281,7 +281,7 @@ void Program::printCentered(string str)
 	cout << ss.str() << endl;
 }
 
-void Program::signup() { //wessal salah
+void Program::signup() { 
 	string username, pass;
 	cout << "Please, enter your user name: \n";
 	cin.ignore();
@@ -306,7 +306,7 @@ void Program::signup() { //wessal salah
 	
 	
 
-int Program::login() { //wessal
+int Program::login() { 
 
 	string username, pass;
 	cout << "Enter your user name: \n";
