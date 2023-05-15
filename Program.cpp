@@ -100,7 +100,7 @@ void Program::userMenu(User &liveUser)
 			liveUser.viewSent();
 			if (liveUser.sent.size() != 0)
 				cout << "1. Undo the latest message\n";
-
+			cout << "_______________\n";
 			cout << "0. Back to previous menu\n";
 
 			intChoice = getInt();
@@ -116,6 +116,7 @@ void Program::userMenu(User &liveUser)
 
 			if (liveUser.contacts.size() != 0) //changed
 				cout << "\nEnter a contact ID for more options \n";
+			cout << "_______________\n";
 			cout << "0. Back to previous menu\n";
 
 			intChoice = getInt();

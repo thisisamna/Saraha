@@ -307,7 +307,7 @@ void User::viewFavorites()
 {
 	if (FavouriteMessages.empty())
 	{
-		cout << "You haven't sent any messages yet.\n";
+		cout << "You don't have any favorite messages yet.\n";
 	}
 	else
 	{
@@ -318,6 +318,7 @@ void User::viewFavorites()
 			FavouriteMessages.pop_front();
 		}
 	}
+	cout << "_______________\n";
 	cout << "0. Back to previous menu\n";
 	cin >> key;
 }
