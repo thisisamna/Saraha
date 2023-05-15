@@ -37,7 +37,9 @@ public:
 	void printCentered(string str);
 	stack<string> split(string s, char delim);
 	void loadfile();
+	void loadContacts();
 	void savefile();
+	void saveContacts();
 	int getInt();
 	void printDivider();
 

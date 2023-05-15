@@ -29,7 +29,7 @@ public:
 	User(string username, string password, int id);
 	User(string name, string pass, int ID, int _reported, int _newMsgs);
 	bool operator<(const User& other) const;
-	int getid();
+	int getid() const;
 	string getUsername();
 	string getPassword();
 	void addcontact(User contact);
@@ -63,7 +63,7 @@ public:
 	vector <Message> getInbox();
 	deque <Message> getSent();
 	int getReported();
-	vector <User> getBlockedContacts;
+	vector<User> getBlockedContacts();
 
 };
 
