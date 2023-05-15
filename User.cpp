@@ -17,8 +17,19 @@ User::User(string name, string pass, int ID)
 	password = pass;
 	id = ID;
 	reported = 0;
-	
-} // added the id to constructor to set the id for every user
+	newMsgs = 0;
+
+}
+User::User(string name, string pass, int ID, int _reported, int _newMsgs)
+{
+	username = name;
+	password = pass;
+	id = ID;
+	reported = _reported ;
+	newMsgs = _newMsgs;
+
+
+}
 bool User:: operator<(const User& other) const {
 	return id < other.id;
 }
@@ -205,6 +216,11 @@ vector<Message> User::getInbox()
 deque<Message> User::getSent()
 {
 	return sent;
+}
+
+int User::getReported()
+{
+	return reported;
 }
 
 
