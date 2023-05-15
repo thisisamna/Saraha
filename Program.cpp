@@ -256,8 +256,10 @@ void Program::addSendertoContacts(User& liveUser, Message msg)
 	if (sender.Blocked(liveUser.getid())) //check if blocked
 		cout << "\nyou have been blocked by this user\n";
 	else
-	liveUser.addcontact(sender);
-	cout << "\nSender added to contacts.\n";
+	{
+		liveUser.addcontact(sender);
+		cout << "\nSender added to contacts.\n";
+	}
 
 
 }
