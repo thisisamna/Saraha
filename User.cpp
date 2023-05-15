@@ -187,34 +187,27 @@ bool User::Blocked(int ID)
 	return false;
 }
 
-void User::saveUserData(fstream& file)
+map<User, int> User::getContacts()
 {
-	//file << contacts.size() << endl; //contacts 
-	//for (auto c : contacts)
-	//{
-	//	file << c.first.id << " " << c.second << endl;
-	//}
+	return contacts;
 }
 
-int User::getContactsSize()
+deque<Message> User::getFavouriteMessages()
 {
-	return contacts.size();
+	return FavouriteMessages;
 }
 
-int User::getFavoritesSize()
+vector<Message> User::getInbox()
 {
-	return FavouriteMessages.size();
+	return inbox;
 }
 
-int User::getInboxSize()
+deque<Message> User::getSent()
 {
-	return inbox.size();
+	return sent;
 }
 
-int User::getSentSize()
-{
-	return sent.size();
-}
+
 
 void User::notify()
 {

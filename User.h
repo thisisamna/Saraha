@@ -55,11 +55,11 @@ public:
 	void notify();
 	void blockContact(User& contact);
 	bool Blocked(int ID);
-	void saveUserData(fstream &file);
-	int getContactsSize();
-	int getFavoritesSize();
-	int getInboxSize();
-	int getSentSize();
-	
+	map<User, int> getContacts();
+	deque <Message> getFavouriteMessages();
+	vector <Message> getInbox();
+	deque <Message> getSent();
+	vector <User> getBlockedContacts;
+
 };
 
