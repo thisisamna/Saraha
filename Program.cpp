@@ -256,7 +256,11 @@ void Program::addSendertoContacts(User& liveUser, Message msg)
 	if (sender.Blocked(liveUser.getid())) //check if blocked
 		cout << "\nyou have been blocked by this user\n";
 	else
-	liveUser.addcontact(sender);
+	{
+		liveUser.addcontact(sender);
+		cout << "\nSender added to contacts.\n";
+	}
+
 
 }
 
@@ -520,7 +524,7 @@ void Program::savefile()
 	file << userCount << endl;
 	for (auto it : users)
 	{
-		file << it.second.getid() << " " << it.second.getUsername() << " " << it.second.getPassword() << " " <<it.second.getReported() << " " << it.second.newMsgs << endl;
+		file << it.second.getid() << " " << it.second.getUsername() << " " << it.second.getPassword() << " " << it.second.getReported() << " " << it.second.newMsgs << endl;
 		//inbox
 		file << it.second.getInbox().size() << endl;
 		for (auto msg : it.second.getInbox())
@@ -542,8 +546,31 @@ void Program::savefile()
 			file << msg.getSenderID() << " " << msg.getReceiverID() << " " << msg.getReceiverUsername() << endl;
 			file << msg.getContent() << endl;
 		}
-
 	}
+	file.close();
+	saveContacts();
+}
+
+void Program::saveContacts()
+{
+	remove("contacts.txt");
+	ofstream file("contacts.txt");
+	for (auto it : users) {
+		file << it.first << endl;
+		//contacts
+		file << it.second.getContacts().size() << endl;
+		for (auto c : it.second.getContacts())
+		{
+			file << c.first.getid() <<  " " << c.second << endl;
+		}
+		//blocked users
+		file << it.second.getBlockedContacts().size() << endl;
+		for (auto b : it.second.getBlockedContacts())
+		{
+			file << b.getid() << endl;
+		}
+	}
+	file.close();
 }
 void Program::loadfile()
 {
@@ -594,6 +621,35 @@ void Program::loadfile()
 				liveUser->favourite(msg);
 		}
 		
+	}
+	loadContacts();
+}
+
+void Program::loadContacts()
+{
+	int liveUserID, containerSize, contactID, numOfMsgs;
+	User contact;
+	ifstream file("contacts.txt");
+	for (int i = 0; i < userCount; i++)
+	{
+		file >> liveUserID;
+		liveUser = idToUser(liveUserID);
+		//contacts
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> contactID >> numOfMsgs;
+			contact = *idToUser(contactID);
+			liveUser->addcontact(contact);
+		}
+		//blocked contacts
+		file >> containerSize;
+		for (int i = 0; i < containerSize; i++)
+		{
+			file >> contactID;
+			contact = *idToUser(contactID);
+			liveUser->blockContact(contact);
+		}
 	}
 }
 

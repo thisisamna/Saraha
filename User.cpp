@@ -33,7 +33,7 @@ User::User(string name, string pass, int ID, int _reported, int _newMsgs)
 bool User:: operator<(const User& other) const {
 	return id < other.id;
 }
-int User::getid() 
+int User::getid() const
 {
 	return id;
 }
@@ -74,7 +74,6 @@ void User::addcontact(User contact)
 		contacts[contact]=msgcounter(contact);
 		//cout << liveUser.contacts.size() << '\n';
 		//cout << Added.getUsername() << ' ' << Added.getid() << '\n';
-		cout << "\nSender added to contacts.\n";
 
 	}
 
@@ -209,6 +208,10 @@ bool User::Blocked(int ID)
 map<User, int> User::getContacts()
 {
 	return contacts;
+}
+vector<User> User::getBlockedContacts()
+{
+	return blockedContacts;
 }
 
 deque<Message> User::getFavouriteMessages()
