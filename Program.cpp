@@ -388,8 +388,6 @@ void Program::sendmessage(User& liveUser) {
 	receiverID = usernameToID(username_receiver);
 
 
-
-
 	if (receiverID == -1)
 	{
 		cout << endl << "User does not exist, please try again." << endl;

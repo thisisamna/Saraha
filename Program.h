@@ -20,17 +20,17 @@ public:
 	//menu functions
 	Program();
 	void loop();
-	void loginMenu();
-	void userMenu(User &liveUser);
+	void loginMenu(); //amna
+	void userMenu(User &liveUser); //amna
 	void Inbox(User &liveUser);
 	void contactMenu(User& liveUser, User& contact);
 
 	//functionality
-	int login();
-	void signup();
-	void sendmessage(User &liveUser);
-	void undolastmessage(User &liveUser);
-	void addSendertoContacts(User& liveUser, Message msg);
+	int login(); //wessal
+	void signup(); //wessal
+	void sendmessage(User &liveUser); //fatma
+	void undolastmessage(User &liveUser); //fatma
+	void addSendertoContacts(User& liveUser, Message msg); //khira
 
 	//helper functions
 	int getInt();

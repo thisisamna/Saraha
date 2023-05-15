@@ -1,7 +1,11 @@
 7
-1 Amna a 0 0
-0
+1 Amna a 0 1
 1
+7 1 Amna
+Hi amna
+2
+1 7 Wessal
+Hi eee
 1 2 Khira
 Hello from Amna
 0
@@ -34,8 +38,12 @@ Hello from Rana
 0
 0
 7 Wessal w 0 0
-0
 1
+1 7 Wessal
+Hi eee
+2
+7 1 Amna
+Hi amna
 7 2 Khira
 Hello from Wessal
 0
