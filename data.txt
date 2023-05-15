@@ -1,49 +1,109 @@
 7
-1 Amna a 0 1
+1 amna a 0 2
+4
+2 1 amna
+Lets all be unique together until we realise we are all the same.
+5 1 amna
+what on earth do u think ur doing??! 
+3 1 amna
+what do you think is the best department in fcis? its obviously sc but i just wanna know your opinion 
+2 1 amna
+this is such a lame app
 1
-7 1 Amna
-Hi amna
-2
-1 7 Wessal
-Hi eee
-1 2 Khira
+1 2 khira
 Hello from Amna
 0
-2 Khira k 0 0
+2 khira k 0 0
+5
+3 2 khira
+Hello khira
+1 2 khira
+I just wanted to say hi
+3 2 khira
+Why would u do that???
+3 2 khira
+Ur really pretty
+7 2 khira
+I don't even know why people use this app
+4
+2 1 amna
+Lets all be unique together until we realise we are all the same.
+2 5 habeba
+I dont know u but i like ur name
+2 1 amna
+this is such a lame app
+2 4 habiba
+remember when somebody said your cats are ugly? that was me and im really sorry
+0
+3 rana r 0 2
+2
+7 3 rana
+rana
+7 3 rana
+why arent we friends anymore? 
+9
+3 5 habeba
+hi hows everything?
+3 1 amna
+what do you think is the best department in fcis? its obviously sc but i just wanna know your opinion 
+3 7 wessal
+wessal
+3 2 khira
+Hello from Rana
+3 2 khira
+Hello from Rana
+3 2 khira
+Hello from Rana
+3 7 wessal
+wessal what are ur plans for summer?
+3 4 habiba
+habiba
+3 4 habiba
+my last message was cut short but i like your cat!! she's super cute
+0
+4 habiba h 0 3
 3
-1 2 Khira
-Hello from Amna
-3 2 Khira
-Hello from Rana
-7 2 Khira
-Hello from Wessal
+3 4 habiba
+habiba
+3 4 habiba
+my last message was cut short but i like your cat!! she's super cute
+2 4 habiba
+remember when somebody said your cats are ugly? that was me and im really sorry
 0
 0
-3 Rana r 0 0
-0
-1
-3 2 Khira
-Hello from Rana
-0
-4 Habiba f 0 0
-0
-0
-0
-5 Habeba h 0 0
-0
-0
-0
-6 Fatma f 0 0
-0
-0
-0
-7 Wessal w 0 0
-1
-1 7 Wessal
-Hi eee
+5 habeba h 0 2
 2
-7 1 Amna
-Hi amna
-7 2 Khira
+2 5 habeba
+I dont know u but i like ur name
+3 5 habeba
+hi hows everything?
+2
+5 1 amna
+what on earth do u think ur doing??! 
+5 6 fatma
+fatma ur really smart!! keep it up
+0
+6 fatma f 0 2
+2
+5 6 fatma
+fatma ur really smart!! keep it up
+7 6 fatma
+we're gonna ace this project!! 
+0
+0
+7 wessal w 0 2
+2
+3 7 wessal
+wessal what are ur plans for summer?
+3 7 wessal
+wessal
+4
+7 2 khira
 Hello from Wessal
+7 6 fatma
+we're gonna ace this project!! 
+7 3 rana
+rana
+7 3 rana
+why arent we friends anymore? 
 0
