@@ -245,10 +245,10 @@ void User::notify()
 
 void User::removecontact(User contact)
 {
-	for (auto it = contacts.begin(); it != contacts.end();) {
+	for (auto it = contacts.begin(); it != contacts.end(); it++) {
 		if (it->first.id == contact.id)
 		{
-			it = contacts.erase(it);
+			contacts.erase(it);
 			cout << "Contact removed. \n";
 			break;
 		}
